@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.1.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.1.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.1.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.1.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.1.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.1.0',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="Java集合类库是接口与实现分离的;此外，在Java　API 文档中，有一组以Abstract开头的类，如”AbstractQueue”,这些类是为类库实现者设计的。（想要实现自己的队列，扩展AbstractQueue比实现Ｑueue轻松的多） 集合框架中的接口 集合结构结合泛型Ｃollection和Iterator都是泛型接口，这意味着可以编写任何集合类型的使用方法如下方法就可以检测任意集合是">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Liisyu Blog">
+<meta property="og:url" content="http://yoursite.com/2019/04/09/java.16/index.html">
+<meta property="og:site_name" content="Liisyu Blog">
+<meta property="og:description" content="Java集合类库是接口与实现分离的;此外，在Java　API 文档中，有一组以Abstract开头的类，如”AbstractQueue”,这些类是为类库实现者设计的。（想要实现自己的队列，扩展AbstractQueue比实现Ｑueue轻松的多） 集合框架中的接口 集合结构结合泛型Ｃollection和Iterator都是泛型接口，这意味着可以编写任何集合类型的使用方法如下方法就可以检测任意集合是">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://raw.githubusercontent.com/FameLsy/Images/master/javase/collection2.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/FameLsy/Images/master/javase/collection.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/FameLsy/Images/master/javase/collection3.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/FameLsy/Images/master/javase/collection4.png">
+<meta property="og:updated_time" content="2019-04-09T12:53:34.434Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Liisyu Blog">
+<meta name="twitter:description" content="Java集合类库是接口与实现分离的;此外，在Java　API 文档中，有一组以Abstract开头的类，如”AbstractQueue”,这些类是为类库实现者设计的。（想要实现自己的队列，扩展AbstractQueue比实现Ｑueue轻松的多） 集合框架中的接口 集合结构结合泛型Ｃollection和Iterator都是泛型接口，这意味着可以编写任何集合类型的使用方法如下方法就可以检测任意集合是">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/FameLsy/Images/master/javase/collection2.png">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="http://yoursite.com/2019/04/09/java.16/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title> | Liisyu Blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Liisyu Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-navigation">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/navigation/" rel="section"><i class="menu-item-icon fa fa-fw fa-diamond"></i> <br>导航</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/09/java.16/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Liisyu">
+      <meta itemprop="description" content="我只是一个兴趣使然的程序员">
+      <meta itemprop="image" content="/images/toux.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Liisyu Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-04-09 08:53:34" itemprop="dateCreated datePublished" datetime="2019-04-09T08:53:34-04:00">2019-04-09</time>
+            
+
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <!-- ---
+title: java基础：集合
+date: 2018-02-02 00:00:16
+tags: 
+- java集合
+categories: 
+- JavaSe教程
+--- -->
+<p>Java集合类库是接口与实现分离的;此外，在<em>Java　API</em> 文档中，有一组以Abstract开头的类，如”AbstractQueue”,这些类是为类库实现者设计的。（想要实现自己的队列，扩展AbstractQueue比实现Ｑueue轻松的多）</p>
+<h1 id="集合框架中的接口"><a href="#集合框架中的接口" class="headerlink" title="集合框架中的接口"></a>集合框架中的接口</h1><p><img src="https://raw.githubusercontent.com/FameLsy/Images/master/javase/collection2.png" alt="collection2"></p>
+<h1 id="集合结构结合泛型"><a href="#集合结构结合泛型" class="headerlink" title="集合结构结合泛型"></a>集合结构结合泛型</h1><p>Ｃollection和Iterator都是泛型接口，这意味着可以编写任何集合类型的使用方法<br>如下方法就可以检测任意集合是否包含指定元素的泛型方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> &lt;E&gt; <span class="function"><span class="keyword">boolean</span> <span class="title">comtains</span><span class="params">(Collection&lt;E&gt; c, Object obj)</span></span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(E element : c)&#123;</span><br><span class="line">        <span class="keyword">if</span>(element.equals(obj)) <span class="keyword">return</span> ture;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Collection 已经声明了很多有用的抽象方法　　<br><img src="https://raw.githubusercontent.com/FameLsy/Images/master/javase/collection.png" alt="collection"></p>
+<h1 id="Collection接口"><a href="#Collection接口" class="headerlink" title="Collection接口"></a>Collection接口</h1><p>集合的最基本接口就是Ｃollection接口,且有两个基本方法<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Collection</span>&lt;<span class="title">E</span>&gt;  <span class="keyword">extends</span> <span class="title">Iterable</span>&lt;<span class="title">E</span>&gt;</span>&#123;</span><br><span class="line">    <span class="comment">// 向集合添加元素</span></span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">add</span><span class="params">(E element)</span></span>;</span><br><span class="line">    <span class="comment">// 返回迭代器</span></span><br><span class="line">    <span class="function">Iterator&lt;E&gt; <span class="title">iterator</span><span class="params">()</span></span>;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h1 id="迭代器"><a href="#迭代器" class="headerlink" title="迭代器"></a>迭代器</h1><p>迭代器虽然不是集合，但是他能作用于任何继承Iterable的集合上，而Collection正是继承了这个类。</p>
+<p>Iterator是一个接口，包含４个方法<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Iterator</span>&lt;<span class="title">E</span>&gt;</span>&#123;</span><br><span class="line">    <span class="comment">// 返回集合的下一个元素，集合末尾抛出NoSuchElementException</span></span><br><span class="line">    <span class="function">E <span class="title">next</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="comment">// 判断集合是否还有下一个元素</span></span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">hasnext</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="comment">// 删除上次调用ｎｅｘｔ方法返回的元素</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">remove</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="comment">// Java　ＳＥ 8 加入的方法，可以对每个迭代器内的元素调用传入的ｌａｍbda表达式</span></span><br><span class="line">    <span class="function"><span class="keyword">default</span> <span class="keyword">void</span> <span class="title">forEachRemaining</span><span class="params">(Consumer&lt;? <span class="keyword">super</span> E&gt; action)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="迭代器遍历"><a href="#迭代器遍历" class="headerlink" title="迭代器遍历"></a>迭代器遍历</h2><p>遍历一个元素，可以使用迭代器来完成,有两种使用方式</p>
+<ol>
+<li>通过hasnext()和next()方法进行遍历</li>
+<li>通过for-earch循环来完成<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Collection&lt;String&gt; aCollection = ...;</span><br><span class="line">Iterator&lt;String&gt; iter = aCollection.iterator();</span><br><span class="line"><span class="comment">// 遍历迭代器，逐个访问元素</span></span><br><span class="line"><span class="keyword">while</span>(iter.hasnext())&#123;</span><br><span class="line">    String element = iter.next();</span><br><span class="line">    <span class="comment">//do something with element</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 使用for-each循环遍历</span></span><br><span class="line"><span class="keyword">for</span>(String element : aCollection)&#123;</span><br><span class="line">     <span class="comment">//do something with element</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p><em>for-each</em> 循环可以与任何实现了 <em>Iterable</em> 接口的对象一起工作，而 <em>Collction</em> 接口扩展了 <em>Iterable</em> 接口，这就意味着所有集合都可以使用 <em>for-each</em> 循环</p>
+<p>此外，在Java SE 8,可以通过调用 <em>forEachRemaining()</em> 方法来完成查看所有元素,它将会对迭代器里的每个元素调用lambda表达式，直到没有为止。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iter.forEachRemaining(element -&gt; <span class="keyword">do</span> something with element)</span><br></pre></td></tr></table></figure>
+<h2 id="迭代器删除"><a href="#迭代器删除" class="headerlink" title="迭代器删除"></a>迭代器删除</h2><p>对于使用remove()方法，必须先使用一次next()方法(删除上一个next的返回值),这点要额外注意</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">iter.next();</span><br><span class="line">iter.remove(); <span class="comment">//ok</span></span><br><span class="line">iter.remove();<span class="comment">//error</span></span><br></pre></td></tr></table></figure>
+<h1 id="List、Set、Queue"><a href="#List、Set、Queue" class="headerlink" title="List、Set、Queue"></a>List、Set、Queue</h1><p>List接口是一个有序集合，元素会添加到容器中的特定位置，可采用迭代器访问和整数索引访问(又被称为 <em>随机访问</em> )</p>
+<p>Set接口类似与Connection,但是对方法的行为更为严谨。容器不能添加重复元素，需要定义equals方法和hashCode()方法</p>
+<p>Queue: 队列结构</p>
+<h1 id="Collection-具体集合"><a href="#Collection-具体集合" class="headerlink" title="Collection 具体集合"></a>Collection 具体集合</h1><p><img src="https://raw.githubusercontent.com/FameLsy/Images/master/javase/collection3.png" alt="collection3"></p>
+<p>说明</p>
+<p><img src="https://raw.githubusercontent.com/FameLsy/Images/master/javase/collection4.png" alt="collection4"></p>
+<h2 id="LinkedList-源码解析"><a href="#LinkedList-源码解析" class="headerlink" title="LinkedList 源码解析"></a>LinkedList 源码解析</h2><p>todo</p>
+<h2 id="AarrayList-源码解析"><a href="#AarrayList-源码解析" class="headerlink" title="AarrayList 源码解析"></a>AarrayList 源码解析</h2><p>从类的定义可以看出，该类继承于AbstractList，可以随机访问、克隆、序列化<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ArrayList</span>&lt;<span class="title">E</span>&gt; <span class="keyword">extends</span> <span class="title">AbstractList</span>&lt;<span class="title">E</span>&gt;</span></span><br><span class="line"><span class="class">        <span class="keyword">implements</span> <span class="title">List</span>&lt;<span class="title">E</span>&gt;, <span class="title">RandomAccess</span>, <span class="title">Cloneable</span>, <span class="title">java</span>.<span class="title">io</span>.<span class="title">Serializable</span></span></span><br></pre></td></tr></table></figure></p>
+<p>再来看它的属性<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//默认的初始化大小</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> DEFAULT_CAPACITY = <span class="number">10</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//一个空的数组</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Object[] EMPTY_ELEMENTDATA = &#123;&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//用于默认大小的空数组</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Object[] DEFAULTCAPACITY_EMPTY_ELEMENTDATA = &#123;&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//存储ArrayList元素的数组缓冲区。</span></span><br><span class="line"><span class="keyword">transient</span> Object[] elementData;</span><br><span class="line"></span><br><span class="line"><span class="comment">//集合大小</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">int</span> size;</span><br></pre></td></tr></table></figure></p>
+<p>添加方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">add</span><span class="params">(E e)</span> </span>&#123;</span><br><span class="line">        ensureCapacityInternal(size + <span class="number">1</span>);  </span><br><span class="line">        elementData[size++] = e;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="comment">//</span></span><br><span class="line">  <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">ensureCapacityInternal</span><span class="params">(<span class="keyword">int</span> minCapacity)</span> </span>&#123;</span><br><span class="line">        ensureExplicitCapacity(calculateCapacity(elementData, minCapacity));</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/02/02/java.17/" rel="next" title="java基础：多线程">
+                <i class="fa fa-chevron-left"></i> java基础：多线程
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/toux.jpg" alt="Liisyu">
+            
+              <p class="site-author-name" itemprop="name">Liisyu</p>
+              <div class="site-description motion-element" itemprop="description">我只是一个兴趣使然的程序员</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">17</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                    <span class="site-state-item-count">1</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">11</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/yourname" title="GitHub &rarr; https://github.com/yourname" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="mailto:yourname@gmail.com" title="E-Mail &rarr; mailto:yourname@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://weibo.com/yourname" title="Weibo &rarr; https://weibo.com/yourname" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i>Weibo</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://plus.google.com/yourname" title="Google &rarr; https://plus.google.com/yourname" rel="noopener" target="_blank"><i class="fa fa-fw fa-google"></i>Google</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#集合框架中的接口"><span class="nav-number">1.</span> <span class="nav-text">集合框架中的接口</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#集合结构结合泛型"><span class="nav-number">2.</span> <span class="nav-text">集合结构结合泛型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Collection接口"><span class="nav-number">3.</span> <span class="nav-text">Collection接口</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#迭代器"><span class="nav-number">4.</span> <span class="nav-text">迭代器</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#迭代器遍历"><span class="nav-number">4.1.</span> <span class="nav-text">迭代器遍历</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#迭代器删除"><span class="nav-number">4.2.</span> <span class="nav-text">迭代器删除</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#List、Set、Queue"><span class="nav-number">5.</span> <span class="nav-text">List、Set、Queue</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Collection-具体集合"><span class="nav-number">6.</span> <span class="nav-text">Collection 具体集合</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#LinkedList-源码解析"><span class="nav-number">6.1.</span> <span class="nav-text">LinkedList 源码解析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AarrayList-源码解析"><span class="nav-number">6.2.</span> <span class="nav-text">AarrayList 源码解析</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Liisyu</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.1.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.1.0"></script>
+
+  <script src="/js/motion.js?v=7.1.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/schemes/muse.js?v=7.1.0"></script>
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.1.0"></script>
+<script src="/js/post-details.js?v=7.1.0"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.1.0"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

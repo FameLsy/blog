@@ -1,0 +1,1275 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.1.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.1.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.1.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.1.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.1.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.1.0',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="Java语言中3个最基本的元素:数据类型,变量和数组 java一共有8个基本数据类型    数据类型 存储需求 取值范围 前/后缀     int 4字节 -2^32~ 2^32-1    short 2字节 -2^16~ 2^16 -1    long 8字节 -2^64~2^64 -1 后缀：L或l,如40000L   byte 1字节 -2^8 ~ 2^8 -1    float 4字节">
+<meta name="keywords" content="数据类型">
+<meta property="og:type" content="article">
+<meta property="og:title" content="java 基础:数据类型">
+<meta property="og:url" content="http://yoursite.com/2018/02/02/java.1/index.html">
+<meta property="og:site_name" content="Liisyu Blog">
+<meta property="og:description" content="Java语言中3个最基本的元素:数据类型,变量和数组 java一共有8个基本数据类型    数据类型 存储需求 取值范围 前/后缀     int 4字节 -2^32~ 2^32-1    short 2字节 -2^16~ 2^16 -1    long 8字节 -2^64~2^64 -1 后缀：L或l,如40000L   byte 1字节 -2^8 ~ 2^8 -1    float 4字节">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://raw.githubusercontent.com/FameLsy/Images/master/other/head.jpg">
+<meta property="og:updated_time" content="2019-04-09T13:19:22.656Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="java 基础:数据类型">
+<meta name="twitter:description" content="Java语言中3个最基本的元素:数据类型,变量和数组 java一共有8个基本数据类型    数据类型 存储需求 取值范围 前/后缀     int 4字节 -2^32~ 2^32-1    short 2字节 -2^16~ 2^16 -1    long 8字节 -2^64~2^64 -1 后缀：L或l,如40000L   byte 1字节 -2^8 ~ 2^8 -1    float 4字节">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/FameLsy/Images/master/other/head.jpg">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="http://yoursite.com/2018/02/02/java.1/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>java 基础:数据类型 | Liisyu Blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Liisyu Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-navigation">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/navigation/" rel="section"><i class="menu-item-icon fa fa-fw fa-diamond"></i> <br>导航</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/02/java.1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Liisyu">
+      <meta itemprop="description" content="我只是一个兴趣使然的程序员">
+      <meta itemprop="image" content="/images/toux.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Liisyu Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">java 基础:数据类型
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-02-02 00:00:01" itemprop="dateCreated datePublished" datetime="2018-02-02T00:00:01-05:00">2018-02-02</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-04-09 09:19:22" itemprop="dateModified" datetime="2019-04-09T09:19:22-04:00">2019-04-09</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/JavaSe教程/" itemprop="url" rel="index"><span itemprop="name">JavaSe教程</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+        <div class="post-gallery" itemscope itemtype="http://schema.org/ImageGallery">
+          
+          
+            <div class="post-gallery-row">
+              <img src="https://raw.githubusercontent.com/FameLsy/Images/master/other/head.jpg" itemprop="contentUrl">
+            
+          
+
+          
+          </div>
+        </div>
+      
+
+      
+        <a id="more"></a>
+<p>Java语言中3个最基本的元素:数据类型,变量和数组</p>
+<p>java一共有8个基本数据类型</p>
+<table>
+<thead>
+<tr>
+<th>数据类型</th>
+<th>存储需求</th>
+<th>取值范围</th>
+<th>前/后缀</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>int</td>
+<td>4字节</td>
+<td>-2^32~ 2^32-1</td>
+<td></td>
+</tr>
+<tr>
+<td>short</td>
+<td>2字节</td>
+<td>-2^16~ 2^16 -1</td>
+<td></td>
+</tr>
+<tr>
+<td>long</td>
+<td>8字节</td>
+<td>-2^64~2^64 -1</td>
+<td>后缀：L或l,如40000L</td>
+</tr>
+<tr>
+<td>byte</td>
+<td>1字节</td>
+<td>-2^8 ~ 2^8 -1</td>
+<td></td>
+</tr>
+<tr>
+<td>float</td>
+<td>4字节</td>
+<td></td>
+<td>后缀F或f</td>
+</tr>
+<tr>
+<td>double</td>
+<td>8字节</td>
+<td></td>
+<td>默认，后缀可以是D或d</td>
+</tr>
+<tr>
+<td>char</td>
+<td>1个字符</td>
+<td>\u0000~\Uffff</td>
+<td></td>
+</tr>
+<tr>
+<td>boolean</td>
+<td></td>
+<td>true/false</td>
+</tr>
+</tbody>
+</table>
+<p><strong>JAVA范围与j运行ava代码机器无关</strong><br>因为Java程序必须保证在所有机器上都能够得到相同的结果，所以各种数据类型的取值范围必须固定。</p>
+<h1 id="整数类型"><a href="#整数类型" class="headerlink" title="整数类型"></a>整数类型</h1><table>
+<thead>
+<tr>
+<th>数据类型</th>
+<th>存储需求</th>
+<th>取值范围</th>
+<th>前/后缀</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>long</td>
+<td>8字节</td>
+<td>-2^64~2^64 -1</td>
+<td>后缀：L或l,如40000L</td>
+</tr>
+<tr>
+<td>int</td>
+<td>4字节</td>
+<td>-2^32~ 2^32-1</td>
+<td></td>
+</tr>
+<tr>
+<td>short</td>
+<td>2字节</td>
+<td>-2^16~ 2^16 -1</td>
+<td></td>
+</tr>
+<tr>
+<td>byte</td>
+<td>1字节</td>
+<td>-2^8 ~ 2^8 -1</td>
+</tr>
+</tbody>
+</table>
+<h2 id="字节型-byte"><a href="#字节型-byte" class="headerlink" title="字节型(byte)"></a>字节型(byte)</h2><p>最小的整数类型是字节型。它是有符号的8位类型,数的范围是-128~127。当你从网<br>络或文件处理数据流的时候,字节类型的变量特别有用。</p>
+<h2 id="短整型-short"><a href="#短整型-short" class="headerlink" title="短整型(short)"></a>短整型(short)</h2><p>有符号的16位类型,被定义为高字节优先(称为big-endian格式),它可能是Java中使用得最少的类型。主要适用于16位计算机。</p>
+<h2 id="整型-int"><a href="#整型-int" class="headerlink" title="整型(int)"></a>整型(int)</h2><p>有符号的32位类型。int类型的变量通常被用来控制循环及作数组的下标。任何时候你的整数表达式包含byte,short,int及字面量数字,在进行计算以前,所有表达式的类型被提升(promoted)到整型。</p>
+<p>使用字节型和短整型可以节约空间,但是不能保证 Java 不会内部把那些类型提升到整型；记住，类型决定行为,而不是大小(惟一的例外是数组,字节型的数据保证每个数组元素只占用一个字节,短整型使用 2 个字节,整型将使用4个。)</p>
+<h2 id="长整型-long"><a href="#长整型-long" class="headerlink" title="长整型(long)"></a>长整型(long)</h2><p>有符号的64位类型,长整型数的范围是相当大的。这使得大的、整个数字都被需要时,它是非常有用的</p>
+<h2 id="浮点类型"><a href="#浮点类型" class="headerlink" title="浮点类型"></a>浮点类型</h2><p>当计算的表达式有精度要求时被使用 ,所有浮点数值计算都遵循 <em>IEEE 754</em>。</p>
+<table>
+<thead>
+<tr>
+<th>数据类型</th>
+<th>存储需求</th>
+<th>取值范围</th>
+<th>前/后缀</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>float</td>
+<td>4字节</td>
+<td></td>
+<td>后缀F或f</td>
+</tr>
+<tr>
+<td>double</td>
+<td>8字节</td>
+<td></td>
+<td>默认，后缀可以是D或d</td>
+</tr>
+</tbody>
+</table>
+<h2 id="单精度浮点型-float"><a href="#单精度浮点型-float" class="headerlink" title="单精度浮点型(float)"></a>单精度浮点型(float)</h2><p>单精度浮点型(float)专指占用32位存储空间的单精度(single-precision)值。<br>当值很大或很小的时候,它将变得不精确。当你需要小数部分并且对精度的要求不高时,单精度浮点型的变量是有用的。</p>
+<h2 id="双精度型-double-浮点型"><a href="#双精度型-double-浮点型" class="headerlink" title="双精度型(double)浮点型"></a>双精度型(double)浮点型</h2><p>占用64位的存储空间<br>所有超出人类经<br>验的数学函数,如sin( ),cos( ),和sqrt( )均返回双精度的值  </p>
+<h2 id="浮点数值三个特殊值"><a href="#浮点数值三个特殊值" class="headerlink" title="浮点数值三个特殊值"></a>浮点数值三个特殊值</h2><table>
+<thead>
+<tr>
+<th>特殊值</th>
+<th>对应常量</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>正无穷大</td>
+<td>Double.POSITIVE_INFINITY 、 Float.POSITIVE_INFINITY</td>
+</tr>
+<tr>
+<td>负无穷大</td>
+<td>Double.NEGATIVE_INFINITY、Float.NEGATIVE_INFINITY</td>
+</tr>
+<tr>
+<td>NaN(不是一个数)</td>
+<td>Double.NaN、Float.NaN</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>注：<br>浮点类型不适用于无法接受舍入误差的金融计算中，如2.0 -1.1 会输出0.8999999999999999，而不是0.9<br>原因：浮点数值采用二进制系统表示法（二进制无法精确表示分数1/10）<br>如果不允许输入误差，需要使用 <em>BigDecimal</em>类</p>
+</blockquote>
+<h1 id="字符类型-char"><a href="#字符类型-char" class="headerlink" title="字符类型(char)"></a>字符类型(char)</h1><table>
+<thead>
+<tr>
+<th>数据类型</th>
+<th>存储需求</th>
+<th>取值范围</th>
+<th>前/后缀</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>char</td>
+<td>1个字符</td>
+<td>\u0000~\Uffff</td>
+</tr>
+</tbody>
+</table>
+<p>用于表示Unicode编码的字符单位的字符类型。<br>char类型的字面量需要使用单引号括起来，如’A’,对应65<br>char类型的值可以表示为十六进制值，范围\u0000~\Uffff  </p>
+<p>尽管char不是整数,但允许你可以将2个字符相加,或对一个字符变量值进行增量操作<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">char</span> ch1 = <span class="string">'x'</span>;</span><br><span class="line">ch1++; <span class="comment">//ch1会变成y</span></span><br></pre></td></tr></table></figure></p>
+<h1 id="布尔型（boolean）"><a href="#布尔型（boolean）" class="headerlink" title="布尔型（boolean）"></a>布尔型（boolean）</h1><p>表示逻辑值的简单类型，它的值只能是真或假这两个值中的一个</p>
+<h1 id="字面量"><a href="#字面量" class="headerlink" title="字面量"></a>字面量</h1><h2 id="整数字面量"><a href="#整数字面量" class="headerlink" title="整数字面量"></a>整数字面量</h2><p>任何一个数字的值就是一个整数字面量,例如1,2,3和42  </p>
+<p>十六进制数：前缀0x或0X   </p>
+<p>八进制数值：前缀0，如010,因为容易混淆，建议不常用  </p>
+<p>二进制：从Java7开始，加上前缀0B或0b。（可为数值加_,如1_000_000,便于阅读）  </p>
+<h2 id="浮点字面量"><a href="#浮点字面量" class="headerlink" title="浮点字面量"></a>浮点字面量</h2><p>浮点数代表带小数部分的十进制值,可通过标准记数法或科学记数法来表示  </p>
+<p>标准记数法(Standard notation)由整数部分加小数点加小数部分组成,2.0,3.14159,和0.6667  </p>
+<p>科学记数法(Scientific notation)是浮点数加一表明乘以10的指定幂次的后缀,指数是紧跟E或 e 的一个十进制的数字,它可以是正值或是负值,例子如6.022E23,314159E-05,及2e+100默认为double类型。</p>
+<h2 id="布尔型字面量"><a href="#布尔型字面量" class="headerlink" title="布尔型字面量"></a>布尔型字面量</h2><p>布尔型字面量仅仅有2个逻辑值,真或假（true or false）<br>Java中,真字面量的值不等于1,假字面量的值也不等于0  </p>
+<h2 id="字符字面量"><a href="#字符字面量" class="headerlink" title="字符字面量"></a>字符字面量</h2><p>Java用Unicode字符集来表示字符,Java的字符是16位值,可以被转换为整数并可进行<br>像加或减这样的整数运算。  </p>
+<p>所有可见的ASCII字符都能直接被包括在单引号之内,例如’a’,’z’,and ‘@’。  </p>
+<p>不能直接被包括的字符,有若干转义序列，例如’\n’代表换行符字符。</p>
+<p>为直接得到八进制或十六进制字符的值也有一个机制：</p>
+<ol>
+<li>对八进制来说,使用反斜线加3个阿拉伯数字。例如, ‘\141’是字母’a’。</li>
+<li>对十六进制来说,使用反斜线和u (\u)加4个十六进制阿拉伯数字。例如,’\u0061’因为高位字节是零,表ISO-Latin-1字符集中的’a’。</li>
+</ol>
+<p><strong>转义序列\u</strong>  </p>
+<p>可以出现在加引号的字符常量或字符之外（其他的转义序列不可以）,如<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String\u005B\u005D args)</span></span></span><br></pre></td></tr></table></figure></p>
+<p>其中\u005B\u005D代表 <em>[</em> 和 <em>]</em></p>
+<p><strong>特殊字符的转义序列</strong></p>
+<table>
+<thead>
+<tr>
+<th>转义序列</th>
+<th>名称</th>
+<th>Unicode值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>\ddd</td>
+<td>八进制字符(ddd)</td>
+</tr>
+<tr>
+<td>\uxxxx</td>
+<td>十六进制Unicode码字符</td>
+</tr>
+<tr>
+<td>\b</td>
+<td>退格</td>
+<td>\u0008</td>
+</tr>
+<tr>
+<td>\t</td>
+<td>制表</td>
+<td>\u0009</td>
+</tr>
+<tr>
+<td>\n</td>
+<td>换行</td>
+<td>\u000a</td>
+</tr>
+<tr>
+<td>\r</td>
+<td>回车</td>
+<td>\u000d</td>
+</tr>
+<tr>
+<td>\”</td>
+<td>双引号</td>
+<td>\u0022</td>
+</tr>
+<tr>
+<td>\’</td>
+<td>单引号</td>
+<td>\u0027</td>
+</tr>
+<tr>
+<td>\</td>
+<td>反斜杠</td>
+<td>\u005c</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>警告：<br>Unicode转义序列会在解析代码之前先进行处理<br>如”\u0022 + \u0022”, \u0022会在解析前转换成”,最后结果为””+””,也就是一个空串<br>在注释中当心\u,如 // look some c:\users, 会出现语法错误（\u后面不是4个十六进制数）</p>
+</blockquote>
+<h2 id="字符串字面量"><a href="#字符串字面量" class="headerlink" title="字符串字面量"></a>字符串字面量</h2><p>将一系列字符用双引号括起来,例如”Hello World”</p>
+<h1 id="数值类型转换"><a href="#数值类型转换" class="headerlink" title="数值类型转换"></a>数值类型转换</h1><p>分为自动类型转换和强制类型转换。</p>
+<h2 id="自动类型转换"><a href="#自动类型转换" class="headerlink" title="自动类型转换"></a>自动类型转换</h2><p>满足以下条件将自动转换</p>
+<ol>
+<li>这2种类型是兼容的。</li>
+<li>目的类型数的范围比来源类型的大。</li>
+</ol>
+<p>当以上2个条件都满足时,拓宽转换(widening conversion)发生  </p>
+<p>数字类型和字符类型(char)或布尔类型(bollean)是不兼容的。字符类型(char)和布尔类型(bollean)也是互相不兼容的。</p>
+<h2 id="强制转换"><a href="#强制转换" class="headerlink" title="强制转换"></a>强制转换</h2><p>通用格式<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(target-type)value</span><br></pre></td></tr></table></figure></p>
+<p>截断(truncation):把浮点值赋给整数类型时一种不同的类型转换,小数部分会被舍去。</p>
+<p>java 257强制转换赋值给byte会怎么样？323呢?<br>答：byte范围是256,所以257赋值后，值为1(257/256)。323为67(323/256)</p>
+<h2 id="基本数值类型直接的转换"><a href="#基本数值类型直接的转换" class="headerlink" title="基本数值类型直接的转换"></a>基本数值类型直接的转换</h2><p>(虚线表示数据可能丢失)<br><img src="https://raw.githubusercontent.com/FameLsy/Images/master/javase/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20190106130122.png" alt="数值类型转换"></p>
+<blockquote>
+<p>注:<br>如果对图中箭头反向转换，会报错，需要强制转换</p>
+</blockquote>
+<h1 id="表达式中的类型提升"><a href="#表达式中的类型提升" class="headerlink" title="表达式中的类型提升"></a>表达式中的类型提升</h1><p>如下代码所示：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">byte</span> a = <span class="number">50</span>;</span><br><span class="line"><span class="keyword">byte</span> b = <span class="number">20</span>;</span><br><span class="line"><span class="keyword">int</span> i = b * a; <span class="comment">//ok</span></span><br><span class="line">b = b * <span class="number">2</span>;<span class="comment">//error,cannot assign an int to a byte</span></span><br><span class="line">b = (<span class="keyword">byte</span>)b; <span class="comment">//ok</span></span><br></pre></td></tr></table></figure></p>
+<p>所有byte型和short型的值在表达式中会被提升到int类型  </p>
+<ol>
+<li>好处：避免了计算过程中中间结果超出范围</li>
+<li>缺点，需要强转</li>
+</ol>
+<p>类型提升规则：</p>
+<ol>
+<li>如果两个操作数中有一个是 double 类型， 另一个操作数就会转换为 double 类型。</li>
+<li>否则， 如果其中一个操作数是 float 类型， 另一个操作数将会转换为 float 类型。</li>
+<li>否则， 如果其中一个操作数是 long 类型， 另一个操作数将会转换为 long 类型。</li>
+<li>否则， 两个操作数都将被转换为 int 类型</li>
+</ol>
+<h1 id="4-枚举类"><a href="#4-枚举类" class="headerlink" title="4 枚举类"></a>4 枚举类</h1><p>如下枚举类Size，其中SMALL, MEDIUM, LARGE, EXTRA .LARCE是它的实例<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Enum Size &#123; SMALL, MEDIUM, LARGE, EXTRA .LARCE &#125;;</span><br></pre></td></tr></table></figure></p>
+<ol>
+<li>因为直接存在实例，所以比较两个枚举类时，直接使用==（不需要构造心对象）</li>
+</ol>
+<p>如果需要，可以添加构造器，方法，域<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//SMALL("s"),, MEDIUM("x")就相当于使用构造器进行了实例化</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">enum</span>  Size &#123;</span><br><span class="line">    SMALL(<span class="string">"s"</span>), MEDIUM(<span class="string">"x"</span>);</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Size</span><span class="params">(String name)</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span></span>&#123;<span class="keyword">return</span> name;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>调用实例<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Size.SMALL.toString()</span><br></pre></td></tr></table></figure></p>
+<p>逆方法，指向枚举实例<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//可以通过字符串数据来获取实例</span></span><br><span class="line">Size f = Enum.valueOf(Size.class, <span class="string">"SMALL"</span>);</span><br><span class="line"><span class="comment">//实际上与下面方法效果一样，但无法使用字符串来获取相应的实例</span></span><br><span class="line">Size e = Size.SMALL;</span><br></pre></td></tr></table></figure></p>
+<p>获取枚举类的所有实例,返回一个数组<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Size[]values = Size.values();</span><br></pre></td></tr></table></figure></p>
+<p><img src="https://raw.githubusercontent.com/FameLsy/Images/master/javase/Enum.png" alt="Enum"></p>
+<h1 id="5-字符串"><a href="#5-字符串" class="headerlink" title="5 字符串"></a>5 字符串</h1><p>从概念讲，java字符串就是Unicode字符序列，每个用双引号括起来的字符串都是String类的一个实例。<br><strong>Api</strong><br><img src="https://raw.githubusercontent.com/FameLsy/Images/master/javase/string.png" alt="string1"><br><img src="https://raw.githubusercontent.com/FameLsy/Images/master/javase/string2.png" alt="string2"><br><img src="https://raw.githubusercontent.com/FameLsy/Images/master/javase/string3.png" alt="string3"></p>
+<p><strong>不可变字符串</strong><br>Sting类没有提供用于修改字符串的方法，由于不能修改 Java 字符串中的字符， 所以在 Java 文档中将 String 类对象称为不可变字符串<br>优点：编译器可以让字符串共享  </p>
+<p><strong>equals和==</strong><br>使用equals()而不使用==<br>原因：<br>==只能确定两个字符串地址是否相同，变量地址可能不同。(String重写了equals方法)<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">equals</span><span class="params">(Object anObject)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">this</span> == anObject) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (anObject <span class="keyword">instanceof</span> String) &#123;</span><br><span class="line">            String anotherString = (String)anObject;</span><br><span class="line">            <span class="keyword">int</span> n = value.length;</span><br><span class="line">            <span class="keyword">if</span> (n == anotherString.value.length) &#123;</span><br><span class="line">                <span class="keyword">char</span> v1[] = value;</span><br><span class="line">                <span class="keyword">char</span> v2[] = anotherString.value;</span><br><span class="line">                <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">                <span class="keyword">while</span> (n-- != <span class="number">0</span>) &#123;</span><br><span class="line">                    <span class="keyword">if</span> (v1[i] != v2[i])</span><br><span class="line">                        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">                    i++;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<p>null == null 返回true<br><strong>空串与Null</strong><br>空串是一个Java对象，有长度(0)和内容(空)<br>null是特殊值，表示没有任何对象与该变量关联<br>判断不为null和不为空串<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (str != <span class="keyword">null</span> &amp;&amp; str.length() != <span class="number">0</span>)</span><br></pre></td></tr></table></figure></p>
+<p><strong>StringBuilder构建字符串</strong><br>构建按键或来自文件中的单词。采用字符串连接的方式达到此目的效率比较低。每次连接字符串，都会构建一个新的String对象，既耗时，又浪费空间<br>StringBuilder可以解决这个问题。</p>
+<blockquote>
+<p>注<br>StringBuilder类在JDK5.0加入，线程不安全<br>前身为StrgnBuffer,线程安全  </p>
+</blockquote>
+<p><img src="https://raw.githubusercontent.com/FameLsy/Images/master/javase/StringBuilder.png" alt="StringBuilder"></p>
+<h1 id="6-大数值"><a href="#6-大数值" class="headerlink" title="6 大数值"></a>6 大数值</h1><p>用于基本整型和浮点数精度无法满足需求。java.math提供了 <em>BigInteger</em>和 <em>bigDeciaml</em> 类，这两个类可以实现任意精度的浮点数运算。<br>缺点是无法使用基本的算术运算符(+、-等)</p>
+<h1 id="对象包装器和自动装箱"><a href="#对象包装器和自动装箱" class="headerlink" title="对象包装器和自动装箱"></a>对象包装器和自动装箱</h1><p>基本类型对应的类，被成为包装器。</p>
+<table>
+<thead>
+<tr>
+<th>包装器</th>
+<th>原始</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Integer</td>
+<td>int</td>
+</tr>
+<tr>
+<td>Long</td>
+<td>long</td>
+</tr>
+<tr>
+<td>Float</td>
+<td>float</td>
+</tr>
+<tr>
+<td>Double</td>
+<td>double</td>
+</tr>
+<tr>
+<td>Short</td>
+<td>short</td>
+</tr>
+<tr>
+<td>Byte</td>
+<td>byte</td>
+</tr>
+<tr>
+<td>Character</td>
+<td>char</td>
+</tr>
+<tr>
+<td>Void</td>
+<td>void</td>
+</tr>
+<tr>
+<td>Boolean</td>
+<td>boolean</td>
+</tr>
+</tbody>
+</table>
+<p>前六个包装器继承于Number类。<br>使用：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ArrayList&lt;Integer&gt;<span class="comment">//不能携程ArrayList&lt;int&gt;</span></span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>注：<br>装箱和拆箱是编译器认可的，而不是虚拟机（编译器在生成类的字节码的时候，插入必要的方法调用，而虚拟机这是执行这些字节码）</p>
+</blockquote>
+<h2 id="自动装箱"><a href="#自动装箱" class="headerlink" title="自动装箱"></a>自动装箱</h2><p>将基本数据赋值给包装器<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">list.add(<span class="number">3</span>);</span><br><span class="line"><span class="comment">//自动装箱成</span></span><br><span class="line">list.add(Integer.valueOf(<span class="number">3</span>));</span><br></pre></td></tr></table></figure></p>
+<h2 id="自动拆箱"><a href="#自动拆箱" class="headerlink" title="自动拆箱"></a>自动拆箱</h2><p> 将包装器对象赋值给基本数据<br> <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> n = list.get(i);</span><br><span class="line"><span class="comment">//自动拆箱</span></span><br><span class="line"><span class="keyword">int</span> n = list.get(i).intValue();</span><br></pre></td></tr></table></figure></p>
+<p> <img src="https://raw.githubusercontent.com/FameLsy/Images/master/javase/Integer.png" alt="Integer"></p>
+<h2 id="混用Integer和Double"><a href="#混用Integer和Double" class="headerlink" title="混用Integer和Double"></a>混用Integer和Double</h2><p>Integer会先自动拆箱，提升为Double，在装箱成Double<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Integer n = <span class="number">1</span>;</span><br><span class="line">Double x = <span class="number">2.0</span>;</span><br><span class="line">System.out.println(<span class="keyword">true</span> ? n : x);</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/数据类型/" rel="tag"># 数据类型</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/02/02/java.2/" rel="prev" title="java 基础:变量">
+                java 基础:变量 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/toux.jpg" alt="Liisyu">
+            
+              <p class="site-author-name" itemprop="name">Liisyu</p>
+              <div class="site-description motion-element" itemprop="description">我只是一个兴趣使然的程序员</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">17</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                    <span class="site-state-item-count">1</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">11</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/yourname" title="GitHub &rarr; https://github.com/yourname" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="mailto:yourname@gmail.com" title="E-Mail &rarr; mailto:yourname@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://weibo.com/yourname" title="Weibo &rarr; https://weibo.com/yourname" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i>Weibo</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://plus.google.com/yourname" title="Google &rarr; https://plus.google.com/yourname" rel="noopener" target="_blank"><i class="fa fa-fw fa-google"></i>Google</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#整数类型"><span class="nav-number">1.</span> <span class="nav-text">整数类型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#字节型-byte"><span class="nav-number">1.1.</span> <span class="nav-text">字节型(byte)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#短整型-short"><span class="nav-number">1.2.</span> <span class="nav-text">短整型(short)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#整型-int"><span class="nav-number">1.3.</span> <span class="nav-text">整型(int)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#长整型-long"><span class="nav-number">1.4.</span> <span class="nav-text">长整型(long)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#浮点类型"><span class="nav-number">1.5.</span> <span class="nav-text">浮点类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#单精度浮点型-float"><span class="nav-number">1.6.</span> <span class="nav-text">单精度浮点型(float)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#双精度型-double-浮点型"><span class="nav-number">1.7.</span> <span class="nav-text">双精度型(double)浮点型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#浮点数值三个特殊值"><span class="nav-number">1.8.</span> <span class="nav-text">浮点数值三个特殊值</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#字符类型-char"><span class="nav-number">2.</span> <span class="nav-text">字符类型(char)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#布尔型（boolean）"><span class="nav-number">3.</span> <span class="nav-text">布尔型（boolean）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#字面量"><span class="nav-number">4.</span> <span class="nav-text">字面量</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#整数字面量"><span class="nav-number">4.1.</span> <span class="nav-text">整数字面量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#浮点字面量"><span class="nav-number">4.2.</span> <span class="nav-text">浮点字面量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#布尔型字面量"><span class="nav-number">4.3.</span> <span class="nav-text">布尔型字面量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#字符字面量"><span class="nav-number">4.4.</span> <span class="nav-text">字符字面量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#字符串字面量"><span class="nav-number">4.5.</span> <span class="nav-text">字符串字面量</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#数值类型转换"><span class="nav-number">5.</span> <span class="nav-text">数值类型转换</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#自动类型转换"><span class="nav-number">5.1.</span> <span class="nav-text">自动类型转换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#强制转换"><span class="nav-number">5.2.</span> <span class="nav-text">强制转换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基本数值类型直接的转换"><span class="nav-number">5.3.</span> <span class="nav-text">基本数值类型直接的转换</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#表达式中的类型提升"><span class="nav-number">6.</span> <span class="nav-text">表达式中的类型提升</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-枚举类"><span class="nav-number">7.</span> <span class="nav-text">4 枚举类</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-字符串"><span class="nav-number">8.</span> <span class="nav-text">5 字符串</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-大数值"><span class="nav-number">9.</span> <span class="nav-text">6 大数值</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#对象包装器和自动装箱"><span class="nav-number">10.</span> <span class="nav-text">对象包装器和自动装箱</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#自动装箱"><span class="nav-number">10.1.</span> <span class="nav-text">自动装箱</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自动拆箱"><span class="nav-number">10.2.</span> <span class="nav-text">自动拆箱</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#混用Integer和Double"><span class="nav-number">10.3.</span> <span class="nav-text">混用Integer和Double</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Liisyu</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.1.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.1.0"></script>
+
+  <script src="/js/motion.js?v=7.1.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/schemes/muse.js?v=7.1.0"></script>
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.1.0"></script>
+<script src="/js/post-details.js?v=7.1.0"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.1.0"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
