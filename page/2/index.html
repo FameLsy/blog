@@ -456,20 +456,50 @@
       
         
           
-            <p>
-              继承关键字 extends 表示继承
-成员的访问与继承子类方法不能够直接地访问超类的私有域。需要通过
-              ...
-            </p>
-          <!--noindex-->
+            <h1 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h1><p>关键字 extends 表示继承</p>
+<h2 id="成员的访问与继承"><a href="#成员的访问与继承" class="headerlink" title="成员的访问与继承"></a>成员的访问与继承</h2><p>子类方法不能够直接地访问超类的私有域。需要通过super调用父类的getter方法。</p>
+<p>子类继承了父类的所有属性和方法或子类拥有父类的所有属性和方法，只不过父类的私有属性和方法，子类是无法直接访问到的。即只是拥有，但是无法使用</p>
+<h2 id="super"><a href="#super" class="headerlink" title="super"></a>super</h2><h3 id="用法一：作为引用的关键字"><a href="#用法一：作为引用的关键字" class="headerlink" title="用法一：作为引用的关键字"></a>用法一：作为引用的关键字</h3><p>子类可以通过spuer调用超类中定义的构造函数方法<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">super</span>(parameter-list);</span><br></pre></td></tr></table></figure></p>
+<p>super( )必须是在子类构造函数中的第一个执行语句。</p>
+<p>super 不是一个对象的引用， 不能将 super 赋给另一个对象变量， 它只是一个指示编 译器调用超类方法的特殊关键字。  </p>
+<h3 id="用法二：类似于this的用法"><a href="#用法二：类似于this的用法" class="headerlink" title="用法二：类似于this的用法"></a>用法二：类似于this的用法</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//member既可以是1个方法也可以是1个实例变量</span></span><br><span class="line"><span class="keyword">super</span>.member</span><br></pre></td></tr></table></figure>
+<h2 id="方法重写-override）"><a href="#方法重写-override）" class="headerlink" title="方法重写(override）"></a>方法重写(override）</h2><p>如果子类中的一个方法与它超类中的方法有相同的方法名和类型声明,称子类中的方法重写(override)超类中的方法</p>
+<p>方法重写应遵循“三同一小一大”原则：  </p>
+<blockquote>
+<p>“三同”：即方法名相同，形参列表相同，返回值类型相同；<br>“一小”：子类方法声明抛出的异常比父类方法声明抛出的异常更小或者相等；<br>“一大”:子类方法的访问修饰符应比父类方法更大或相等。  </p>
+</blockquote>
+<h2 id="子类构造器"><a href="#子类构造器" class="headerlink" title="子类构造器"></a>子类构造器</h2><p>因为子类不能直接访问父类的私有域，所以必须利用父类的构造器对部分私有域进行初始化。  </p>
+<p>通过 super 实现对超类构造器的调用。  </p>
+<p>super 调用构造器的语句必须是子类构造器的第一条语句。  </p>
+<p>子类的构造器没有显式地调用超类的构造器， 则将自动地调用超类默认（没有参数 ) 的构造器。<br>如果超类没有不带参数的构造器， 并且在子类的构造器中又没有显式地调用超类 的其他构造器’ 则 Java 编译器将报告错误  </p>
+<h1 id="多态"><a href="#多态" class="headerlink" title="多态"></a>多态</h1><p>一个对象可以指示多种实际类型的现象被成为多态。</p>
+<p>当一个子类对象的引用被赋给一个超类引用变量时,你只能访问超类定义的对象的那一部分(即由父类引用子类对象，无法调用子类的特有方法。)</p>
+<p>子类引用父类对象，需要强转。  </p>
+<h2 id="动态绑定"><a href="#动态绑定" class="headerlink" title="动态绑定"></a>动态绑定</h2><p>动态方法调度是一种在运行时而不是编译时调用重载方法的机制,即在运行时能够自动地选择调用哪个方法的现象被称为动态绑定，这是Java实现运行时多态性的基础</p>
+<h2 id="理解方法调用"><a href="#理解方法调用" class="headerlink" title="理解方法调用"></a>理解方法调用</h2><p>当一个重载方法通过超类引用被调用,Java根据当前被引用对象的类型来决定执行哪个版本的方法</p>
+<p>调用过程的详细描述：</p>
+<ol>
+<li>编译器査看对象的声明类型和方法名。【编译器已获得所有可能被调用的候选方法，同名不同参数的方法】  </li>
+<li>接下来，编译器将査看调用方法时提供的参数类型【编译器已获得需要调用的方法名字和参数类型。】。编译器没有找到与参数类型匹配的方法， 或者发现经过类型转换后 有多个方法与之匹配， 就会报告一个错误。</li>
+<li>如果是 private 方法、 static 方法、 final 方法或者构造器， 那么编译器将可以准确地知道应该调用哪个方法， 我们将这种调用方式称为静态绑定（ static binding )。</li>
+<li>当程序运行，并且采用动态绑定调用方法时， 虚拟机一定调用与 x 所引用对象的实 际类型最合适的那个类的方法。。假设 x 的实际类型是 D，它是 C 类的子类。如果 D 类定义了 方法 f(String，) 就直接调用它；否则， 将在 D 类的超类中寻找 f(String，) 以此类推。每次调用方法都要进行搜索，时间开销相当大。因此，虚拟机预先为每个类创建了一个 方法表（ method table), 其中列出了所有方法的签名和实际调用的方法。这样一来，在真正 调用方法的时候， 虚拟机仅查找这个表就行了。</li>
+</ol>
+<h1 id="继承中使用final"><a href="#继承中使用final" class="headerlink" title="继承中使用final"></a>继承中使用final</h1><h2 id="使用final阻止重写"><a href="#使用final阻止重写" class="headerlink" title="使用final阻止重写"></a>使用final阻止重写</h2><p>声明成final的方法不能被重载</p>
+<h2 id="使用final阻止继承"><a href="#使用final阻止继承" class="headerlink" title="使用final阻止继承"></a>使用final阻止继承</h2><p>声明成final的类不能被继承</p>
+<h1 id="继承的设计技巧"><a href="#继承的设计技巧" class="headerlink" title="继承的设计技巧"></a>继承的设计技巧</h1><ol>
+<li>将公共操作和域放在超类</li>
+<li>不要使用受保护的域</li>
+<li>使用继承实现“ is-a” 关系</li>
+<li>除非所有继承的方法都有意义，否则不要使用继承</li>
+<li>在覆盖方法时，不要改变预期的行为</li>
+<li><p>使用多态， 而非类型信息</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//如下情况，考虑多态，即将方法写入两个类的父类或接口中</span></span><br><span class="line"><span class="keyword">if</span> (x is of type1)&#123;</span><br><span class="line">    action1(x)</span><br><span class="line">&#125;<span class="keyword">else</span> <span class="keyword">if</span>(x is of type2)&#123;</span><br><span class="line">    action2(x)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>不要过多地使用反射</p>
+</li>
+</ol>
+
           
-            <div class="post-button text-center">
-              <a class="btn" href="/blog/2018/02/02/java.7/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
         
       
     </div>
@@ -640,19 +670,139 @@
       
         
           
-            <p>
-              类基础名词概念类：　对象的模板(template)对象：类的一个实例(instance)实例变量(i
-              ...
-            </p>
-          <!--noindex-->
+            <h1 id="类基础"><a href="#类基础" class="headerlink" title="类基础"></a>类基础</h1><h2 id="名词概念"><a href="#名词概念" class="headerlink" title="名词概念"></a>名词概念</h2><p>类：　对象的模板(template)<br>对象：类的一个实例(instance)<br>实例变量(instance variables)：定义在类中的数据或变量<br>类的成员: 定义在类中的方法和实例变量</p>
+<h2 id="this-关键字"><a href="#this-关键字" class="headerlink" title="this 关键字"></a>this 关键字</h2><p>this可以在引用当前对象的所有方法内使用</p>
+<h2 id="垃圾回收"><a href="#垃圾回收" class="headerlink" title="垃圾回收"></a>垃圾回收</h2><p>使用new运算符来为对象动态地分配内存，这些对象是如何撤消的以及他们的内存在以后的重新分配时是如何被释放的？  </p>
+<p>答：Java使用一种不同的、自动地处理重新分配内存的办法:垃圾回收( garbage collection)技术</p>
+<p>垃圾回收机制工作原理：<br>当一个对象的引用不存在时,则该对象被认为是不再需要的,它所占用的内存就被释放掉。</p>
+<h2 id="finalize-方法"><a href="#finalize-方法" class="headerlink" title="finalize( )方法"></a>finalize( )方法</h2><p>例如,如果一个对象正在处理的是非Java资源,如文件流,这时你要确认在一个对象被撤消以前要保证这些资源被释放。  </p>
+<p>解决：Java提供了被称为收尾(finalization)的机制，使用该机制你可以定义一些特殊的操作,这些操作在一个对象将要被垃圾回收程序释放时执行。</p>
+<p>为类添加收尾：只要定义finalize ( )方法</p>
+<p>finalize()方法的通用格式:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">finalize</span><span class="params">( )</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"><span class="comment">// finalization code here</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h1 id="类进阶"><a href="#类进阶" class="headerlink" title="类进阶"></a>类进阶</h1><h2 id="参数数量可变的方法"><a href="#参数数量可变的方法" class="headerlink" title="参数数量可变的方法"></a>参数数量可变的方法</h2><p>如<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span>  <span class="keyword">static</span> <span class="keyword">double</span> <span class="title">max</span><span class="params">(<span class="keyword">int</span> aint, <span class="keyword">double</span>... values)</span></span></span><br></pre></td></tr></table></figure></p>
+<p>该程序相当于传入了一个aint参数，和一个double[] 数组。</p>
+<h2 id="方法重载"><a href="#方法重载" class="headerlink" title="方法重载"></a>方法重载</h2><p>方法重载（overloaded）：同一个类中的2个或2个以上的方法可以有同一个名字,只要它们的参数声明不同即可</p>
+<p>在一些情况下,Java的自动类型转换也适用于重载方法的自变量  </p>
+<p>如:当只有double类型的方法时，会把int扩大到double<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">test</span><span class="params">(<span class="keyword">double</span> a)</span> </span>&#123;</span><br><span class="line">System.out.println(<span class="string">"Inside test(double) a: "</span> + a);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">test(<span class="number">10</span>);<span class="comment">// print 10;</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="默认初始化域"><a href="#默认初始化域" class="headerlink" title="默认初始化域"></a>默认初始化域</h2><table>
+<thead>
+<tr>
+<th>类型</th>
+<th>值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>基本数值类型</td>
+<td>0</td>
+</tr>
+<tr>
+<td>布尔值</td>
+<td>false</td>
+</tr>
+<tr>
+<td>对象引用</td>
+<td>null</td>
+</tr>
+</tbody>
+</table>
+<h2 id="构造器"><a href="#构造器" class="headerlink" title="构造器"></a>构造器</h2><h3 id="无参构造器"><a href="#无参构造器" class="headerlink" title="无参构造器"></a>无参构造器</h3><p>没有编写构造器，系统就会提供一个无参数构造器，并将值默认初始化</p>
+<blockquote>
+<p>注：<br>参数名设置,如要在构造器显示传入一个name的参数，可以这样命名:String aName</p>
+</blockquote>
+<h3 id="调用另一个构造器"><a href="#调用另一个构造器" class="headerlink" title="调用另一个构造器"></a>调用另一个构造器</h3><p>使用 this 关键字调用其他构造器,this放在第一行<br>优点：对公共的构造器代码部分只编写一次</p>
+<h3 id="构造器调用处理步骤"><a href="#构造器调用处理步骤" class="headerlink" title="构造器调用处理步骤"></a>构造器调用处理步骤</h3><ol>
+<li>父类静态代码块</li>
+<li>子类静态代码块</li>
+<li>父类构造代码块</li>
+<li>父类构造函数</li>
+<li>子类构造代码块</li>
+<li>子类构造函数</li>
+</ol>
+<h2 id="初始化块"><a href="#初始化块" class="headerlink" title="初始化块"></a>初始化块</h2><p>在一个类的声明中， 可以包含多个代码块；只要构造类的对象，这些块就会被执行<br>首先运行初始化块，然后才运行构造器的主体部分<br>（不必需，不常见） </p>
+<h2 id="静态初始化块"><a href="#静态初始化块" class="headerlink" title="静态初始化块"></a>静态初始化块</h2><p>对类的静态域进行初始化的代码比较复杂，那么可以使用静态的初始化块<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">static&#123;</span><br><span class="line">    some code</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="参数传递"><a href="#参数传递" class="headerlink" title="参数传递"></a>参数传递</h2><p>计算机语言给子程序传递参数的方法有两种:</p>
+<ol>
+<li>值传递：当一个简单类型传递给一个方法时,使用按值传递。将一个参数值(value)复制成为子程序的正式参数</li>
+<li>引用传递：对象传递使用引用传递。参数的引用(而不是参数值)被传递给子程序参数</li>
+</ol>
+<h2 id="类之间的关系"><a href="#类之间的关系" class="headerlink" title="类之间的关系"></a>类之间的关系</h2><table>
+<thead>
+<tr>
+<th>关系</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>依赖</td>
+<td>uses-a</td>
+</tr>
+<tr>
+<td>聚合</td>
+<td>has-a</td>
+</tr>
+<tr>
+<td>继承</td>
+<td>is-a</td>
+</tr>
+</tbody>
+</table>
+<p><strong>UML符号</strong></p>
+<p><img src="https://raw.githubusercontent.com/FameLsy/Images/master/javase/UML.png" alt="UML"></p>
+<h1 id="嵌套类和内部类"><a href="#嵌套类和内部类" class="headerlink" title="嵌套类和内部类"></a>嵌套类和内部类</h1><p>嵌套类(nested classes): 在另一个类中定义的类,嵌套类可以访问嵌套它的类的成员,包括private成员。但是,包围类不能访问嵌套类的成员。</p>
+<p>嵌套类一般有2种类型,前面加static标识符的和不加static标识符的</p>
+<ol>
+<li>static的嵌套类：只能通过对象来访问它外部类的成员</li>
+<li>非static的嵌套类：又称内部类</li>
+</ol>
+<p>内部类：非static的嵌套类,可以访问它的外部类的所有变量和方法</p>
+<p>为什么使用内部类?  </p>
+<ol>
+<li>内部类方法可以访问该类定义所在的作用域中的数据, 包括私有的数据</li>
+<li>内部类可以对同一个包中的其他类隐藏起来</li>
+<li>当想要定义一个回调函数且不想编写大量代码时,使用匿名内部类比较便捷</li>
+</ol>
+<h2 id="使用内部类访问对象状态"><a href="#使用内部类访问对象状态" class="headerlink" title="使用内部类访问对象状态"></a>使用内部类访问对象状态</h2><p>内部类既可以访问自身的数据域, 也可以访问创建它的外围类对象的数据域</p>
+<p>内部类含有一个隐式的引用参数，指向外部类。而这个引用，实在内部类的构造器中设置（编译器会修改内部类的构造器,添加一个外围类的引用参数）<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 假设内部类的隐身引用变量为ｏuter</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">innerClass</span><span class="params">(OuterlCLass outer)</span></span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.outer = outer;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="内部类的特殊语法规则"><a href="#内部类的特殊语法规则" class="headerlink" title="内部类的特殊语法规则"></a>内部类的特殊语法规则</h2><p>内部类中引用外围类<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 如OuterlCLass.this.name就是引用外围类的name变量</span></span><br><span class="line">OuterCLass.<span class="keyword">this</span></span><br></pre></td></tr></table></figure></p>
+<p>更明确地编写内部类构造器<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 如，this.new Node();编写一个内部Node类的构造器</span></span><br><span class="line">outerObject.new InnerCLass(...);</span><br></pre></td></tr></table></figure></p>
+<p>外围类中引用内部类<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">OuterClass.InnerClass;</span><br></pre></td></tr></table></figure></p>
+<h2 id="局部内部类"><a href="#局部内部类" class="headerlink" title="局部内部类"></a>局部内部类</h2><p>局部内部类： 在方法中定义的类</p>
+<ol>
+<li>通常类只使用一次时可以将其定义为局部内部类</li>
+<li>局部类不能用 public 或 private 访问说明符进行声明.它的作用域被限定在声明这个局部类的块中</li>
+<li>局部类有一个优势, 即对外部世界可以完全地隐藏起来<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 这里的InnerClass,只有start方法知道它的存在</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">start</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">InnerClass</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">method</span> <span class="params">( ActionEvent event)</span></span>&#123;</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">    InnerClass aInnerCLass = <span class="keyword">new</span> InnerClass();</span><br><span class="line">    ....</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>局部内部类访问不仅可以访问外部类，还可以访问局部变量,但那些局部变量必须事实上为 final。</p>
+<h2 id="匿名内部类"><a href="#匿名内部类" class="headerlink" title="匿名内部类"></a>匿名内部类</h2><p>局部内部类: 只在某一个方法到一次<br>匿名内部类：只需要创建一次,无需为类命名</p>
+<p>语法<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 直接通过父接口来创建，方法实现直接写在&#123;&#125;</span></span><br><span class="line">SuperType aClass = <span class="keyword">new</span> SuperType(construction parameters)&#123;</span><br><span class="line">    .....</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="静态内部类"><a href="#静态内部类" class="headerlink" title="静态内部类"></a>静态内部类</h2><p>只是为了把一个类隐藏在另外一个类的内部 , 并不需要内部类引用外围类对象,此时可以将内部类声明为static</p>
+<blockquote>
+<p>注：  </p>
+<ol>
+<li>在内部类不需要访问外围类对象的时候, 应该使用静态内部类</li>
+<li>与常规内部类不同 , 静态内部类可以有静态域和方法 </li>
+<li>声明在接口中的内部类自动成为 static 和 public 类(即接口中的都是静态公有内部类)</li>
+</ol>
+</blockquote>
+<h1 id="抽象类"><a href="#抽象类" class="headerlink" title="抽象类"></a>抽象类</h1><h2 id="抽象类-方法"><a href="#抽象类-方法" class="headerlink" title="抽象类/方法"></a>抽象类/方法</h2><p>关键字：abstract<br>抽象类可以包含具抽象方法、具体数据、具体方法<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> Clss person&#123;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Person</span><span class="params">(String name)</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> String <span class="title">geDescrption</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>类即使不含抽象方法，也可以将类声明为抽象类。  </p>
+<p>抽象类不能被实例化。  </p>
+<p>抽象类是被继承的。  </p>
+<p>可以定义一个抽象类的对象变量，但只能引用非抽象子类的对象。</p>
+<h1 id="枚举类"><a href="#枚举类" class="headerlink" title="枚举类"></a>枚举类</h1><p>如下枚举类Size，其中SMALL, MEDIUM, LARGE, EXTRA .LARCE是它的实例<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Enum Size &#123; SMALL, MEDIUM, LARGE, EXTRA .LARCE &#125;;</span><br></pre></td></tr></table></figure></p>
+<ol>
+<li>因为直接存在实例，所以比较两个枚举类时，直接使用==（不需要构造心对象）</li>
+</ol>
+<p>如果需要，可以添加构造器，方法，域<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//SMALL("s"),, MEDIUM("x")就相当于使用构造器进行了实例化</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">enum</span>  Size &#123;</span><br><span class="line">    SMALL(<span class="string">"s"</span>), MEDIUM(<span class="string">"x"</span>);</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Size</span><span class="params">(String name)</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span></span>&#123;<span class="keyword">return</span> name;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>调用实例<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Size.SMALL.toString()</span><br></pre></td></tr></table></figure></p>
+<p>逆方法，指向枚举实例<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//可以通过字符串数据来获取实例</span></span><br><span class="line">Size f = Enum.valueOf(Size.class, <span class="string">"SMALL"</span>);</span><br><span class="line"><span class="comment">//实际上与下面方法效果一样，但无法使用字符串来获取相应的实例</span></span><br><span class="line">Size e = Size.SMALL;</span><br></pre></td></tr></table></figure></p>
+<p>获取枚举类的所有实例,返回一个数组<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Size[]values = Size.values();</span><br></pre></td></tr></table></figure></p>
+<p><img src="https://raw.githubusercontent.com/FameLsy/Images/master/javase/Enum.png" alt="Enum"></p>
+
           
-            <div class="post-button text-center">
-              <a class="btn" href="/blog/2018/02/02/java.6/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
         
       
     </div>
@@ -823,20 +973,34 @@
       
         
           
-            <p>
-              Java的程序控制语句分为以下几类:选择,重复和跳转
-Java的选择语句Java支持两种选择语句:i
-              ...
-            </p>
-          <!--noindex-->
+            <p>Java的程序控制语句分为以下几类:选择,重复和跳转</p>
+<h1 id="Java的选择语句"><a href="#Java的选择语句" class="headerlink" title="Java的选择语句"></a>Java的选择语句</h1><p>Java支持两种选择语句:if语句和switch语句</p>
+<h2 id="if语句"><a href="#if语句" class="headerlink" title="if语句"></a>if语句</h2><p>f语句的完整格式:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (condition) statement1;</span><br><span class="line"><span class="keyword">else</span> statement2;</span><br></pre></td></tr></table></figure></p>
+<h2 id="switch语句"><a href="#switch语句" class="headerlink" title="switch语句"></a>switch语句</h2><p>switch语句的通用形式<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">switch</span> (expression) &#123;</span><br><span class="line">    <span class="keyword">case</span> value1:</span><br><span class="line">    <span class="comment">// statement sequence</span></span><br><span class="line">    <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">case</span> value2:</span><br><span class="line">    <span class="comment">// statement sequence   </span></span><br><span class="line">    <span class="keyword">break</span>;</span><br><span class="line">    .</span><br><span class="line">    .</span><br><span class="line">    .</span><br><span class="line">    <span class="keyword">case</span> valueN:</span><br><span class="line">    <span class="comment">// statement sequence</span></span><br><span class="line">    <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">default</span>:</span><br><span class="line">    <span class="comment">// default statement sequence</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>表达式expression必须为byte,short,int或char类型。  </p>
+<p>每个case语句后的值value必须是与表达式类型兼容的特定的一个常量(它必须为一个常量,而不是变量)。  </p>
+<p>重复的case值是不允许的。  </p>
+<p>如果没有break语句,程序将继续执行下面的每一个case语句,直到遇到break语句(或switch语句的末尾)。</p>
+<h1 id="循-环-语-句"><a href="#循-环-语-句" class="headerlink" title="循 环 语 句"></a>循 环 语 句</h1><p>Java的循环语句有for, while和 do-while</p>
+<h2 id="while语句"><a href="#while语句" class="headerlink" title="while语句"></a>while语句</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span>(condition) &#123;</span><br><span class="line"><span class="comment">// body of loop</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>因为while语句在循环一开始就计算条件表达式,若开始时条件为假,则循环体一次也<br>不会执行</p>
+<h2 id="do-while循环"><a href="#do-while循环" class="headerlink" title="do-while循环"></a>do-while循环</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">do</span> &#123;</span><br><span class="line"><span class="comment">// body of loop</span></span><br><span class="line">&#125; <span class="keyword">while</span> (condition);</span><br></pre></td></tr></table></figure>
+<p>do-while循环总是先执行循环体,然后再计算条件表达式</p>
+<h2 id="for循环"><a href="#for循环" class="headerlink" title="for循环"></a>for循环</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(initialization; condition; iteration) &#123;</span><br><span class="line"><span class="comment">// body</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Java允许你在for循环的初始化部分和反复部分声明多个变量<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(a=<span class="number">1</span>, b=<span class="number">4</span>; a&lt;b; a++, b--) &#123;</span><br><span class="line">    System.out.println(<span class="string">"a = "</span> + a);</span><br><span class="line">    System.out.println(<span class="string">"b = "</span> + b);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h1 id="跳-转-语-句"><a href="#跳-转-语-句" class="headerlink" title="跳 转 语 句"></a>跳 转 语 句</h1><p>Java 支持 3 种跳转语句:break,continue和return</p>
+<h2 id="break语句"><a href="#break语句" class="headerlink" title="break语句"></a>break语句</h2><p>作用：</p>
+<ol>
+<li>在switch语句中,它被用来终止一个语句序列</li>
+<li>能被用来退出一个循环</li>
+<li>能作为一种“先进”的goto 语句来使用</li>
+</ol>
+<p>break不是被设计来提供一种正常的循环终止的方法!!!</p>
+<p><strong>把 break 当作 goto 的一种形式来用</strong><br>标签break语句的通用格式<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">label:&#123;</span><br><span class="line">    ...</span><br><span class="line">    <span class="keyword">break</span> label<span class="comment">//直接跳出循环，调到label块的尾部执行some code..</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// some code..</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="continue语句"><a href="#continue语句" class="headerlink" title="continue语句"></a>continue语句</h2><p>跳出当前循环，开始新的一次循环</p>
+<h2 id="return语句"><a href="#return语句" class="headerlink" title="return语句"></a>return语句</h2><p>return语句用来明确地从一个方法返回</p>
+
           
-            <div class="post-button text-center">
-              <a class="btn" href="/blog/2018/02/02/java.5/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
         
       
     </div>
@@ -1007,42 +1171,293 @@ Java的选择语句Java支持两种选择语句:i
       
         
           
-            <p>
-              算数运符
+            <h1 id="算数运符"><a href="#算数运符" class="headerlink" title="算数运符"></a>算数运符</h1><table>
+<thead>
+<tr>
+<th>运算符</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>+</td>
+<td>加法</td>
+</tr>
+<tr>
+<td>–</td>
+<td>减法(一元减号)</td>
+</tr>
+<tr>
+<td>*</td>
+<td>乘法</td>
+</tr>
+<tr>
+<td>/</td>
+<td>除法</td>
+</tr>
+<tr>
+<td>% 模运算</td>
+</tr>
+<tr>
+<td>++</td>
+<td>递增运算</td>
+</tr>
+<tr>
+<td>+=</td>
+<td>加法赋值</td>
+</tr>
+<tr>
+<td>–=</td>
+<td>减法赋值</td>
+</tr>
+<tr>
+<td>*=</td>
+<td>乘法赋值</td>
+</tr>
+<tr>
+<td>/=</td>
+<td>除法赋值</td>
+</tr>
+<tr>
+<td>%=</td>
+<td>模运算赋值</td>
+</tr>
+<tr>
+<td>–</td>
+<td>递减运算</td>
+</tr>
+</tbody>
+</table>
+<h1 id="位-运-算-符"><a href="#位-运-算-符" class="headerlink" title="位 运 算 符"></a>位 运 算 符</h1><table>
+<thead>
+<tr>
+<th>运算符</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>~</td>
+<td>按位非(NOT)(一元运算)</td>
+</tr>
+<tr>
+<td>&amp;</td>
+<td>按位与(AND)</td>
+</tr>
+<tr>
+<td>\</td>
+<td></td>
+<td>按位或(OR)</td>
+</tr>
+<tr>
+<td>^</td>
+<td>按位异或(XOR)</td>
+</tr>
+<tr>
+<td>&gt;&gt;</td>
+<td>右移,被移走的最高位(最左边的位)由原来最高位的数字补充</td>
+</tr>
+<tr>
+<td>&gt;&gt;&gt;</td>
+<td>右移,左边空出的位以0填充</td>
+</tr>
+<tr>
+<td>&lt;&lt;</td>
+<td>左移,高阶位都被移出(并且丢弃),并用0填充右边</td>
+</tr>
+<tr>
+<td>&amp;=</td>
+<td>按位与赋值</td>
+</tr>
+<tr>
+<td>\</td>
+<td>=</td>
+<td>按位或赋值</td>
+</tr>
+<tr>
+<td>^=</td>
+<td>按位异或赋值</td>
+</tr>
+<tr>
+<td>&gt;&gt;=</td>
+<td>右移赋值</td>
+</tr>
+<tr>
+<td>&gt;&gt;&gt;=</td>
+<td>右移赋值,左边空出的位以0填充</td>
+</tr>
+<tr>
+<td>&lt;&lt;=</td>
+<td>左移赋值</td>
+</tr>
+</tbody>
+</table>
+<h1 id="关系运算符"><a href="#关系运算符" class="headerlink" title="关系运算符"></a>关系运算符</h1><table>
+<thead>
+<tr>
+<th>运算符</th>
+<th>意义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>==</td>
+<td>等于</td>
+</tr>
+<tr>
+<td>!=</td>
+<td>不等于</td>
+</tr>
+<tr>
+<td>&gt;</td>
+<td>大于</td>
+</tr>
+<tr>
+<td>&lt;</td>
+<td>小于</td>
+</tr>
+<tr>
+<td>&gt;=</td>
+<td>大于等于</td>
+</tr>
+<tr>
+<td>&lt;=</td>
+<td>小于等于</td>
+</tr>
+</tbody>
+</table>
+<h1 id="布尔逻辑运算符"><a href="#布尔逻辑运算符" class="headerlink" title="布尔逻辑运算符"></a>布尔逻辑运算符</h1><p>布尔逻辑运算符的运算数只能是布尔型。而且逻辑运算的结果也是布尔类型</p>
+<table>
+<thead>
+<tr>
+<th>运算符</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>&amp;</td>
+<td>逻辑与</td>
+</tr>
+<tr>
+<td>\</td>
+<td></td>
+<td>逻辑或</td>
+</tr>
+<tr>
+<td>^</td>
+<td>异或</td>
+</tr>
+<tr>
+<td>\</td>
+<td>\</td>
+<td></td>
+<td>短路或</td>
+</tr>
+<tr>
+<td>&amp;&amp;</td>
+<td>短路与</td>
+</tr>
+<tr>
+<td>!</td>
+<td>逻辑反</td>
+</tr>
+<tr>
+<td>&amp;=</td>
+<td>逻辑与赋值(赋值的简写形式)</td>
+</tr>
+<tr>
+<td>\</td>
+<td>=</td>
+<td>逻辑或赋值(赋值的简写形式)</td>
+</tr>
+<tr>
+<td>^=</td>
+<td>异或赋值(赋值的简写形式)</td>
+</tr>
+<tr>
+<td>==</td>
+<td>相等</td>
+</tr>
+<tr>
+<td>!=</td>
+<td>不相等</td>
+</tr>
+<tr>
+<td>?:</td>
+<td>三元运算符(IF-THEN-ELSE)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>数学函数</strong>  </p>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Math.sin</td>
+<td>sin</td>
+</tr>
+<tr>
+<td>Math.cos</td>
+<td></td>
+</tr>
+<tr>
+<td>Math.tan</td>
+<td></td>
+</tr>
+<tr>
+<td>Math.atan(x)</td>
+<td>返回一个 - π/2  到  π/2  弧度之间的数值</td>
+</tr>
+<tr>
+<td>Math.atan2(y,x)</td>
+<td>返回一个 -π 到 π 之间的数值，表示点 (x, y) 对应的偏移角度</td>
+</tr>
+<tr>
+<td>Math.exp</td>
+<td></td>
+</tr>
+<tr>
+<td>Math.log</td>
+<td></td>
+</tr>
+<tr>
+<td>Math.log10</td>
+<td></td>
+</tr>
+<tr>
+<td>Math.PI</td>
+<td>π</td>
+</tr>
+<tr>
+<td>Math.E</td>
+<td>e</td>
+</tr>
+<tr>
+<td>Math.sqrt</td>
+<td>算数平方根</td>
+</tr>
+<tr>
+<td>Math.pow(x,a)</td>
+<td>幂运算，计算x^a(double参数，返回double类型)</td>
+</tr>
+<tr>
+<td>Math.round(x)</td>
+<td>四舍五入,返回long类型</td>
+</tr>
+</tbody>
+</table>
+<p><strong>自增自减运算</strong><br>++、–</p>
+<p><strong>关系运算符</strong><br><em>||</em>、<em>$$</em></p>
+<p><strong>三元运算符</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">condition ? expression1 : expression2;</span><br></pre></td></tr></table></figure></p>
+<p><strong>位运算</strong><br>$、|、^、~、&gt;&gt;（左移,使用符号位填充高位）、&lt;&lt;（右移）、&gt;&gt;&gt;(使用0填充高位)</p>
 
-
-运算符
-含义
-
-
-
-
-+
-加法
-
-
-–
-减法(一元减号)
-
-
-*
-乘法
-
-
-/
-除法
-
-              ...
-            </p>
-          <!--noindex-->
           
-            <div class="post-button text-center">
-              <a class="btn" href="/blog/2018/02/02/java.4/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
         
       
     </div>
@@ -1213,20 +1628,15 @@ Java的选择语句Java支持两种选择语句:i
       
         
           
-            <p>
-              Java语言中3个最基本的元素:数据类型,变量和数组
-#　一维数组通用的一维数组的声明格式：type
-              ...
-            </p>
-          <!--noindex-->
+            <p>Java语言中3个最基本的元素:数据类型,变量和数组</p>
+<p>#　一维数组<br>通用的一维数组的声明格式：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">type <span class="keyword">var</span>-name[ ];</span><br></pre></td></tr></table></figure></p>
+<p>数组初始化<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//自动初始化值</span></span><br><span class="line"><span class="keyword">new</span> type[size];</span><br><span class="line"><span class="comment">//自定义初始化值</span></span><br><span class="line"><span class="keyword">int</span>[] smallPrimes = &#123; <span class="number">2</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">7</span>, <span class="number">11</span>, <span class="number">13</span> &#125;;</span><br></pre></td></tr></table></figure></p>
+<p>初始化匿名数组<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> <span class="keyword">int</span>[] &#123; <span class="number">17</span>, <span class="number">19</span>, <span class="number">23</span>, <span class="number">29</span>, <span class="number">31</span>, <span class="number">37</span> &#125;</span><br></pre></td></tr></table></figure></p>
+<h1 id="多维数组"><a href="#多维数组" class="headerlink" title="多维数组"></a>多维数组</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> twoD[][] = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">4</span>][<span class="number">5</span>];</span><br><span class="line"><span class="comment">// 也可以,第二维手工分配    </span></span><br><span class="line"><span class="keyword">int</span> twoD[][] = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">4</span>][];</span><br><span class="line">twoD[<span class="number">0</span>] = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">5</span>];</span><br><span class="line">twoD[<span class="number">1</span>] = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">5</span>];</span><br><span class="line">twoD[<span class="number">2</span>] = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">5</span>];</span><br><span class="line">twoD[<span class="number">3</span>] = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">5</span>];</span><br></pre></td></tr></table></figure>
+<p><strong>数组工具类Array</strong><br><img src="https://raw.githubusercontent.com/FameLsy/Images/master/javase/Array1.png" alt="array1"></p>
+<p><img src="https://raw.githubusercontent.com/FameLsy/Images/master/javase/Array2.png" alt="array2"></p>
+
           
-            <div class="post-button text-center">
-              <a class="btn" href="/blog/2018/02/02/java.3/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
         
       
     </div>
@@ -1397,20 +1807,20 @@ Java的选择语句Java支持两种选择语句:i
       
         
           
-            <p>
-              Java语言中3个最基本的元素:数据类型,变量和数组
-变量变量是Java程序的一个基本存储单元。  
-              ...
-            </p>
-          <!--noindex-->
+            <p>Java语言中3个最基本的元素:数据类型,变量和数组</p>
+<h1 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h1><p>变量是Java程序的一个基本存储单元。  </p>
+<p>变量由一个标识符,类型及一个可选初始值的组合定义。  </p>
+<p>所有的变量都有一个作用域,定义变量的可见性,生存期。</p>
+<p>#　声明变量<br>基本的变量声明方法如下<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">type identifier [ = value][,identifier [= value] ...] ;</span><br></pre></td></tr></table></figure></p>
+<p>type是Java的基本类型之一,或类及接口类型的名字<br>标识符(identifier)是变量的名字,指定一个等号和一个值来初始化变量。</p>
+<h1 id="变量命名"><a href="#变量命名" class="headerlink" title="变量命名"></a>变量命名</h1><p>字母[a~zA~Z_$]</p>
+<blockquote>
+<p>注：<br>$ 虽然合法，但一般不使用在自己的代码中，只用于Java编译器或其他工具生成的名字中<br>命名：对于讲变量名命名为类型名，许多程序员喜欢加上前缀”a”,如Box abox</p>
+</blockquote>
+<h1 id="变量的作用域和生存期"><a href="#变量的作用域和生存期" class="headerlink" title="变量的作用域和生存期"></a>变量的作用域和生存期</h1><p>程序块被包括在一对大括号中。一个程序块定义了一个作用域(scope)<br>变量在其作用域内被创建,离开其作用域时被撤消  </p>
+<h2 id="常量"><a href="#常量" class="headerlink" title="常量"></a>常量</h2><p>利用关键字final指示常量，只能赋值一次,且常量名习惯上使用全大写加 <em>_</em>的方式命名<br><strong>类常量</strong><br>通过关键字 <em>static final</em> 设置的常量</p>
+
           
-            <div class="post-button text-center">
-              <a class="btn" href="/blog/2018/02/02/java.2/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
         
       
     </div>
@@ -1593,25 +2003,363 @@ Java的选择语句Java支持两种选择语句:i
       
         
           
-            <p>
-              
-Java语言中3个最基本的元素:数据类型,变量和数组
-java一共有8个基本数据类型
+            <a id="more"></a>
+<p>Java语言中3个最基本的元素:数据类型,变量和数组</p>
+<p>java一共有8个基本数据类型</p>
+<table>
+<thead>
+<tr>
+<th>数据类型</th>
+<th>存储需求</th>
+<th>取值范围</th>
+<th>前/后缀</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>int</td>
+<td>4字节</td>
+<td>-2^32~ 2^32-1</td>
+<td></td>
+</tr>
+<tr>
+<td>short</td>
+<td>2字节</td>
+<td>-2^16~ 2^16 -1</td>
+<td></td>
+</tr>
+<tr>
+<td>long</td>
+<td>8字节</td>
+<td>-2^64~2^64 -1</td>
+<td>后缀：L或l,如40000L</td>
+</tr>
+<tr>
+<td>byte</td>
+<td>1字节</td>
+<td>-2^8 ~ 2^8 -1</td>
+<td></td>
+</tr>
+<tr>
+<td>float</td>
+<td>4字节</td>
+<td></td>
+<td>后缀F或f</td>
+</tr>
+<tr>
+<td>double</td>
+<td>8字节</td>
+<td></td>
+<td>默认，后缀可以是D或d</td>
+</tr>
+<tr>
+<td>char</td>
+<td>1个字符</td>
+<td>\u0000~\Uffff</td>
+<td></td>
+</tr>
+<tr>
+<td>boolean</td>
+<td></td>
+<td>true/false</td>
+</tr>
+</tbody>
+</table>
+<p><strong>JAVA范围与j运行ava代码机器无关</strong><br>因为Java程序必须保证在所有机器上都能够得到相同的结果，所以各种数据类型的取值范围必须固定。</p>
+<h1 id="整数类型"><a href="#整数类型" class="headerlink" title="整数类型"></a>整数类型</h1><table>
+<thead>
+<tr>
+<th>数据类型</th>
+<th>存储需求</th>
+<th>取值范围</th>
+<th>前/后缀</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>long</td>
+<td>8字节</td>
+<td>-2^64~2^64 -1</td>
+<td>后缀：L或l,如40000L</td>
+</tr>
+<tr>
+<td>int</td>
+<td>4字节</td>
+<td>-2^32~ 2^32-1</td>
+<td></td>
+</tr>
+<tr>
+<td>short</td>
+<td>2字节</td>
+<td>-2^16~ 2^16 -1</td>
+<td></td>
+</tr>
+<tr>
+<td>byte</td>
+<td>1字节</td>
+<td>-2^8 ~ 2^8 -1</td>
+</tr>
+</tbody>
+</table>
+<h2 id="字节型-byte"><a href="#字节型-byte" class="headerlink" title="字节型(byte)"></a>字节型(byte)</h2><p>最小的整数类型是字节型。它是有符号的8位类型,数的范围是-128~127。当你从网<br>络或文件处理数据流的时候,字节类型的变量特别有用。</p>
+<h2 id="短整型-short"><a href="#短整型-short" class="headerlink" title="短整型(short)"></a>短整型(short)</h2><p>有符号的16位类型,被定义为高字节优先(称为big-endian格式),它可能是Java中使用得最少的类型。主要适用于16位计算机。</p>
+<h2 id="整型-int"><a href="#整型-int" class="headerlink" title="整型(int)"></a>整型(int)</h2><p>有符号的32位类型。int类型的变量通常被用来控制循环及作数组的下标。任何时候你的整数表达式包含byte,short,int及字面量数字,在进行计算以前,所有表达式的类型被提升(promoted)到整型。</p>
+<p>使用字节型和短整型可以节约空间,但是不能保证 Java 不会内部把那些类型提升到整型；记住，类型决定行为,而不是大小(惟一的例外是数组,字节型的数据保证每个数组元素只占用一个字节,短整型使用 2 个字节,整型将使用4个。)</p>
+<h2 id="长整型-long"><a href="#长整型-long" class="headerlink" title="长整型(long)"></a>长整型(long)</h2><p>有符号的64位类型,长整型数的范围是相当大的。这使得大的、整个数字都被需要时,它是非常有用的</p>
+<h2 id="浮点类型"><a href="#浮点类型" class="headerlink" title="浮点类型"></a>浮点类型</h2><p>当计算的表达式有精度要求时被使用 ,所有浮点数值计算都遵循 <em>IEEE 754</em>。</p>
+<table>
+<thead>
+<tr>
+<th>数据类型</th>
+<th>存储需求</th>
+<th>取值范围</th>
+<th>前/后缀</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>float</td>
+<td>4字节</td>
+<td></td>
+<td>后缀F或f</td>
+</tr>
+<tr>
+<td>double</td>
+<td>8字节</td>
+<td></td>
+<td>默认，后缀可以是D或d</td>
+</tr>
+</tbody>
+</table>
+<h2 id="单精度浮点型-float"><a href="#单精度浮点型-float" class="headerlink" title="单精度浮点型(float)"></a>单精度浮点型(float)</h2><p>单精度浮点型(float)专指占用32位存储空间的单精度(single-precision)值。<br>当值很大或很小的时候,它将变得不精确。当你需要小数部分并且对精度的要求不高时,单精度浮点型的变量是有用的。</p>
+<h2 id="双精度型-double-浮点型"><a href="#双精度型-double-浮点型" class="headerlink" title="双精度型(double)浮点型"></a>双精度型(double)浮点型</h2><p>占用64位的存储空间<br>所有超出人类经<br>验的数学函数,如sin( ),cos( ),和sqrt( )均返回双精度的值  </p>
+<h2 id="浮点数值三个特殊值"><a href="#浮点数值三个特殊值" class="headerlink" title="浮点数值三个特殊值"></a>浮点数值三个特殊值</h2><table>
+<thead>
+<tr>
+<th>特殊值</th>
+<th>对应常量</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>正无穷大</td>
+<td>Double.POSITIVE_INFINITY 、 Float.POSITIVE_INFINITY</td>
+</tr>
+<tr>
+<td>负无穷大</td>
+<td>Double.NEGATIVE_INFINITY、Float.NEGATIVE_INFINITY</td>
+</tr>
+<tr>
+<td>NaN(不是一个数)</td>
+<td>Double.NaN、Float.NaN</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>注：<br>浮点类型不适用于无法接受舍入误差的金融计算中，如2.0 -1.1 会输出0.8999999999999999，而不是0.9<br>原因：浮点数值采用二进制系统表示法（二进制无法精确表示分数1/10）<br>如果不允许输入误差，需要使用 <em>BigDecimal</em>类</p>
+</blockquote>
+<h1 id="字符类型-char"><a href="#字符类型-char" class="headerlink" title="字符类型(char)"></a>字符类型(char)</h1><table>
+<thead>
+<tr>
+<th>数据类型</th>
+<th>存储需求</th>
+<th>取值范围</th>
+<th>前/后缀</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>char</td>
+<td>1个字符</td>
+<td>\u0000~\Uffff</td>
+</tr>
+</tbody>
+</table>
+<p>用于表示Unicode编码的字符单位的字符类型。<br>char类型的字面量需要使用单引号括起来，如’A’,对应65<br>char类型的值可以表示为十六进制值，范围\u0000~\Uffff  </p>
+<p>尽管char不是整数,但允许你可以将2个字符相加,或对一个字符变量值进行增量操作<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">char</span> ch1 = <span class="string">'x'</span>;</span><br><span class="line">ch1++; <span class="comment">//ch1会变成y</span></span><br></pre></td></tr></table></figure></p>
+<h1 id="布尔型（boolean）"><a href="#布尔型（boolean）" class="headerlink" title="布尔型（boolean）"></a>布尔型（boolean）</h1><p>表示逻辑值的简单类型，它的值只能是真或假这两个值中的一个</p>
+<h1 id="字面量"><a href="#字面量" class="headerlink" title="字面量"></a>字面量</h1><h2 id="整数字面量"><a href="#整数字面量" class="headerlink" title="整数字面量"></a>整数字面量</h2><p>任何一个数字的值就是一个整数字面量,例如1,2,3和42  </p>
+<p>十六进制数：前缀0x或0X   </p>
+<p>八进制数值：前缀0，如010,因为容易混淆，建议不常用  </p>
+<p>二进制：从Java7开始，加上前缀0B或0b。（可为数值加_,如1_000_000,便于阅读）  </p>
+<h2 id="浮点字面量"><a href="#浮点字面量" class="headerlink" title="浮点字面量"></a>浮点字面量</h2><p>浮点数代表带小数部分的十进制值,可通过标准记数法或科学记数法来表示  </p>
+<p>标准记数法(Standard notation)由整数部分加小数点加小数部分组成,2.0,3.14159,和0.6667  </p>
+<p>科学记数法(Scientific notation)是浮点数加一表明乘以10的指定幂次的后缀,指数是紧跟E或 e 的一个十进制的数字,它可以是正值或是负值,例子如6.022E23,314159E-05,及2e+100默认为double类型。</p>
+<h2 id="布尔型字面量"><a href="#布尔型字面量" class="headerlink" title="布尔型字面量"></a>布尔型字面量</h2><p>布尔型字面量仅仅有2个逻辑值,真或假（true or false）<br>Java中,真字面量的值不等于1,假字面量的值也不等于0  </p>
+<h2 id="字符字面量"><a href="#字符字面量" class="headerlink" title="字符字面量"></a>字符字面量</h2><p>Java用Unicode字符集来表示字符,Java的字符是16位值,可以被转换为整数并可进行<br>像加或减这样的整数运算。  </p>
+<p>所有可见的ASCII字符都能直接被包括在单引号之内,例如’a’,’z’,and ‘@’。  </p>
+<p>不能直接被包括的字符,有若干转义序列，例如’\n’代表换行符字符。</p>
+<p>为直接得到八进制或十六进制字符的值也有一个机制：</p>
+<ol>
+<li>对八进制来说,使用反斜线加3个阿拉伯数字。例如, ‘\141’是字母’a’。</li>
+<li>对十六进制来说,使用反斜线和u (\u)加4个十六进制阿拉伯数字。例如,’\u0061’因为高位字节是零,表ISO-Latin-1字符集中的’a’。</li>
+</ol>
+<p><strong>转义序列\u</strong>  </p>
+<p>可以出现在加引号的字符常量或字符之外（其他的转义序列不可以）,如<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String\u005B\u005D args)</span></span></span><br></pre></td></tr></table></figure></p>
+<p>其中\u005B\u005D代表 <em>[</em> 和 <em>]</em></p>
+<p><strong>特殊字符的转义序列</strong></p>
+<table>
+<thead>
+<tr>
+<th>转义序列</th>
+<th>名称</th>
+<th>Unicode值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>\ddd</td>
+<td>八进制字符(ddd)</td>
+</tr>
+<tr>
+<td>\uxxxx</td>
+<td>十六进制Unicode码字符</td>
+</tr>
+<tr>
+<td>\b</td>
+<td>退格</td>
+<td>\u0008</td>
+</tr>
+<tr>
+<td>\t</td>
+<td>制表</td>
+<td>\u0009</td>
+</tr>
+<tr>
+<td>\n</td>
+<td>换行</td>
+<td>\u000a</td>
+</tr>
+<tr>
+<td>\r</td>
+<td>回车</td>
+<td>\u000d</td>
+</tr>
+<tr>
+<td>\”</td>
+<td>双引号</td>
+<td>\u0022</td>
+</tr>
+<tr>
+<td>\’</td>
+<td>单引号</td>
+<td>\u0027</td>
+</tr>
+<tr>
+<td>\</td>
+<td>反斜杠</td>
+<td>\u005c</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>警告：<br>Unicode转义序列会在解析代码之前先进行处理<br>如”\u0022 + \u0022”, \u0022会在解析前转换成”,最后结果为””+””,也就是一个空串<br>在注释中当心\u,如 // look some c:\users, 会出现语法错误（\u后面不是4个十六进制数）</p>
+</blockquote>
+<h2 id="字符串字面量"><a href="#字符串字面量" class="headerlink" title="字符串字面量"></a>字符串字面量</h2><p>将一系列字符用双引号括起来,例如”Hello World”</p>
+<h1 id="数值类型转换"><a href="#数值类型转换" class="headerlink" title="数值类型转换"></a>数值类型转换</h1><p>分为自动类型转换和强制类型转换。</p>
+<h2 id="自动类型转换"><a href="#自动类型转换" class="headerlink" title="自动类型转换"></a>自动类型转换</h2><p>满足以下条件将自动转换</p>
+<ol>
+<li>这2种类型是兼容的。</li>
+<li>目的类型数的范围比来源类型的大。</li>
+</ol>
+<p>当以上2个条件都满足时,拓宽转换(widening conversion)发生  </p>
+<p>数字类型和字符类型(char)或布尔类型(bollean)是不兼容的。字符类型(char)和布尔类型(bollean)也是互相不兼容的。</p>
+<h2 id="强制转换"><a href="#强制转换" class="headerlink" title="强制转换"></a>强制转换</h2><p>通用格式<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(target-type)value</span><br></pre></td></tr></table></figure></p>
+<p>截断(truncation):把浮点值赋给整数类型时一种不同的类型转换,小数部分会被舍去。</p>
+<p>java 257强制转换赋值给byte会怎么样？323呢?<br>答：byte范围是256,所以257赋值后，值为1(257/256)。323为67(323/256)</p>
+<h2 id="基本数值类型直接的转换"><a href="#基本数值类型直接的转换" class="headerlink" title="基本数值类型直接的转换"></a>基本数值类型直接的转换</h2><p>(虚线表示数据可能丢失)<br><img src="https://raw.githubusercontent.com/FameLsy/Images/master/javase/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20190106130122.png" alt="数值类型转换"></p>
+<blockquote>
+<p>注:<br>如果对图中箭头反向转换，会报错，需要强制转换</p>
+</blockquote>
+<h1 id="表达式中的类型提升"><a href="#表达式中的类型提升" class="headerlink" title="表达式中的类型提升"></a>表达式中的类型提升</h1><p>如下代码所示：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">byte</span> a = <span class="number">50</span>;</span><br><span class="line"><span class="keyword">byte</span> b = <span class="number">20</span>;</span><br><span class="line"><span class="keyword">int</span> i = b * a; <span class="comment">//ok</span></span><br><span class="line">b = b * <span class="number">2</span>;<span class="comment">//error,cannot assign an int to a byte</span></span><br><span class="line">b = (<span class="keyword">byte</span>)b; <span class="comment">//ok</span></span><br></pre></td></tr></table></figure></p>
+<p>所有byte型和short型的值在表达式中会被提升到int类型  </p>
+<ol>
+<li>好处：避免了计算过程中中间结果超出范围</li>
+<li>缺点，需要强转</li>
+</ol>
+<p>类型提升规则：</p>
+<ol>
+<li>如果两个操作数中有一个是 double 类型， 另一个操作数就会转换为 double 类型。</li>
+<li>否则， 如果其中一个操作数是 float 类型， 另一个操作数将会转换为 float 类型。</li>
+<li>否则， 如果其中一个操作数是 long 类型， 另一个操作数将会转换为 long 类型。</li>
+<li>否则， 两个操作数都将被转换为 int 类型</li>
+</ol>
+<h1 id="4-枚举类"><a href="#4-枚举类" class="headerlink" title="4 枚举类"></a>4 枚举类</h1><p>如下枚举类Size，其中SMALL, MEDIUM, LARGE, EXTRA .LARCE是它的实例<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Enum Size &#123; SMALL, MEDIUM, LARGE, EXTRA .LARCE &#125;;</span><br></pre></td></tr></table></figure></p>
+<ol>
+<li>因为直接存在实例，所以比较两个枚举类时，直接使用==（不需要构造心对象）</li>
+</ol>
+<p>如果需要，可以添加构造器，方法，域<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//SMALL("s"),, MEDIUM("x")就相当于使用构造器进行了实例化</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">enum</span>  Size &#123;</span><br><span class="line">    SMALL(<span class="string">"s"</span>), MEDIUM(<span class="string">"x"</span>);</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Size</span><span class="params">(String name)</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span></span>&#123;<span class="keyword">return</span> name;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>调用实例<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Size.SMALL.toString()</span><br></pre></td></tr></table></figure></p>
+<p>逆方法，指向枚举实例<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//可以通过字符串数据来获取实例</span></span><br><span class="line">Size f = Enum.valueOf(Size.class, <span class="string">"SMALL"</span>);</span><br><span class="line"><span class="comment">//实际上与下面方法效果一样，但无法使用字符串来获取相应的实例</span></span><br><span class="line">Size e = Size.SMALL;</span><br></pre></td></tr></table></figure></p>
+<p>获取枚举类的所有实例,返回一个数组<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Size[]values = Size.values();</span><br></pre></td></tr></table></figure></p>
+<p><img src="https://raw.githubusercontent.com/FameLsy/Images/master/javase/Enum.png" alt="Enum"></p>
+<h1 id="5-字符串"><a href="#5-字符串" class="headerlink" title="5 字符串"></a>5 字符串</h1><p>从概念讲，java字符串就是Unicode字符序列，每个用双引号括起来的字符串都是String类的一个实例。<br><strong>Api</strong><br><img src="https://raw.githubusercontent.com/FameLsy/Images/master/javase/string.png" alt="string1"><br><img src="https://raw.githubusercontent.com/FameLsy/Images/master/javase/string2.png" alt="string2"><br><img src="https://raw.githubusercontent.com/FameLsy/Images/master/javase/string3.png" alt="string3"></p>
+<p><strong>不可变字符串</strong><br>Sting类没有提供用于修改字符串的方法，由于不能修改 Java 字符串中的字符， 所以在 Java 文档中将 String 类对象称为不可变字符串<br>优点：编译器可以让字符串共享  </p>
+<p><strong>equals和==</strong><br>使用equals()而不使用==<br>原因：<br>==只能确定两个字符串地址是否相同，变量地址可能不同。(String重写了equals方法)<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">equals</span><span class="params">(Object anObject)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">this</span> == anObject) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (anObject <span class="keyword">instanceof</span> String) &#123;</span><br><span class="line">            String anotherString = (String)anObject;</span><br><span class="line">            <span class="keyword">int</span> n = value.length;</span><br><span class="line">            <span class="keyword">if</span> (n == anotherString.value.length) &#123;</span><br><span class="line">                <span class="keyword">char</span> v1[] = value;</span><br><span class="line">                <span class="keyword">char</span> v2[] = anotherString.value;</span><br><span class="line">                <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">                <span class="keyword">while</span> (n-- != <span class="number">0</span>) &#123;</span><br><span class="line">                    <span class="keyword">if</span> (v1[i] != v2[i])</span><br><span class="line">                        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">                    i++;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<p>null == null 返回true<br><strong>空串与Null</strong><br>空串是一个Java对象，有长度(0)和内容(空)<br>null是特殊值，表示没有任何对象与该变量关联<br>判断不为null和不为空串<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (str != <span class="keyword">null</span> &amp;&amp; str.length() != <span class="number">0</span>)</span><br></pre></td></tr></table></figure></p>
+<p><strong>StringBuilder构建字符串</strong><br>构建按键或来自文件中的单词。采用字符串连接的方式达到此目的效率比较低。每次连接字符串，都会构建一个新的String对象，既耗时，又浪费空间<br>StringBuilder可以解决这个问题。</p>
+<blockquote>
+<p>注<br>StringBuilder类在JDK5.0加入，线程不安全<br>前身为StrgnBuffer,线程安全  </p>
+</blockquote>
+<p><img src="https://raw.githubusercontent.com/FameLsy/Images/master/javase/StringBuilder.png" alt="StringBuilder"></p>
+<h1 id="6-大数值"><a href="#6-大数值" class="headerlink" title="6 大数值"></a>6 大数值</h1><p>用于基本整型和浮点数精度无法满足需求。java.math提供了 <em>BigInteger</em>和 <em>bigDeciaml</em> 类，这两个类可以实现任意精度的浮点数运算。<br>缺点是无法使用基本的算术运算符(+、-等)</p>
+<h1 id="对象包装器和自动装箱"><a href="#对象包装器和自动装箱" class="headerlink" title="对象包装器和自动装箱"></a>对象包装器和自动装箱</h1><p>基本类型对应的类，被成为包装器。</p>
+<table>
+<thead>
+<tr>
+<th>包装器</th>
+<th>原始</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Integer</td>
+<td>int</td>
+</tr>
+<tr>
+<td>Long</td>
+<td>long</td>
+</tr>
+<tr>
+<td>Float</td>
+<td>float</td>
+</tr>
+<tr>
+<td>Double</td>
+<td>double</td>
+</tr>
+<tr>
+<td>Short</td>
+<td>short</td>
+</tr>
+<tr>
+<td>Byte</td>
+<td>byte</td>
+</tr>
+<tr>
+<td>Character</td>
+<td>char</td>
+</tr>
+<tr>
+<td>Void</td>
+<td>void</td>
+</tr>
+<tr>
+<td>Boolean</td>
+<td>boolean</td>
+</tr>
+</tbody>
+</table>
+<p>前六个包装器继承于Number类。<br>使用：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ArrayList&lt;Integer&gt;<span class="comment">//不能携程ArrayList&lt;int&gt;</span></span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>注：<br>装箱和拆箱是编译器认可的，而不是虚拟机（编译器在生成类的字节码的时候，插入必要的方法调用，而虚拟机这是执行这些字节码）</p>
+</blockquote>
+<h2 id="自动装箱"><a href="#自动装箱" class="headerlink" title="自动装箱"></a>自动装箱</h2><p>将基本数据赋值给包装器<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">list.add(<span class="number">3</span>);</span><br><span class="line"><span class="comment">//自动装箱成</span></span><br><span class="line">list.add(Integer.valueOf(<span class="number">3</span>));</span><br></pre></td></tr></table></figure></p>
+<h2 id="自动拆箱"><a href="#自动拆箱" class="headerlink" title="自动拆箱"></a>自动拆箱</h2><p> 将包装器对象赋值给基本数据<br> <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> n = list.get(i);</span><br><span class="line"><span class="comment">//自动拆箱</span></span><br><span class="line"><span class="keyword">int</span> n = list.get(i).intValue();</span><br></pre></td></tr></table></figure></p>
+<p> <img src="https://raw.githubusercontent.com/FameLsy/Images/master/javase/Integer.png" alt="Integer"></p>
+<h2 id="混用Integer和Double"><a href="#混用Integer和Double" class="headerlink" title="混用Integer和Double"></a>混用Integer和Double</h2><p>Integer会先自动拆箱，提升为Double，在装箱成Double<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Integer n = <span class="number">1</span>;</span><br><span class="line">Double x = <span class="number">2.0</span>;</span><br><span class="line">System.out.println(<span class="keyword">true</span> ? n : x);</span><br></pre></td></tr></table></figure></p>
 
-
-
-数据类
-              ...
-            </p>
-          <!--noindex-->
           
-            <div class="post-button text-center">
-              <a class="btn" href="/blog/2018/02/02/java.1/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
         
       
     </div>
@@ -1780,7 +2528,7 @@ java一共有8个基本数据类型
                   
                     
                   
-                  <a href="https://github.com/yourname" title="GitHub &rarr; https://github.com/yourname" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  <a href="https://github.com/FameLsy" title="GitHub &rarr; https://github.com/FameLsy" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
                 </span>
               
                 <span class="links-of-author-item">
@@ -1791,7 +2539,7 @@ java一共有8个基本数据类型
                   
                     
                   
-                  <a href="mailto:yourname@gmail.com" title="E-Mail &rarr; mailto:yourname@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  <a href="mailto:575600714@qq.com.com" title="E-Mail(QQ) &rarr; mailto:575600714@qq.com.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-qq"></i>E-Mail(QQ)</a>
                 </span>
               
                 <span class="links-of-author-item">
@@ -1802,7 +2550,7 @@ java一共有8个基本数据类型
                   
                     
                   
-                  <a href="https://weibo.com/yourname" title="Weibo &rarr; https://weibo.com/yourname" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i>Weibo</a>
+                  <a href="mailto:swordmaster2014@gmail.com" title="E-Mail(Google) &rarr; mailto:swordmaster2014@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-google"></i>E-Mail(Google)</a>
                 </span>
               
                 <span class="links-of-author-item">
@@ -1813,7 +2561,18 @@ java一共有8个基本数据类型
                   
                     
                   
-                  <a href="https://plus.google.com/yourname" title="Google &rarr; https://plus.google.com/yourname" rel="noopener" target="_blank"><i class="fa fa-fw fa-google"></i>Google</a>
+                  <a href="https://blog.csdn.net/masorl" title="CSDN &rarr; https://blog.csdn.net/masorl" rel="noopener" target="_blank"><i class="fa fa-fw fa-tree"></i>CSDN</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="tencent://message/?uin=575600714&Site=qq&Menu=yes" title="QQ &rarr; tencent://message/?uin=575600714&Site=qq&Menu=yes" rel="noopener" target="_blank"><i class="fa fa-fw fa-QQ"></i>QQ</a>
                 </span>
               
             </div>
