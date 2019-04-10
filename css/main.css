@@ -1765,7 +1765,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #ab0f39;
+  background: #ff0966;
 }
 .feed-link,
 .chat {
@@ -2475,7 +2475,7 @@ embed {
   display: inline-block;
 }
 body {
-  background: url("https://raw.githubusercontent.com/FameLsy/Images/master/other/stretched-1920-1080-802301.png") fixed;
+  background: url("https://raw.githubusercontent.com/FameLsy/Images/master/Fullmetal%20Alchemist/stretched-1920-1080-802301.png") fixed;
 }
 .posts-expand .post-eof {
   margin: 0px;
