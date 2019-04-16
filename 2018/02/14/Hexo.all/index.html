@@ -1,0 +1,1685 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/blog/css/main.css?v=7.1.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png?v=7.1.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png?v=7.1.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png?v=7.1.0">
+
+
+  <link rel="mask-icon" href="/blog/images/logo.svg?v=7.1.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/blog/',
+    scheme: 'Muse',
+    version: '7.1.0',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="keywords" content="Hexo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="https://masol.gitee.io/blog/2018/02/14/Hexo.all/index.html">
+<meta property="og:site_name" content="Liisyu Blog">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://raw.githubusercontent.com/FameLsy/Images/master/Fullmetal%20Alchemist/wallhaven-228549.jpg">
+<meta property="og:image" content="c:/Users/Liisyu/Desktop/hexo%E7%9A%84next%E4%B8%BB%E9%A2%98%E8%AF%A6%E7%BB%86%E9%85%8D%E7%BD%AE/1.webp">
+<meta property="og:image" content="c:/Users/Liisyu/Desktop/hexo%E7%9A%84next%E4%B8%BB%E9%A2%98%E8%AF%A6%E7%BB%86%E9%85%8D%E7%BD%AE/2.webp">
+<meta property="og:image" content="c:/Users/Liisyu/Desktop/hexo%E7%9A%84next%E4%B8%BB%E9%A2%98%E8%AF%A6%E7%BB%86%E9%85%8D%E7%BD%AE/3.webp">
+<meta property="og:image" content="c:/Users/Liisyu/Desktop/hexo%E7%9A%84next%E4%B8%BB%E9%A2%98%E8%AF%A6%E7%BB%86%E9%85%8D%E7%BD%AE/5.webp">
+<meta property="og:image" content="c:/Users/Liisyu/Desktop/hexo%E7%9A%84next%E4%B8%BB%E9%A2%98%E8%AF%A6%E7%BB%86%E9%85%8D%E7%BD%AE/4.webp">
+<meta property="og:image" content="c:/Users/Liisyu/Desktop/hexo%E7%9A%84next%E4%B8%BB%E9%A2%98%E8%AF%A6%E7%BB%86%E9%85%8D%E7%BD%AE/6.webp">
+<meta property="og:image" content="c:/Users/Liisyu/Desktop/hexo%E7%9A%84next%E4%B8%BB%E9%A2%98%E8%AF%A6%E7%BB%86%E9%85%8D%E7%BD%AE/7.webp">
+<meta property="og:updated_time" content="2019-04-11T11:36:04.641Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hexo">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/FameLsy/Images/master/Fullmetal%20Alchemist/wallhaven-228549.jpg">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="https://masol.gitee.io/blog/2018/02/14/Hexo.all/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Hexo | Liisyu Blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/blog/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Liisyu Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/blog/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/blog/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/blog/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/blog/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-navigation">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/blog/navigation/" rel="section"><i class="menu-item-icon fa fa-fw fa-diamond"></i> <br>导航</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://masol.gitee.io/blog/blog/2018/02/14/Hexo.all/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Liisyu">
+      <meta itemprop="description" content="我只是一个兴趣使然的程序员">
+      <meta itemprop="image" content="/blog/images/toux.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Liisyu Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Hexo
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-02-15 00:00:01" itemprop="dateCreated datePublished" datetime="2018-02-15T00:00:01+08:00">2018-02-15</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-04-11 19:36:04" itemprop="dateModified" datetime="2019-04-11T19:36:04+08:00">2019-04-11</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/blog/categories/Blog/" itemprop="url" rel="index"><span itemprop="name">Blog</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="https://raw.githubusercontent.com/FameLsy/Images/master/Fullmetal%20Alchemist/wallhaven-228549.jpg" alt></p>
+<a id="more"></a>
+<p><a href="https://hexo.io/zh-cn/docs/" target="_blank" rel="noopener">hexo官网文档</a></p>
+<hr>
+<h1 id="安装Hexo"><a href="#安装Hexo" class="headerlink" title="安装Hexo"></a>安装Hexo</h1><h2 id="安装前提"><a href="#安装前提" class="headerlink" title="安装前提"></a>安装前提</h2><p>安装hexo前，还需还装<strong>Node.js</strong>和<strong>Git*</strong>两个程序</p>
+<h2 id="安装-Git"><a href="#安装-Git" class="headerlink" title="安装 Git"></a>安装 Git</h2><p><a href="https://git-scm.com/" target="_blank" rel="noopener">git官网</a><br>Linux (Ubuntu, Debian)</p>
+<div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install git</span><br></pre></td></tr></table></figure></div>
+<p>Linux (Fedora, Red Hat, CentOS)</p>
+<div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo yum install git</span><br></pre></td></tr></table></figure></div>
+<h2 id="安装Node-js"><a href="#安装Node-js" class="headerlink" title="安装Node.js"></a>安装Node.js</h2><p><a href="https://nodejs.org/en/" target="_blank" rel="noopener">Node.js官网</a><br>安装<strong>Node.js</strong>,推荐使用<strong>nvm</strong>方式安装<br>下载并安装<strong>nvm</strong><br><a href="https://github.com/creationix/nvm" target="_blank" rel="noopener">nvm  github地址</a><br>CURL方式</p>
+<div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash</span><br></pre></td></tr></table></figure></div>
+<p>Wget方式</p>
+<div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget -qO- https://raw.github.com/creationix/nvm/v0.33.11/install.sh | sh</span><br></pre></td></tr></table></figure></div>
+<p>安装完成后,重新打开一个终端.<br>开始安装<strong>Node.js</strong></p>
+<div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nvm install stable</span><br></pre></td></tr></table></figure></div>
+<h2 id="安装Hexo-1"><a href="#安装Hexo-1" class="headerlink" title="安装Hexo"></a>安装<strong>Hexo</strong></h2><p>使用<strong>nmp</strong>命令进行安装</p>
+<div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g hexo-cli</span><br></pre></td></tr></table></figure></div>
+<h1 id="建站"><a href="#建站" class="headerlink" title="建站"></a>建站</h1><h2 id="建立博客站"><a href="#建立博客站" class="headerlink" title="建立博客站"></a>建立博客站</h2><p>先初始化一个站，<strong>folder</strong>为自己填写的站名</p>
+<div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo init &lt;folder&gt;</span><br></pre></td></tr></table></figure></div>
+<p>完成后，在用户目录下，多出了一个以<strong>folder</strong> 为名的文件夹<br>进入该文件夹</p>
+<div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd &lt;folder&gt;</span><br></pre></td></tr></table></figure></div>
+<p>该文件夹下，有如下文件</p>
+<table>
+<thead>
+<tr>
+<th>文件名</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>_config.yml</td>
+<td>存有网站的配置信息，大部分配置都在这里修改</td>
+</tr>
+<tr>
+<td>package.json</td>
+<td>应用程序的信息</td>
+</tr>
+<tr>
+<td>scaffolds</td>
+<td>模版文件夹。当新建文章时，Hexo 会根据 scaffold 来建立文件</td>
+</tr>
+<tr>
+<td>source</td>
+<td>资源文件夹是存放用户资源的地方。开头命名为 _ (下划线)的文件 / 文件夹和隐藏的文件将会被忽略。Markdown 和 HTML 文件会被解析并放到 public 文件夹，而其他文件会被拷贝过去</td>
+</tr>
+<tr>
+<td>themes</td>
+<td>主题 文件夹。Hexo 会根据主题来生成静态页面</td>
+</tr>
+</tbody>
+</table>
+<p>安装相关依赖</p>
+<div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install</span><br></pre></td></tr></table></figure></div>
+<p>此时基本可以运行，首先生成静态文件</p>
+<div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo d</span><br></pre></td></tr></table></figure></div>
+<p>然后运行</p>
+<div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo s</span><br></pre></td></tr></table></figure></div>
+<p>运行正确的话，系统会输出</p>
+<div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Hexo is running at http://localhost:4000</span><br></pre></td></tr></table></figure></div>
+<p>在自己的浏览器打开访问,就可以浏览到一个什么都没有的博客了。</p>
+<h1 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h1><h2 id="网站配置"><a href="#网站配置" class="headerlink" title="网站配置"></a>网站配置</h2><p>打开配置文件,接下来我将以<strong>blog</strong>为设置的站文件夹</p>
+<div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vim ~/blog/_config.yml</span><br></pre></td></tr></table></figure></div>
+<p>配置网站,关键字<strong>Site</strong></p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>title</td>
+<td>网站标题</td>
+</tr>
+<tr>
+<td>subtitle</td>
+<td>网站副标题</td>
+</tr>
+<tr>
+<td>description</td>
+<td>网站描述</td>
+</tr>
+<tr>
+<td>author</td>
+<td>您的名字</td>
+</tr>
+<tr>
+<td>language</td>
+<td>网站使用的语言</td>
+</tr>
+<tr>
+<td>timezone</td>
+<td>网站时区。Hexo 默认使用您电脑的时区。时区列表。比如说：America/New_York,Japan, 和 UTC 。</td>
+</tr>
+</tbody>
+</table>
+<p>其中，description主要用于SEO，告诉搜索引擎一个关于您站点的简单描述，通常建议在其中包含您网站的关键词。author参数用于主题显示文章的作者。</p>
+<h2 id="网址配置"><a href="#网址配置" class="headerlink" title="网址配置"></a>网址配置</h2><p>关键字，<strong>Url</strong></p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>描述</th>
+<th>默认值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>url</td>
+<td>网址</td>
+<td></td>
+</tr>
+<tr>
+<td>root</td>
+<td>网站根目录</td>
+<td></td>
+</tr>
+<tr>
+<td>permalink</td>
+<td>文章的永久链接格式</td>
+<td>:year/:month/:day/:title/</td>
+</tr>
+<tr>
+<td>permalink_defaults</td>
+<td>永久链接中各部分的默认值</td>
+</tr>
+</tbody>
+</table>
+<h2 id="配置目录"><a href="#配置目录" class="headerlink" title="配置目录"></a>配置目录</h2><p>关键字，<strong>Directory</strong></p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>描述</th>
+<th>默认值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>source_dir</td>
+<td>资源文件夹，这个文件夹用来存放内容。</td>
+<td>source</td>
+</tr>
+<tr>
+<td>public_dir</td>
+<td>公共文件夹，这个文件夹用于存放生成的站点文件。</td>
+<td>public</td>
+</tr>
+<tr>
+<td>tag_dir</td>
+<td>标签文件夹</td>
+<td>tags</td>
+</tr>
+<tr>
+<td>archive_dir</td>
+<td>归档文件夹</td>
+<td>archives</td>
+</tr>
+<tr>
+<td>category_dir</td>
+<td>分类文件夹</td>
+<td>categories</td>
+</tr>
+<tr>
+<td>code_dir</td>
+<td>Include code 文件夹</td>
+<td>downloads/code</td>
+</tr>
+<tr>
+<td>i18n_dir</td>
+<td>国际化（i18n）文件夹</td>
+<td>:lang</td>
+</tr>
+<tr>
+<td>skip_render</td>
+<td>跳过指定文件的渲染，您可使用 glob 表达式来匹配路径。</td>
+</tr>
+</tbody>
+</table>
+<h2 id="配置-1"><a href="#配置-1" class="headerlink" title="配置"></a>配置</h2><p>未完待续</p>
+<hr>
+<h1 id="更新博客文件"><a href="#更新博客文件" class="headerlink" title="更新博客文件"></a>更新博客文件</h1><div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># 进入博客文件文件夹</span><br><span class="line">cd ~/blog/source/_posts</span><br><span class="line"># 更新博客</span><br><span class="line">hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</span><br></pre></td></tr></table></figure></div>
+<h1 id="挂载到Github"><a href="#挂载到Github" class="headerlink" title="挂载到Github"></a>挂载到Github</h1><p><strong>安装依赖</strong></p>
+<div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure></div>
+<p><strong>修改站点配置文件</strong><br>仓库名必须是 <em>famelsy.github.io</em></p>
+<div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repo : git@github.com:FameLsy/famelsy.github.io.git</span><br><span class="line">  branch: master</span><br></pre></td></tr></table></figure></div>
+<h1 id="个性化Hexo"><a href="#个性化Hexo" class="headerlink" title="个性化Hexo"></a>个性化<strong>Hexo</strong></h1><h2 id="自定义CSS样式"><a href="#自定义CSS样式" class="headerlink" title="自定义CSS样式"></a>自定义CSS样式</h2><p>创建一个.styl文件</p>
+<div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 内容就放css的内容即可</span><br><span class="line">vim ~/blog/themes/next/source/css/_custom/mystyle.styl</span><br></pre></td></tr></table></figure></div>
+<p>打开custom.styl文件，并将刚刚创建的.styl文件导入</p>
+<div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#输入@impolt &quot;mystyle.styl&quot;导入</span><br><span class="line">sudo vim ~/blog/themes/next/source/css/_custom/custom.styl</span><br></pre></td></tr></table></figure></div>
+<h2 id="自定义JS代码"><a href="#自定义JS代码" class="headerlink" title="自定义JS代码"></a>自定义JS代码</h2><p>首先,如果根目录没有<em>scripts</em>目录，就创建一个。<br>然后，创建js文件  </p>
+<div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 直接创建并打开</span><br><span class="line">vim ~/blog/scripts/myjs.js</span><br></pre></td></tr></table></figure></div>
+<p>hexo会自动加载该目录下的js文件</p>
+<h2 id="修改代码块"><a href="#修改代码块" class="headerlink" title="修改代码块"></a>修改代码块</h2><p>首先,如果根目录没有<em>scripts</em>目录，就创建一个。<br>然后，创建js文件  </p>
+<div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 直接创建并打开</span><br><span class="line">vim ~/blog/scripts/codeblock.js</span><br></pre></td></tr></table></figure></div>
+<p>复制以下内容进去</p>
+<div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="JS"><figure class="iseeu highlight /js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> attributes = [</span><br><span class="line">  <span class="string">'autocomplete="off"'</span>,</span><br><span class="line">  <span class="string">'autocorrect="off"'</span>,</span><br><span class="line">  <span class="string">'autocapitalize="off"'</span>,</span><br><span class="line">  <span class="string">'spellcheck="false"'</span>,</span><br><span class="line">  <span class="string">'contenteditable="true"'</span></span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> attributesStr = attributes.join(<span class="string">' '</span>)</span><br><span class="line"></span><br><span class="line">hexo.extend.filter.register(<span class="string">'after_post_render'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">data</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">while</span> (<span class="regexp">/&lt;figure class="highlight ([a-zA-Z]+)"&gt;.*?&lt;\/figure&gt;/</span>.test(data.content)) &#123;</span><br><span class="line">    data.content = data.content.replace(<span class="regexp">/&lt;figure class="highlight ([a-zA-Z]+)"&gt;.*?&lt;\/figure&gt;/</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">      <span class="keyword">var</span> language = <span class="built_in">RegExp</span>.$<span class="number">1</span> || <span class="string">'plain'</span></span><br><span class="line">      <span class="keyword">var</span> lastMatch = <span class="built_in">RegExp</span>.lastMatch</span><br><span class="line">      lastMatch = lastMatch.replace(<span class="regexp">/&lt;figure class="highlight /</span>, <span class="string">'&lt;figure class="iseeu highlight /'</span>)</span><br><span class="line">      <span class="keyword">return</span> <span class="string">'&lt;div class="highlight-wrap"'</span> + attributesStr + <span class="string">'data-rel="'</span> + language.toUpperCase() + <span class="string">'"&gt;'</span> + lastMatch + <span class="string">'&lt;/div&gt;'</span></span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> data</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></div>
+<p>然后，创建一个.style文件</p>
+<div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim ~/blog/themes/next/source/css/_custom/mystyle.styl</span><br></pre></td></tr></table></figure></div>
+<p>加入内容</p>
+<div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="CSS"><figure class="iseeu highlight /css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.highlight</span> &#123;</span><br><span class="line">        <span class="attribute">margin</span>: <span class="number">38px</span> <span class="number">0</span> <span class="number">0</span> <span class="number">0</span> <span class="meta">!important</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.highlight-wrap</span><span class="selector-attr">[data-rel]</span> &#123;</span><br><span class="line">  <span class="attribute">position</span>: relative;</span><br><span class="line">  <span class="attribute">overflow</span>: hidden;</span><br><span class="line">  <span class="attribute">border-radius</span>: <span class="number">5px</span>;</span><br><span class="line">  <span class="attribute">box-shadow</span>: <span class="number">0</span> <span class="number">10px</span> <span class="number">30px</span> <span class="number">0px</span> <span class="built_in">rgba</span>(0, 0, 0, 0.4);</span><br><span class="line">  <span class="attribute">margin</span>: <span class="number">35px</span> <span class="number">0</span>;</span><br><span class="line">  ::-webkit-scrollbar &#123;</span><br><span class="line">    <span class="selector-tag">height</span>: 10<span class="selector-tag">px</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="selector-pseudo">::-webkit-scrollbar-track</span> &#123;</span><br><span class="line">    <span class="attribute">-webkit-box-shadow</span>: inset <span class="number">0</span> <span class="number">0</span> <span class="number">6px</span> <span class="built_in">rgba</span>(0, 0, 0, 0.3);</span><br><span class="line">    <span class="attribute">border-radius</span>: <span class="number">10px</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="selector-pseudo">::-webkit-scrollbar-thumb</span> &#123;</span><br><span class="line">    <span class="attribute">border-radius</span>: <span class="number">10px</span>;</span><br><span class="line">    <span class="attribute">-webkit-box-shadow</span>: inset <span class="number">0</span> <span class="number">0</span> <span class="number">6px</span> <span class="built_in">rgba</span>(0, 0, 0, 0.5);</span><br><span class="line">  &#125;</span><br><span class="line">  &amp;<span class="selector-pseudo">::before</span> &#123;</span><br><span class="line">    <span class="attribute">color</span>: white;</span><br><span class="line">    <span class="attribute">content</span>: <span class="built_in">attr</span>(data-rel);</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">38px</span>;</span><br><span class="line">    <span class="attribute">line-height</span>: <span class="number">38px</span>;</span><br><span class="line">    <span class="attribute">background</span>: <span class="number">#21252b</span>;</span><br><span class="line">    <span class="attribute">color</span>: <span class="number">#fff</span>;</span><br><span class="line">    <span class="attribute">font-size</span>: <span class="number">16px</span>;</span><br><span class="line">    <span class="attribute">position</span>: absolute;</span><br><span class="line">    <span class="attribute">top</span>: <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">left</span>: <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">100%</span>;</span><br><span class="line">    <span class="attribute">font-family</span>: <span class="string">'Source Sans Pro'</span>, sans-serif;</span><br><span class="line">    <span class="attribute">font-weight</span>: bold;</span><br><span class="line">    <span class="attribute">padding</span>: <span class="number">0px</span> <span class="number">80px</span>;</span><br><span class="line">    <span class="attribute">text-indent</span>: <span class="number">15px</span>;</span><br><span class="line">    <span class="attribute">float</span>: left;</span><br><span class="line">  &#125;</span><br><span class="line">  &amp;<span class="selector-pseudo">::after</span> &#123;</span><br><span class="line">    <span class="attribute">content</span>: <span class="string">' '</span>;</span><br><span class="line">    <span class="attribute">position</span>: absolute;</span><br><span class="line">    <span class="attribute">-webkit-border-radius</span>: <span class="number">50%</span>;</span><br><span class="line">    <span class="attribute">border-radius</span>: <span class="number">50%</span>;</span><br><span class="line">    <span class="attribute">background</span>: <span class="number">#fc625d</span>;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">12px</span>;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">12px</span>;</span><br><span class="line">    <span class="attribute">top</span>: <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">left</span>: <span class="number">20px</span>;</span><br><span class="line">    <span class="attribute">margin-top</span>: <span class="number">13px</span>;</span><br><span class="line">    <span class="attribute">-webkit-box-shadow</span>: <span class="number">20px</span> <span class="number">0px</span> <span class="number">#fdbc40</span>, <span class="number">40px</span> <span class="number">0px</span> <span class="number">#35cd4b</span>;</span><br><span class="line">    <span class="attribute">box-shadow</span>: <span class="number">20px</span> <span class="number">0px</span> <span class="number">#fdbc40</span>, <span class="number">40px</span> <span class="number">0px</span> <span class="number">#35cd4b</span>;</span><br><span class="line">    <span class="attribute">z-index</span>: <span class="number">3</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+<p>打开custom.styl文件，并将刚刚创建的.styl文件导入</p>
+<div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#输入@import &quot;mystyle.styl&quot;导入</span><br><span class="line">sudo vim ~/blog/themes/next/source/css/_custom/custom.styl</span><br></pre></td></tr></table></figure></div>
+<h1 id="主题"><a href="#主题" class="headerlink" title="主题"></a>主题</h1><p><strong>下载next主题</strong></p>
+<div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"> git clone https://github.com/theme-next/hexo-theme-next themes/next</span><br><span class="line"></span><br><span class="line"># 站点配置文件</span><br><span class="line">theme: next</span><br></pre></td></tr></table></figure></div>
+<p><strong>不展开全部内容</strong><br>主题配置文件搜索关键字<em>auto_excerpt</em>,<em>enable</em>改为<em>true</em></p>
+<div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">auto_excerpt:</span><br><span class="line">  enable: true</span><br><span class="line">  length: 150</span><br></pre></td></tr></table></figure></div>
+<p><strong>添加「标签/分类」页面</strong><br>新建页面</p>
+<div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd ~/blog</span><br><span class="line">hexo new page tags</span><br><span class="line">hexo new page tags categories</span><br></pre></td></tr></table></figure></div>
+<p>编辑刚刚新建的页面</p>
+<div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">vim source/tags/index.md</span><br><span class="line">vim source/categories/index.md</span><br></pre></td></tr></table></figure></div>
+<p>添加 <em>type: “tags”</em></p>
+<div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">title: tags</span><br><span class="line">type: &quot;tags&quot;</span><br><span class="line">date: 2018-12-20 21:00:02</span><br><span class="line">---</span><br><span class="line"># 对于分类页面就是</span><br><span class="line">title: 分类</span><br><span class="line">date: 2014-12-22 12:39:04</span><br><span class="line">type: &quot;categories&quot;</span><br><span class="line">---</span><br></pre></td></tr></table></figure></div>
+<p>修改主题配置文件</p>
+<div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">menu:</span><br><span class="line">  home: /</span><br><span class="line">  archives: /archives</span><br><span class="line">  tags: /tags</span><br><span class="line">  categories: /categories</span><br></pre></td></tr></table></figure></div>
+<p>在 Hexo 中有两份主要的配置文件，其名称都是 _config.yml。 其中，一份位于站点根目录下，主要包含 Hexo 本身的配置；另一份位于主题目录下，这份配置由主题作者提供，主要用于配置主题相关的选项。</p>
+<p> 为了描述方便，在以下说明中，将前者称为<strong>站点配置文件</strong>， 后者称为<strong>主题配置文件</strong>。</p>
+<p>以下所有终端执行的命令都在你的Hexo根目录下</p>
+<h1 id="基本信息配置"><a href="#基本信息配置" class="headerlink" title="基本信息配置"></a>基本信息配置</h1><p>打开 <strong>站点配置文件</strong> ，找到Site模块</p>
+<div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">title: 标题</span><br><span class="line">subtitle: 副标题</span><br><span class="line">description: 描述</span><br><span class="line">author: 作者</span><br><span class="line">language: 语言（简体中文是zh-Hans）</span><br><span class="line">timezone: 网站时区（Hexo 默认使用您电脑的时区，不用写）</span><br></pre></td></tr></table></figure></div>
+<p>关于 <strong>站点配置文件</strong> 中的其他配置可参考<a href="https://link.jianshu.com/?t=https%3A%2F%2Fhexo.io%2Fzh-cn%2Fdocs%2Fconfiguration.html" target="_blank" rel="noopener">站点配置</a></p>
+<h1 id="菜单设置"><a href="#菜单设置" class="headerlink" title="菜单设置"></a>菜单设置</h1><p>菜单包括：首页、归档、分类、标签、关于等等</p>
+<p>我们刚开始默认的菜单只有首页和归档两个，不能够满足我们的要求，所以需要添加菜单，打开 <strong>主题配置文件</strong> 找到<code>Menu Settings</code></p>
+<p>看看你需要哪个菜单就把哪个取消注释打开就行了；<br> 关于后面的格式，以<code>archives: /archives/ || archive</code>为例：<br> <code>||</code> 之前的<code>/archives/</code>表示标题“归档”，关于标题的格式可以去<code>themes/next/languages/zh-Hans.yml</code>中参考或修改<br> <code>||</code>之后的<code>archive</code>表示图标，可以去<a href="https://link.jianshu.com?t=http%3A%2F%2Ffontawesome.io%2Ficons%2F" target="_blank" rel="noopener">Font Awesome</a>中查看或修改，Next主题所有的图标都来自Font Awesome</p>
+<h1 id="Next主题样式设置"><a href="#Next主题样式设置" class="headerlink" title="Next主题样式设置"></a>Next主题样式设置</h1><p>我们百里挑一选择了Next主题，不过Next主题还有4种风格供我们选择，打开 <strong>主题配置文件</strong> 找到<code>Scheme Settings</code></p>
+<div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># Schemes</span><br><span class="line"># scheme: Muse</span><br><span class="line"># scheme: Mist</span><br><span class="line"># scheme: Pisces</span><br><span class="line">scheme: Gemini</span><br></pre></td></tr></table></figure></div>
+<p>4种风格大同小异，本人用的是<a href="https://link.jianshu.com/?t=https%3A%2F%2Fyoungerli.github.io" target="_blank" rel="noopener">Gemini</a>风格，你们可以选择自己喜欢的风格</p>
+<h2 id="侧栏设置"><a href="#侧栏设置" class="headerlink" title="侧栏设置"></a>侧栏设置</h2><h2 id="开启侧边栏社交链接"><a href="#开启侧边栏社交链接" class="headerlink" title="开启侧边栏社交链接"></a>开启侧边栏社交链接</h2><div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"># Social links</span><br><span class="line">social:</span><br><span class="line">  GitHub: https://github.com/hydcoder</span><br><span class="line">  Weibo: https://weibo.com/3180967953/profile?rightmod=1&amp;wvr=6&amp;mod=personinfo</span><br><span class="line">  # 等等</span><br><span class="line"></span><br><span class="line">social_icons:</span><br><span class="line">  enable: true</span><br><span class="line">  # Icon Mappings.</span><br><span class="line">  GitHub: github</span><br><span class="line">  Weibo: weibo</span><br></pre></td></tr></table></figure></div>
+<h2 id="开启打赏功能"><a href="#开启打赏功能" class="headerlink" title="开启打赏功能"></a>开启打赏功能</h2><div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">reward_comment: 坚持原创技术分享，您的支持将鼓励我继续创作！</span><br><span class="line">wechatpay: 你的微信收款码链接</span><br><span class="line">alipay: 你的支付宝收款码链接</span><br></pre></td></tr></table></figure></div>
+<h2 id="开启友情链接"><a href="#开启友情链接" class="headerlink" title="开启友情链接"></a>开启友情链接</h2><div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">links_title: Links</span><br><span class="line">links:</span><br><span class="line">  MacTalk: http://macshuo.com/</span><br><span class="line">  Title: http://example.com/</span><br></pre></td></tr></table></figure></div>
+<h2 id="开启订阅微信公众号"><a href="#开启订阅微信公众号" class="headerlink" title="开启订阅微信公众号"></a>开启订阅微信公众号</h2><div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">wechat_subscriber:</span><br><span class="line">enabled: true</span><br><span class="line">qcode: /uploads/wechat-qcode.jpg</span><br><span class="line">description: 欢迎您扫一扫上面的微信公众号，订阅我的博客！</span><br></pre></td></tr></table></figure></div>
+<h1 id="头像设置"><a href="#头像设置" class="headerlink" title="头像设置"></a>头像设置</h1><p>打开 <strong>主题配置文件</strong> 找到<code>Sidebar Avatar</code>字段</p>
+<div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># Sidebar Avatar</span><br><span class="line">avatar: /images/header.jpg</span><br></pre></td></tr></table></figure></div>
+<p>这是头像的路径，只需把你的头像命名为<code>header.jpg</code>（随便命名）放入<code>themes/next/source/images</code>中，将<code>avatar</code>的路径名改成你的头像名就OK啦！</p>
+<p>设置侧边栏设置圆形可旋转头像</p>
+<p>找到生成的Hexo目录\themes\next\source\css_common\components\sidebar下的sidebar-author.styl，将里面的css样式内容全部替换为：</p>
+<div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">.site-author-image &#123;</span><br><span class="line">  margin: 0 auto;</span><br><span class="line">  padding: $site-author-image-padding;</span><br><span class="line">  max-width: $site-author-image-width;</span><br><span class="line">  height: $site-author-image-height;</span><br><span class="line">  border: $site-author-image-border-width solid $site-author-image-border-color;</span><br><span class="line"></span><br><span class="line">  border-radius: 50%;</span><br><span class="line">  -webkit-border-radius: 50%;</span><br><span class="line">  -moz-border-radius: 50%;</span><br><span class="line">  transition: 1.4s all;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">.site-author-image:hover &#123;</span><br><span class="line">    -webkit-transform: rotate(360deg);</span><br><span class="line">    -moz-transform: rotate(360deg);</span><br><span class="line">    -ms-transform: rotate(360deg);</span><br><span class="line">    -transform: rotate(360deg);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">.site-author-name &#123;</span><br><span class="line">  margin: $site-author-name-margin;</span><br><span class="line">  text-align: $site-author-name-align;</span><br><span class="line">  color: $site-author-name-color;</span><br><span class="line">  font-weight: $site-author-name-weight;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">.site-description &#123;</span><br><span class="line">  margin-top: $site-description-margin-top;</span><br><span class="line">  text-align: $site-description-align;</span><br><span class="line">  font-size: $site-description-font-size;</span><br><span class="line">  color: $site-description-color;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+<h1 id="设置首页不显示全文-只显示预览"><a href="#设置首页不显示全文-只显示预览" class="headerlink" title="设置首页不显示全文(只显示预览)"></a>设置首页不显示全文(只显示预览)</h1><p>打开<strong>主题配置文件</strong>_config.yml，ctrl + F搜索找到”auto_excerpt”，可以看见</p>
+<div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># Automatically Excerpt. Not recommand.</span><br><span class="line"># Please use &lt;!-- more --&gt; in the post to control excerpt accurately.</span><br><span class="line">auto_excerpt:</span><br><span class="line">enable: false</span><br><span class="line">length: 150</span><br></pre></td></tr></table></figure></div>
+<p>把enable改为对应的false改为true，length就是预览显示的文字长度，你可以根据你的需要进行更改，然后重新部署，再进主页，你就发现你首页的文章多了一个<strong>阅读全文</strong>的按钮。</p>
+<h1 id="添加动态背景"><a href="#添加动态背景" class="headerlink" title="添加动态背景"></a>添加动态背景</h1><p>先上张图</p>
+<p><img src="C:/Users/Liisyu/Desktop/hexo%E7%9A%84next%E4%B8%BB%E9%A2%98%E8%AF%A6%E7%BB%86%E9%85%8D%E7%BD%AE/1.webp" alt="你想输入的替代文字"></p>
+<p>打开生成的Hexo目录\themes\next/layout/_layout.swig文件，<br>在 &lt; head&gt;中的添加代码</p>
+<div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;% if theme.canvas_nest %&#125;</span><br><span class="line">&lt;script type=&quot;text/javascript&quot; src=&quot;//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">&#123;% endif %&#125;</span><br></pre></td></tr></table></figure></div>
+<p>打开主题配置文件，搜索canvas_nest，将其改成true</p>
+<div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">canvas_nest: true</span><br></pre></td></tr></table></figure></div>
+<p>什么？线条太多了？没事，来看看怎么让线条变少点</p>
+<p>在上一步修改的主题配置文件中，把刚才的那些代码改成下面这样：</p>
+<div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;% if theme.canvas_nest %&#125;</span><br><span class="line">&lt;script type=&quot;text/javascript&quot;</span><br><span class="line">color=&quot;0,0,255&quot; opacity=&apos;0.7&apos; zIndex=&quot;-2&quot; count=&quot;99&quot; src=&quot;//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">&#123;% e</span><br></pre></td></tr></table></figure></div>
+<p>配置项说明<br> color ：线条颜色, 默认: ‘0,0,0’；三个数字分别为(R,G,B)<br> opacity: 线条透明度（0~1）, 默认: 0.5<br> count: 线条的总数量, 默认: 150<br> zIndex: 背景的z-index属性，css属性用于控制所在层的位置, 默认: -1</p>
+<h1 id="分类和标签设置"><a href="#分类和标签设置" class="headerlink" title="分类和标签设置"></a>分类和标签设置</h1><p>这里主要说的是在编写文章的时候，怎么给文章设置标签和分类。</p>
+<p>首先通过<code>hexo n &quot;name&quot;</code>命令来新建一个页面，在source/_posts目录下找到刚才新建的name.md文件，用Typora或者notepad++t打开(推荐Typora)</p>
+<div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">title: name</span><br><span class="line">date: 2014-08-05 11:15:00 </span><br><span class="line">tags: </span><br><span class="line">---</span><br></pre></td></tr></table></figure></div>
+<p>页面默认就是长这样的，可以编辑标题、日期、标签和内容，但是没有分类的选项。我们可以手动加入categories:项,但是下次创建新的页面的时候还是没有，所以我们直接打开scaffolds/post.md文件，在tages:上面加入categories:,保存后，重新执行hexo n ‘name’命令，会发现新建的页面里有categories:项了。</p>
+<p>scaffolds目录下，是新建页面的模板，执行新建命令时，是根据这里的模板页来完成的，所以可以在这里根据你自己的需求添加一些默认值。</p>
+<h1 id="设置分类列表"><a href="#设置分类列表" class="headerlink" title="设置分类列表"></a>设置分类列表</h1><p>在我们编辑文章的时候，直接在categories:项填写属于哪个分类，但如果分类是中文的时候，路径也会包含中文。</p>
+<p>比如分类我们设置的是：</p>
+<div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">categories: 开车</span><br></pre></td></tr></table></figure></div>
+<p>那在生成页面后，分类列表就会出现开车这个选项，他的访问路径是：</p>
+<div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">*/categories/开车</span><br></pre></td></tr></table></figure></div>
+<p>我们都知道，有时候中文路径可能会出现一些奇奇怪怪的问题，所以我们需要路径名和分类名分别设置。</p>
+<p>打开站点配置文件_config.yml，找到如下位置做更改：</p>
+<div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># Category &amp; Tag</span><br><span class="line">default_category: uncategorized</span><br><span class="line">category_map:</span><br><span class="line">    开车: drive</span><br><span class="line">    生活: life</span><br><span class="line">    其他: other</span><br><span class="line">tag_map:</span><br></pre></td></tr></table></figure></div>
+<p>在这里category_map:是设置分类的地方，每行一个分类，冒号前面是分类名称，后面是访问路径。<br>可以提前在这里设置好一些分类，当编辑的文章填写了对应的分类名时，就会自动的按照对应的路径来访问。</p>
+<h1 id="设置标签"><a href="#设置标签" class="headerlink" title="设置标签"></a>设置标签</h1><p>在编辑文章的时候，tags:后面是设置标签的地方，如果有多个标签的话，可以用下面两种办法来设置：</p>
+<p>第一种：</p>
+<div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tages: [标签1,标签2,...标签n]</span><br></pre></td></tr></table></figure></div>
+<p>第二种：</p>
+<div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"> tages: </span><br><span class="line">- 标签1</span><br><span class="line">- 标签2</span><br><span class="line">...</span><br><span class="line">- 标签n</span><br></pre></td></tr></table></figure></div>
+<h1 id="添加文章更新时间"><a href="#添加文章更新时间" class="headerlink" title="添加文章更新时间"></a>添加文章更新时间</h1><p>修改（博客主目录）<code>/themes/next/layout/_macro/post.swig</code> 文件，在<code>&lt;span class=&quot;post-time&quot;&gt;...&lt;/span&gt;</code>标签后添加</p>
+<div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;%if post.updated and post.updated &gt; post.date%&#125;</span><br><span class="line">  &lt;span class=&quot;post-updated&quot;&gt;</span><br><span class="line">    &amp;nbsp; | &amp;nbsp; &#123;&#123; __(&apos;post.updated&apos;) &#125;&#125;</span><br><span class="line">    &lt;time itemprop=&quot;dateUpdated&quot; datetime=&quot;&#123;&#123; moment(post.updated).format() &#125;&#125;&quot; content=&quot;&#123;&#123; date(post.updated, config.date_format) &#125;&#125;&quot;&gt;</span><br><span class="line">      &#123;&#123; date(post.updated, config.date_format) &#125;&#125;</span><br><span class="line">    &lt;/time&gt;</span><br><span class="line">  &lt;/span&gt;</span><br><span class="line">&#123;% endif %&#125;</span><br></pre></td></tr></table></figure></div>
+<p>根据博客配置文件中的 <code>language</code> 参数修改对应的语言配置文件（博客主目录）<code>/themes/next/languages/zh_Hans.yml</code></p>
+<div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">post:</span><br><span class="line">  updated: 更新于</span><br></pre></td></tr></table></figure></div>
+<p>修改主题配置文件（博客主目录）<code>/themes/next/_config.yml</code>，增加一行</p>
+<div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">display_updated: true</span><br></pre></td></tr></table></figure></div>
+<p>或者写文章的时候可以直接在文章开头设置更新时间，没有这参数的话将会显示md文件的修改日期</p>
+<div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">updated: 2018-01-01 12:00:00</span><br></pre></td></tr></table></figure></div>
+<p>添加搜索功能</p>
+<p>安装 <a href="https://link.jianshu.com/?t=https%3A%2F%2Fgithub.com%2Fflashlab%2Fhexo-generator-search" target="_blank" rel="noopener">hexo-generator-searchdb</a> 插件</p>
+<div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install hexo-generator-searchdb --save</span><br></pre></td></tr></table></figure></div>
+<p>打开 <strong>站点配置文件</strong> 找到<code>Extensions</code>在下面添加</p>
+<div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># 搜索</span><br><span class="line">search:</span><br><span class="line">  path: search.xml</span><br><span class="line">  field: post</span><br><span class="line">  format: html</span><br><span class="line">  limit: 10000</span><br></pre></td></tr></table></figure></div>
+<p>3、打开 <strong>主题配置文件</strong> 找到<code>Local search</code>，将<code>enable</code>设置为<code>true</code></p>
+<h1 id="添加阅读全文按钮"><a href="#添加阅读全文按钮" class="headerlink" title="添加阅读全文按钮"></a>添加阅读全文按钮</h1><p>因为在你的博客主页会有多篇文章，如果你想让你的文章只显示一部分，多余的可以点击阅读全文来查看，那么你需要在你的文章中添加</p>
+<div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--more--&gt;</span><br></pre></td></tr></table></figure></div>
+<p>其后面的部分就不会显示了，只能点击阅读全文才能看</p>
+<p>修改文章内链接文本样式</p>
+<p>打开文件 <code>themes/next/source/css/_common/components/post/post.styl</code>，在末尾添加</p>
+<div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">.post-body p a &#123;</span><br><span class="line">  color: #0593d3;</span><br><span class="line">  border-bottom: none;</span><br><span class="line">  border-bottom: 1px solid #0593d3;</span><br><span class="line">  &amp;:hover &#123;</span><br><span class="line">    color: #fc6423;</span><br><span class="line">    border-bottom: none;</span><br><span class="line">    border-bottom: 1px solid #fc6423;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+<p>其中选择 .post-body 是为了不影响标题，选择 p 是为了不影响首页“阅读全文”的显示样式,颜色可以自己定义。</p>
+<h1 id="设置网站缩略图标"><a href="#设置网站缩略图标" class="headerlink" title="设置网站缩略图标"></a>设置网站缩略图标</h1><p>从网上看了很多设置方法都是说把favicon.ico放到站点目录的source目录下就可以了，可是我试了好多遍，并不行</p>
+<p>我的设置方法是这样的：把你的图片（png或jpg格式，不是favicon.ico）放在<code>themes/next/source/images</code>里，然后打开 <strong>主题配置文件</strong> 找到<code>favicon</code>，将<code>small、medium、apple_touch_icon</code>三个字段的值都设置成<code>/images/图片名.jpg</code>就可以了，其他字段都注释掉。</p>
+<p><img src="C:/Users/Liisyu/Desktop/hexo%E7%9A%84next%E4%B8%BB%E9%A2%98%E8%AF%A6%E7%BB%86%E9%85%8D%E7%BD%AE/2.webp" alt="你想输入的替代文字"></p>
+<p>设置文章字体的颜色、大小</p>
+<p><img src="C:/Users/Liisyu/Desktop/hexo%E7%9A%84next%E4%B8%BB%E9%A2%98%E8%AF%A6%E7%BB%86%E9%85%8D%E7%BD%AE/3.webp" alt="你想输入的替代文字"></p>
+<p>如果想设置某一句的颜色或大小，只需用html语法写出来就行了</p>
+<div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="HTML"><figure class="iseeu highlight /html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">接下来就是见证奇迹的时刻</span><br><span class="line"><span class="tag">&lt;<span class="name">font</span> <span class="attr">color</span>=<span class="string">"#FF0000"</span>&gt;</span> 我可以设置这一句的颜色哈哈 <span class="tag">&lt;/<span class="name">font</span>&gt;</span> </span><br><span class="line"><span class="tag">&lt;<span class="name">font</span> <span class="attr">size</span>=<span class="string">6</span>&gt;</span> 我还可以设置这一句的大小嘻嘻 <span class="tag">&lt;/<span class="name">font</span>&gt;</span> </span><br><span class="line"><span class="tag">&lt;<span class="name">font</span> <span class="attr">size</span>=<span class="string">5</span> <span class="attr">color</span>=<span class="string">"#FF0000"</span>&gt;</span> 我甚至可以设置这一句的颜色和大小呵呵<span class="tag">&lt;/<span class="name">font</span>&gt;</span></span><br></pre></td></tr></table></figure></div>
+<h1 id="设置文字居中"><a href="#设置文字居中" class="headerlink" title="设置文字居中"></a>设置文字居中</h1><div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;center&gt;这一行需要居中&lt;/center&gt;</span><br></pre></td></tr></table></figure></div>
+<h1 id="添加评论系统"><a href="#添加评论系统" class="headerlink" title="添加评论系统"></a>添加评论系统</h1><p>目前国内比较有名的多说、网易云跟帖评论系统都已停止服务了，国外的Disqus评论系统还得需要翻墙，所以不推荐使用，剩下的还有搜狐畅言、友言、来必力等。<br>本来想使用畅言的，结果注册完之后还得要求备案，我只想说F开头的那个单词，果断放弃。<br>后来选择了友言</p>
+<p>1、进入<a href="https://link.jianshu.com/?t=http%3A%2F%2Fwww.uyan.cc" target="_blank" rel="noopener">友言官网</a>注册、登录步骤我就不介绍了<br>2、登录完成之后，点击获取代码，你会发现出来了一段代码，里面有你的<code>uid=1234567</code><br>3、打开 <strong>主题配置文件</strong> 找到<code>youyan_uid</code>将值设置为上面的uid就可以了</p>
+<h1 id="添加站点访问计数"><a href="#添加站点访问计数" class="headerlink" title="添加站点访问计数"></a>添加站点访问计数</h1><p>站点访问计数有名的就是<a href="https://link.jianshu.com/?t=http%3A%2F%2Fbusuanzi.ibruce.info" target="_blank" rel="noopener">不蒜子</a>，使用起来非常方便<br>1、安装脚本<br>打开 <code>themes/next/layout/_partial/footer.swig</code>，将下面这段代码添加到里面</p>
+<div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;div&gt;</span><br><span class="line">&lt;script async src=&quot;https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">&lt;span id=&quot;busuanzi_container_site_pv&quot; style=&apos;display:none&apos;&gt;</span><br><span class="line">    本站总访问量 &lt;span id=&quot;busuanzi_value_site_pv&quot;&gt;&lt;/span&gt; 次</span><br><span class="line">    &lt;span class=&quot;post-meta-divider&quot;&gt;|&lt;/span&gt;</span><br><span class="line">&lt;/span&gt;</span><br><span class="line">&lt;span id=&quot;busuanzi_container_site_uv&quot; style=&apos;display:none&apos;&gt;</span><br><span class="line">    有&lt;span id=&quot;busuanzi_value_site_uv&quot;&gt;&lt;/span&gt;人看过我的博客啦</span><br><span class="line">&lt;/span&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure></div>
+<p>添加的位置如下图，可自行根据个人喜好更换位置</p>
+<p><img src="C:/Users/Liisyu/Desktop/hexo%E7%9A%84next%E4%B8%BB%E9%A2%98%E8%AF%A6%E7%BB%86%E9%85%8D%E7%BD%AE/5.webp" alt="你想输入的替代文字"></p>
+<p>以上只是显示站点的访问次数，如果想显示每篇文章的访问次数，打开 <code>themes/next/layout/_macro/post.swig</code>，在第一行增加<code>is_pv</code>字段</p>
+<div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;% macro render(post, is_index, is_pv, post_extra_class) %&#125;</span><br></pre></td></tr></table></figure></div>
+<p>然后将这段代码插入到里面</p>
+<div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;% if is_pv %&#125;</span><br><span class="line">  &lt;span class=&quot;post-meta-divider&quot;&gt;|&lt;/span&gt;</span><br><span class="line">  &lt;span id=&quot;busuanzi_value_page_pv&quot;&gt;&lt;/span&gt;次阅读</span><br><span class="line">&#123;% endif %&#125;</span><br></pre></td></tr></table></figure></div>
+<p>插入的位置</p>
+<p><img src="C:/Users/Liisyu/Desktop/hexo%E7%9A%84next%E4%B8%BB%E9%A2%98%E8%AF%A6%E7%BB%86%E9%85%8D%E7%BD%AE/4.webp" alt="你想输入的替代文字"></p>
+<p>然后再打开 <code>themes/next/layout/post.swig</code>，这个文件是文章的模板，给render方法传入参数（对应刚才添加的<code>is_pv</code>字段）</p>
+<p><img src="C:/Users/Liisyu/Desktop/hexo%E7%9A%84next%E4%B8%BB%E9%A2%98%E8%AF%A6%E7%BB%86%E9%85%8D%E7%BD%AE/6.webp" alt="你想输入的替代文字"></p>
+<p>最后再打开 <strong>themes/next/layout/index.swig</strong>，这个文件是首页的模板，给render方法传入参数（对应刚才添加的is_pv字段）</p>
+<p><img src="C:/Users/Liisyu/Desktop/hexo%E7%9A%84next%E4%B8%BB%E9%A2%98%E8%AF%A6%E7%BB%86%E9%85%8D%E7%BD%AE/7.webp" alt="你想输入的替代文字"></p>
+<p>OK！设置完毕</p>
+<h1 id="去掉文章目录标题的自动编号"><a href="#去掉文章目录标题的自动编号" class="headerlink" title="去掉文章目录标题的自动编号"></a>去掉文章目录标题的自动编号</h1><p>我们自己写文章的时候一般都会自己带上标题编号，但是默认的主题会给我们带上编号，很是别扭，如何去掉呢？<br>打开<strong>主题配置文件</strong>，找到</p>
+<div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"># Table Of Contents in the Sidebar</span><br><span class="line">toc:</span><br><span class="line">  enable: true</span><br><span class="line"></span><br><span class="line">  # Automatically add list number to toc.</span><br><span class="line">  number: true</span><br><span class="line"></span><br><span class="line">  # If true, all words will placed on next lines if header width longer then sidebar width.</span><br><span class="line">  wrap: false</span><br></pre></td></tr></table></figure></div>
+<p>将<code>number</code>改为<code>false</code>即可</p>
+<h1 id="自定义样式-引用"><a href="#自定义样式-引用" class="headerlink" title="自定义样式 引用"></a>自定义样式 引用</h1><p>需加入<code>custom.styl</code>的代码</p>
+<p>文件位置：~/blog/themes/next/source/css/_custom/custom.styl</p>
+<div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">// 自定义的引用样式</span><br><span class="line">blockquote.question &#123;</span><br><span class="line">    color: #555;</span><br><span class="line">    border-left: 4px solid rgb(16, 152, 173);</span><br><span class="line">    background-color: rgb(227, 242, 253);</span><br><span class="line">    border-top-right-radius: 3px;</span><br><span class="line">    border-bottom-right-radius: 3px;</span><br><span class="line">    margin-bottom: 20px;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+<ul>
+<li>文字颜色改<code>color</code>的值</li>
+<li>背景色改<code>background-color</code>的值</li>
+<li>边框颜色和粗细改<code>border-left</code>的值</li>
+</ul>
+<p>效果：</p>
+<blockquote class="question">内容</blockquote>
+
+<p>使用方法：</p>
+<div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">内容</span><br></pre></td></tr></table></figure></div>
+<h1 id="修改hexo的主题nexT中的Pisces主题宽度"><a href="#修改hexo的主题nexT中的Pisces主题宽度" class="headerlink" title="修改hexo的主题nexT中的Pisces主题宽度"></a>修改hexo的主题nexT中的Pisces主题宽度</h1><p>在<code>source/css/_schemes/Picses/_layout.styl</code>文件末尾添加如下代码</p>
+<div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">// 以下为新增代码！！</span><br><span class="line">header&#123; width: 90% !important; &#125;</span><br><span class="line">header.post-header &#123;</span><br><span class="line">  width: auto !important;</span><br><span class="line">&#125;</span><br><span class="line">.container .main-inner &#123; width: 90%; &#125;</span><br><span class="line">.content-wrap &#123; width: calc(100% - 260px); &#125;</span><br><span class="line"></span><br><span class="line">.header &#123;</span><br><span class="line">  +tablet() &#123;</span><br><span class="line">    width: auto !important;</span><br><span class="line">  &#125;</span><br><span class="line">  +mobile() &#123;</span><br><span class="line">    width: auto !important;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">.container .main-inner &#123;</span><br><span class="line">  +tablet() &#123;</span><br><span class="line">    width: auto !important;</span><br><span class="line">  &#125;</span><br><span class="line">  +mobile() &#123;</span><br><span class="line">    width: auto !important;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">.content-wrap &#123;</span><br><span class="line">  +tablet() &#123;</span><br><span class="line">    width: 100% !important;</span><br><span class="line">  &#125;</span><br><span class="line">  +mobile() &#123;</span><br><span class="line">    width: 100% !important;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+<h1 id="更多主题和插件"><a href="#更多主题和插件" class="headerlink" title="更多主题和插件"></a>更多主题和插件</h1><p>还有其他更多的主题配置，请查看<a href="https://link.jianshu.com/?t=http%3A%2F%2Ftheme-next.iissnan.com%2Ftheme-settings.html" target="_blank" rel="noopener">主题配置</a></p>
+<p>还有其他更多的插件，请查看<a href="https://link.jianshu.com/?t=https%3A%2F%2Fhexo.io%2Fplugins%2F" target="_blank" rel="noopener">Hexo插件</a></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/blog/tags/Hexo/" rel="tag"># Hexo</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/2018/02/13/SpringBoot.all/" rel="next" title="SpringBoot">
+                <i class="fa fa-chevron-left"></i> SpringBoot
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/2018/02/15/Centos.all/" rel="prev" title="Centos">
+                Centos <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/blog/images/toux.jpg" alt="Liisyu">
+            
+              <p class="site-author-name" itemprop="name">Liisyu</p>
+              <div class="site-description motion-element" itemprop="description">我只是一个兴趣使然的程序员</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/blog/archives/">
+                
+                    <span class="site-state-item-count">19</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/blog/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">12</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/blog/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">18</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="http://liisyu.gitee.io/cv/" title="简历 &rarr; http://liisyu.gitee.io/cv/" rel="noopener" target="_blank"><i class="fa fa-fw fa-user-o"></i>简历</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="mailto:575600714@qq.com.com" title="E-Mail(QQ) &rarr; mailto:575600714@qq.com.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail(QQ)</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="mailto:swordmaster2014@gmail.com" title="E-Mail(Google) &rarr; mailto:swordmaster2014@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-google"></i>E-Mail(Google)</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/FameLsy" title="GitHub &rarr; https://github.com/FameLsy" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://gitee.com/liisyu" title="Gitee &rarr; https://gitee.com/liisyu" rel="noopener" target="_blank"><i class="fa fa-fw fa-git-square"></i>Gitee</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://blog.csdn.net/masorl" title="CSDN &rarr; https://blog.csdn.net/masorl" rel="noopener" target="_blank"><i class="fa fa-fw fa-tree"></i>CSDN</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="tencent://message/?uin=575600714&Site=qq&Menu=yes" title="QQ &rarr; tencent://message/?uin=575600714&Site=qq&Menu=yes" rel="noopener" target="_blank"><i class="fa fa-fw fa-qq"></i>QQ</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://messilessblog.com/" title="https://messilessblog.com/" rel="noopener" target="_blank">汪酱 BLOG</a>
+                  </li>
+                
+              </ul>
+			   
+            </div>
+          
+
+          
+            
+          
+          
+
+    <div class="wechat-box">
+      <div class="weixin-description">微信扫一扫，联系我</div>
+	  <img src="/blog/images/wechat.jpg" alt="wechat">
+    </div>
+
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#安装Hexo"><span class="nav-number">1.</span> <span class="nav-text">安装Hexo</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装前提"><span class="nav-number">1.1.</span> <span class="nav-text">安装前提</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装-Git"><span class="nav-number">1.2.</span> <span class="nav-text">安装 Git</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装Node-js"><span class="nav-number">1.3.</span> <span class="nav-text">安装Node.js</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装Hexo-1"><span class="nav-number">1.4.</span> <span class="nav-text">安装Hexo</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#建站"><span class="nav-number">2.</span> <span class="nav-text">建站</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#建立博客站"><span class="nav-number">2.1.</span> <span class="nav-text">建立博客站</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#配置"><span class="nav-number">3.</span> <span class="nav-text">配置</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#网站配置"><span class="nav-number">3.1.</span> <span class="nav-text">网站配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#网址配置"><span class="nav-number">3.2.</span> <span class="nav-text">网址配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置目录"><span class="nav-number">3.3.</span> <span class="nav-text">配置目录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置-1"><span class="nav-number">3.4.</span> <span class="nav-text">配置</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#更新博客文件"><span class="nav-number">4.</span> <span class="nav-text">更新博客文件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#挂载到Github"><span class="nav-number">5.</span> <span class="nav-text">挂载到Github</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#个性化Hexo"><span class="nav-number">6.</span> <span class="nav-text">个性化Hexo</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#自定义CSS样式"><span class="nav-number">6.1.</span> <span class="nav-text">自定义CSS样式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自定义JS代码"><span class="nav-number">6.2.</span> <span class="nav-text">自定义JS代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#修改代码块"><span class="nav-number">6.3.</span> <span class="nav-text">修改代码块</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#主题"><span class="nav-number">7.</span> <span class="nav-text">主题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#基本信息配置"><span class="nav-number">8.</span> <span class="nav-text">基本信息配置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#菜单设置"><span class="nav-number">9.</span> <span class="nav-text">菜单设置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Next主题样式设置"><span class="nav-number">10.</span> <span class="nav-text">Next主题样式设置</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#侧栏设置"><span class="nav-number">10.1.</span> <span class="nav-text">侧栏设置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#开启侧边栏社交链接"><span class="nav-number">10.2.</span> <span class="nav-text">开启侧边栏社交链接</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#开启打赏功能"><span class="nav-number">10.3.</span> <span class="nav-text">开启打赏功能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#开启友情链接"><span class="nav-number">10.4.</span> <span class="nav-text">开启友情链接</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#开启订阅微信公众号"><span class="nav-number">10.5.</span> <span class="nav-text">开启订阅微信公众号</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#头像设置"><span class="nav-number">11.</span> <span class="nav-text">头像设置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#设置首页不显示全文-只显示预览"><span class="nav-number">12.</span> <span class="nav-text">设置首页不显示全文(只显示预览)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#添加动态背景"><span class="nav-number">13.</span> <span class="nav-text">添加动态背景</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#分类和标签设置"><span class="nav-number">14.</span> <span class="nav-text">分类和标签设置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#设置分类列表"><span class="nav-number">15.</span> <span class="nav-text">设置分类列表</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#设置标签"><span class="nav-number">16.</span> <span class="nav-text">设置标签</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#添加文章更新时间"><span class="nav-number">17.</span> <span class="nav-text">添加文章更新时间</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#添加阅读全文按钮"><span class="nav-number">18.</span> <span class="nav-text">添加阅读全文按钮</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#设置网站缩略图标"><span class="nav-number">19.</span> <span class="nav-text">设置网站缩略图标</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#设置文字居中"><span class="nav-number">20.</span> <span class="nav-text">设置文字居中</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#添加评论系统"><span class="nav-number">21.</span> <span class="nav-text">添加评论系统</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#添加站点访问计数"><span class="nav-number">22.</span> <span class="nav-text">添加站点访问计数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#去掉文章目录标题的自动编号"><span class="nav-number">23.</span> <span class="nav-text">去掉文章目录标题的自动编号</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#自定义样式-引用"><span class="nav-number">24.</span> <span class="nav-text">自定义样式 引用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#修改hexo的主题nexT中的Pisces主题宽度"><span class="nav-number">25.</span> <span class="nav-text">修改hexo的主题nexT中的Pisces主题宽度</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#更多主题和插件"><span class="nav-number">26.</span> <span class="nav-text">更多主题和插件</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Liisyu</span>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/blog/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/blog/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/blog/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/blog/js/utils.js?v=7.1.0"></script>
+
+  <script src="/blog/js/motion.js?v=7.1.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/blog/js/schemes/muse.js?v=7.1.0"></script>
+
+
+
+  
+  <script src="/blog/js/scrollspy.js?v=7.1.0"></script>
+<script src="/blog/js/post-details.js?v=7.1.0"></script>
+
+
+
+  
+
+
+  <script src="/blog/js/next-boot.js?v=7.1.0"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/blog/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <script type="text/javascript" src="/blog/js/clipboard.min.js"></script>  
+  <script type="text/javascript" src="/blog/js/clipboard-use.js"></script>
+</body>
+</html>

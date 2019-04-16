@@ -1765,7 +1765,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #e0f2a2;
+  background: #ffd7d4;
 }
 .feed-link,
 .chat {
@@ -2511,17 +2511,23 @@ body {
   max-width: 80%;
   height: auto;
 }
+.post-body h3 {
+  color: #f77a0b;
+}
 .post-body h2 {
-  border-bottom: 8px solid #57c4d0;
   display: inline-block;
-  color: #57c4d0;
+  color: #2674ba;
+  font-size: 23px;
 }
 .post-body h1 {
-  margin-left: -36px;
-  padding-left: 25px;
-  border-left: 8px solid #c557d0;
-  color: #c557d0;
+  padding: 50px 0;
+  border-bottom: 1px solid #bbb;
+  color: #222;
   font-size: 30px;
+}
+th {
+  background-color: #2674ba;
+  color: #fff;
 }
 .highlight {
   margin: 38px 0 0 0 !important;
