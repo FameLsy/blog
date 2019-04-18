@@ -113,7 +113,7 @@
 <meta property="og:image" content="https://raw.githubusercontent.com/FameLsy/Images/master/javamode/jvm7.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/FameLsy/Images/master/javamode/jvm8.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/FameLsy/Images/master/javamode/jvm9.png">
-<meta property="og:updated_time" content="2019-04-16T15:06:41.545Z">
+<meta property="og:updated_time" content="2019-04-18T08:15:16.542Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JVM">
 <meta name="twitter:image" content="https://raw.githubusercontent.com/FameLsy/Images/master/Fullmetal%20Alchemist/wallhaven-389513.jpg">
@@ -439,7 +439,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-04-16 23:06:41" itemprop="dateModified" datetime="2019-04-16T23:06:41+08:00">2019-04-16</time>
+                <time title="修改时间：2019-04-18 16:15:16" itemprop="dateModified" datetime="2019-04-18T16:15:16+08:00">2019-04-18</time>
               
             
           </span>
@@ -535,8 +535,7 @@
 </ul>
 <h2 id="方法区"><a href="#方法区" class="headerlink" title="方法区"></a>方法区</h2><p> 方法区</p>
 <ul>
-<li><strong>线程间共享</strong>内存，别名<code>Non-Heap</code>(非堆);又被称为<code>永久代</code><sup id="fnref:13"><a href="#fn:13" rel="footnote"><span class="hint--top hint--error hint--medium hint--rounded hint--bounce" aria-label="【永久代】其实是将GC分代算法扩展至方法区,HotSpot虚拟机特有。JDK1.7字符串常量池已经移除，JDK1.8完全移除永久代，原因是永久代更容易使内存溢出
-">[13]</span></a></sup></li>
+<li><strong>线程间共享</strong>内存，别名<code>Non-Heap</code>(非堆);又被称为<code>永久代</code><sup id="fnref:13"><a href="#fn:13" rel="footnote"><span class="hint--top hint--error hint--medium hint--rounded hint--bounce" aria-label="【高位在前】被称为“Big-Endian”,具体是指最高位字节在地址最低位，最低为字节在地址最高位的顺序存储数据">[13]</span></a></sup></li>
 <li>用于存储已被虚拟机加载的<strong>类信息、常量、静态变量、即时编译器编译后的代码</strong>等数据</li>
 <li>当方法区无法满足内存分配需求时，抛出<code>OutOfMemoryError</code>异常</li>
 </ul>
@@ -1324,7 +1323,976 @@
 <p>在JDk1.5中，java.lang.Thread类新增了一个getAllStackTraces()方法用于获取虚拟机中所有线程的StackTraceElement对象。使用这个方法可以通过简单的几行代码就完成jstack的大部分功能。在实际项目中可以用这个方法做管理员页面，以便随时使用浏览器来查看线程堆栈</p>
 <h1 id="Java-VisualVM"><a href="#Java-VisualVM" class="headerlink" title="Java VisualVM"></a>Java VisualVM</h1><h2 id="内存监控功能"><a href="#内存监控功能" class="headerlink" title="内存监控功能"></a>内存监控功能</h2><p>限定java堆的大小为100m,最大和最小设置为同一个值可以避免堆自动扩展</p>
 <div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="JAVA"><figure class="iseeu highlight /java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> *  VM Args: -Xms100m -Xmx100m -XX:+UseSerialGC</span></span><br><span class="line"><span class="comment"> *  代码作用</span></span><br><span class="line"><span class="comment"> *	以64KB/50毫秒的速度往Java堆中填充数据</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HeapOOM</span> </span>&#123;</span><br><span class="line">    <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">OOMObject</span></span>&#123;</span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">byte</span>[] placeholder = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">64</span> * <span class="number">1024</span>];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">fillHeap</span><span class="params">(<span class="keyword">int</span> num)</span> <span class="keyword">throws</span> InterruptedException</span>&#123;</span><br><span class="line">        List&lt;OOMObject&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; num; i++)&#123;</span><br><span class="line">            Thread.sleep(<span class="number">50</span>);</span><br><span class="line">            list.add(<span class="keyword">new</span> OOMObject());</span><br><span class="line">        &#125;</span><br><span class="line">        System.gc();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception</span>&#123;</span><br><span class="line">        fillHeap(<span class="number">1000</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
-<h1 id="相关注脚"><a href="#相关注脚" class="headerlink" title="相关注脚"></a>相关注脚</h1><div id="footnotes"><hr><div id="footnotelist"><ol style="list-style: none; padding-left: 0; margin-left: 40px"><li id="fn:1"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">1.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;">【MinorGC】从年轻代空间（包括Eden和Survivor区域）回收内存<a href="#fnref:1" rev="footnote"> ↩</a></span></li><li id="fn:2"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">2.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;">【FullGC】<a href="#fnref:2" rev="footnote"> ↩</a></span></li><li id="fn:3"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">3.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;">【浮动垃圾】在并发清除阶段，用户线程依旧在运行，那么可能产生新的垃圾，而这些垃圾已经是在标记之后了，所以这次清楚并不会清理，只能留在下次。这样的垃圾，就被成为浮动垃圾<a href="#fnref:3" rev="footnote"> ↩</a></span></li><li id="fn:4"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">4.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;">【并行（Parallel)】指多条垃圾收集线程并行工作，但此时用户线程仍然处于等待状态。<a href="#fnref:4" rev="footnote"> ↩</a></span></li><li id="fn:5"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">5.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;">【并发（Concurrent)】指用户线程与垃圾收集线程同时执行（但不一定是并行，可能会交替执行），用户程序在继续运行，而垃圾收集器运行在另一个CPU上。<a href="#fnref:5" rev="footnote"> ↩</a></span></li><li id="fn:6"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">6.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;">【吞吐量】CPU用于运行用户代码的时间与CPU总消耗时间的比值，即吞吐量=运行用户代码时间/(运行用户代码时间+垃圾回收时间)<a href="#fnref:6" rev="footnote"> ↩</a></span></li><li id="fn:7"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">7.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;">【老年代】按照分代收集算法划分java堆，老年代中的对象存活率高<a href="#fnref:7" rev="footnote"> ↩</a></span></li><li id="fn:8"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">8.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;">【新生代】按照分代收集算法划分java堆，新生代中的对象存活率低<a href="#fnref:8" rev="footnote"> ↩</a></span></li><li id="fn:9"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">9.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;">【大对象】需要大量连续空间的Java对象<a href="#fnref:9" rev="footnote"> ↩</a></span></li><li id="fn:10"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">10.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;">【-Xoss】设置本地方法栈大小<a href="#fnref:10" rev="footnote"> ↩</a></span></li><li id="fn:11"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">11.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;">需要远程主机提供RMI支持，可以使用Sun提供的jstatd工具简历远程RMI服务器<a href="#fnref:11" rev="footnote"> ↩</a></span></li><li id="fn:12"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">12.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;">【线程快照】当前虚拟机内每一条线程正在执行的方法堆栈集合<a href="#fnref:12" rev="footnote"> ↩</a></span></li><li id="fn:13"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">13.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;">【永久代】其实是将GC分代算法扩展至方法区,HotSpot虚拟机特有。JDK1.7字符串常量池已经移除，JDK1.8完全移除永久代，原因是永久代更容易使内存溢出<a href="#fnref:13" rev="footnote"> ↩</a></span></li></ol></div></div>
+<h1 id="Class类结构"><a href="#Class类结构" class="headerlink" title="Class类结构"></a>Class类结构</h1><p>一个<code>Class</code>文件对应着唯一的一个类或接口的定义信息，但要注意的是，类和接口的定义信息并不一定在文件里，因为它并不一定以磁盘文件的形式存在</p>
+<p>Class文件是一组<strong>以8位字节为基础单位的二进制流</strong>，各个数据之间紧密相连。当数据高于8位时，会按照<code>高位在前</code></p>
+<p>Class文件结构中含有两种数据：</p>
+<ul>
+<li><p>无符号数：</p>
+<p>属于基本类型，以u1、u2、u4、u8代表1、2、4、8个字节的无符号数，可以用来描述数字、索引引用、数量值或按照UTF-8编码构成字符串值</p>
+</li>
+<li><p>表：</p>
+<p>表是由多个无符号数和其他表作为数据项构成的复合数据类型，习惯以<code>_info</code>结尾。<strong>整个Class文件，就是一张表</strong></p>
+</li>
+</ul>
+<p>Class文件格式</p>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th style="text-align:center">名称</th>
+<th>数量</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>u4</td>
+<td style="text-align:center">magic</td>
+<td>1</td>
+</tr>
+<tr>
+<td>u2</td>
+<td style="text-align:center">minor_version</td>
+<td>1</td>
+</tr>
+<tr>
+<td>u2</td>
+<td style="text-align:center">major_version</td>
+<td>1</td>
+</tr>
+<tr>
+<td>u2</td>
+<td style="text-align:center">constant_pool_count</td>
+<td>1</td>
+</tr>
+<tr>
+<td>cp_info</td>
+<td style="text-align:center">constant_pool</td>
+<td>constant_pool_count - 1</td>
+</tr>
+<tr>
+<td>u2</td>
+<td style="text-align:center">access_flags</td>
+<td>1</td>
+</tr>
+<tr>
+<td>u2</td>
+<td style="text-align:center">this_class</td>
+<td>1</td>
+</tr>
+<tr>
+<td>u2</td>
+<td style="text-align:center">super_class</td>
+<td>1</td>
+</tr>
+<tr>
+<td>u2</td>
+<td style="text-align:center">interfaces_count</td>
+<td>1</td>
+</tr>
+<tr>
+<td>u2</td>
+<td style="text-align:center">interfaces</td>
+<td>interfaces_count</td>
+</tr>
+<tr>
+<td>u2</td>
+<td style="text-align:center">fields_count</td>
+<td>1</td>
+</tr>
+<tr>
+<td>field_info</td>
+<td style="text-align:center">fields</td>
+<td>fields_count</td>
+</tr>
+<tr>
+<td>u2</td>
+<td style="text-align:center">methods_count</td>
+<td>1</td>
+</tr>
+<tr>
+<td>method_info</td>
+<td style="text-align:center">methods</td>
+<td>methods_count</td>
+</tr>
+<tr>
+<td>u2</td>
+<td style="text-align:center">attribute_count</td>
+<td>1</td>
+</tr>
+<tr>
+<td>attribute_info</td>
+<td style="text-align:center">attributes</td>
+<td>attributes_count</td>
+</tr>
+</tbody>
+</table>
+<h2 id="魔数与Class版本号"><a href="#魔数与Class版本号" class="headerlink" title="魔数与Class版本号"></a>魔数与Class版本号</h2><p>Class文件的头4个字节被称为魔数，它的唯一作用是标识这是一个可以被虚拟机接受的Class文件。</p>
+<div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="JAVA"><figure class="iseeu highlight /java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//可以看到0~3 四个字节即为Class的魔数为：CAFEBABE，咖啡宝宝</span></span><br><span class="line"><span class="comment">//4~5字节表示次版本号</span></span><br><span class="line"><span class="comment">//6~7字节表示主版本好,0x34换成10进制就是52，JDK1.1支持45.0~45.65535的Class文件。JDK1.2的话，可以执行45.0~46.65535的Class文件。这里的52，说明使用的是JDK1.8	</span></span><br><span class="line"> Offset: <span class="number">00</span> <span class="number">01</span> <span class="number">02</span> <span class="number">03</span> <span class="number">04</span> <span class="number">05</span> <span class="number">06</span> <span class="number">07</span> <span class="number">08</span> <span class="number">09</span> <span class="number">0</span>A <span class="number">0</span>B <span class="number">0</span>C <span class="number">0</span>D <span class="number">0</span>E <span class="number">0F</span> 	</span><br><span class="line"><span class="number">00000000</span>: CA FE BA BE <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">34</span> <span class="number">00</span> <span class="number">41</span> <span class="number">0</span>A <span class="number">00</span> <span class="number">0</span>D <span class="number">00</span> <span class="number">2</span>B <span class="number">07</span>    J~:&gt;...<span class="number">4</span>.A....+.</span><br><span class="line"><span class="number">00000010</span>: <span class="number">00</span> <span class="number">2</span>C <span class="number">0</span>A <span class="number">00</span> <span class="number">02</span> <span class="number">00</span> <span class="number">2</span>B <span class="number">05</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">32</span>    .,....+........<span class="number">2</span></span><br><span class="line"><span class="number">00000020</span>: <span class="number">0</span>A <span class="number">00</span> <span class="number">2</span>D <span class="number">00</span> <span class="number">2</span>E <span class="number">07</span> <span class="number">00</span> <span class="number">2F</span> <span class="number">0</span>A <span class="number">00</span> <span class="number">07</span> <span class="number">00</span> <span class="number">2</span>B <span class="number">0</span>B <span class="number">00</span> <span class="number">30</span>    ..-..../....+..<span class="number">0</span></span><br><span class="line"><span class="number">00000030</span>: <span class="number">00</span> <span class="number">31</span> <span class="number">0</span>A <span class="number">00</span> <span class="number">32</span> <span class="number">00</span> <span class="number">33</span> <span class="number">0</span>A <span class="number">00</span> <span class="number">0</span>C <span class="number">00</span> <span class="number">34</span> <span class="number">07</span> <span class="number">00</span> <span class="number">35</span> <span class="number">07</span>    .<span class="number">1</span>..<span class="number">2.3</span>....<span class="number">4</span>..<span class="number">5</span>.</span><br><span class="line"><span class="number">00000040</span>: <span class="number">00</span> <span class="number">36</span> <span class="number">01</span> <span class="number">00</span> <span class="number">09</span> <span class="number">4F</span> <span class="number">4F</span> <span class="number">4</span>D <span class="number">4F</span> <span class="number">62</span> <span class="number">6</span>A <span class="number">65</span> <span class="number">63</span> <span class="number">74</span> <span class="number">01</span> <span class="number">00</span>    .<span class="number">6</span>...OOMObject..</span><br><span class="line"><span class="number">00000050</span>: <span class="number">0</span>C <span class="number">49</span> <span class="number">6</span>E <span class="number">6</span>E <span class="number">65</span> <span class="number">72</span> <span class="number">43</span> <span class="number">6</span>C <span class="number">61</span> <span class="number">73</span> <span class="number">73</span> <span class="number">65</span> <span class="number">73</span> <span class="number">01</span> <span class="number">00</span> <span class="number">06</span>    .InnerClasses...</span><br><span class="line"><span class="number">00000060</span>: <span class="number">3</span>C <span class="number">69</span> <span class="number">6</span>E <span class="number">69</span> <span class="number">74</span> <span class="number">3</span>E <span class="number">01</span> <span class="number">00</span> <span class="number">03</span> <span class="number">28</span> <span class="number">29</span> <span class="number">56</span> <span class="number">01</span> <span class="number">00</span> <span class="number">04</span> <span class="number">43</span>    &lt;init&gt;...()V...C</span><br><span class="line"><span class="number">00000070</span>: <span class="number">6F</span> <span class="number">64</span> <span class="number">65</span> <span class="number">01</span> <span class="number">00</span> <span class="number">0F</span> <span class="number">4</span>C <span class="number">69</span> <span class="number">6</span>E <span class="number">65</span> <span class="number">4</span>E <span class="number">75</span> <span class="number">6</span>D <span class="number">62</span> <span class="number">65</span> <span class="number">72</span></span><br></pre></td></tr></table></figure></div>
+<h2 id="常量池"><a href="#常量池" class="headerlink" title="常量池"></a>常量池</h2><p>常量池</p>
+<ul>
+<li>可以理解为Class文件中的资源仓库</li>
+<li>是Class文件结构中与其他项目关联最多的数据类型</li>
+<li>占用Class文件空间最大的项目之一</li>
+<li>Class文件中第一个出现的表类型数据项目</li>
+</ul>
+<p>在回顾Class文件</p>
+<div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="JAVA"><figure class="iseeu highlight /java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//8~9字节代表了常量池的的入口，是一个u2类型的数据，代表常量池容量计数值。Ox0041,换成10进制的话就是65，该数值说明常量池中有64项常量，索引范围从1~64。计数从1开始计数（除了常量池，其他计数都从0开始）</span></span><br><span class="line"><span class="comment">//剩下的第0项常量有特殊含义，表示不引用任何一个常量池项目</span></span><br><span class="line"> Offset: <span class="number">00</span> <span class="number">01</span> <span class="number">02</span> <span class="number">03</span> <span class="number">04</span> <span class="number">05</span> <span class="number">06</span> <span class="number">07</span> <span class="number">08</span> <span class="number">09</span> <span class="number">0</span>A <span class="number">0</span>B <span class="number">0</span>C <span class="number">0</span>D <span class="number">0</span>E <span class="number">0F</span> 	</span><br><span class="line"><span class="number">00000000</span>: CA FE BA BE <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">34</span> <span class="number">00</span> <span class="number">41</span> <span class="number">0</span>A <span class="number">00</span> <span class="number">0</span>D <span class="number">00</span> <span class="number">2</span>B <span class="number">07</span>    J~:&gt;...<span class="number">4</span>.A....+.</span><br><span class="line"><span class="number">00000010</span>: <span class="number">00</span> <span class="number">2</span>C <span class="number">0</span>A <span class="number">00</span> <span class="number">02</span> <span class="number">00</span> <span class="number">2</span>B <span class="number">05</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">32</span>    .,....+........<span class="number">2</span></span><br><span class="line"><span class="number">00000020</span>: <span class="number">0</span>A <span class="number">00</span> <span class="number">2</span>D <span class="number">00</span> <span class="number">2</span>E <span class="number">07</span> <span class="number">00</span> <span class="number">2F</span> <span class="number">0</span>A <span class="number">00</span> <span class="number">07</span> <span class="number">00</span> <span class="number">2</span>B <span class="number">0</span>B <span class="number">00</span> <span class="number">30</span>    ..-..../....+..<span class="number">0</span></span><br><span class="line"><span class="number">00000030</span>: <span class="number">00</span> <span class="number">31</span> <span class="number">0</span>A <span class="number">00</span> <span class="number">32</span> <span class="number">00</span> <span class="number">33</span> <span class="number">0</span>A <span class="number">00</span> <span class="number">0</span>C <span class="number">00</span> <span class="number">34</span> <span class="number">07</span> <span class="number">00</span> <span class="number">35</span> <span class="number">07</span>    .<span class="number">1</span>..<span class="number">2.3</span>....<span class="number">4</span>..<span class="number">5</span>.</span><br><span class="line"><span class="number">00000040</span>: <span class="number">00</span> <span class="number">36</span> <span class="number">01</span> <span class="number">00</span> <span class="number">09</span> <span class="number">4F</span> <span class="number">4F</span> <span class="number">4</span>D <span class="number">4F</span> <span class="number">62</span> <span class="number">6</span>A <span class="number">65</span> <span class="number">63</span> <span class="number">74</span> <span class="number">01</span> <span class="number">00</span>    .<span class="number">6</span>...OOMObject..</span><br><span class="line"><span class="number">00000050</span>: <span class="number">0</span>C <span class="number">49</span> <span class="number">6</span>E <span class="number">6</span>E <span class="number">65</span> <span class="number">72</span> <span class="number">43</span> <span class="number">6</span>C <span class="number">61</span> <span class="number">73</span> <span class="number">73</span> <span class="number">65</span> <span class="number">73</span> <span class="number">01</span> <span class="number">00</span> <span class="number">06</span>    .InnerClasses...</span><br><span class="line"><span class="number">00000060</span>: <span class="number">3</span>C <span class="number">69</span> <span class="number">6</span>E <span class="number">69</span> <span class="number">74</span> <span class="number">3</span>E <span class="number">01</span> <span class="number">00</span> <span class="number">03</span> <span class="number">28</span> <span class="number">29</span> <span class="number">56</span> <span class="number">01</span> <span class="number">00</span> <span class="number">04</span> <span class="number">43</span>    &lt;init&gt;...()V...C</span><br><span class="line"><span class="number">00000070</span>: <span class="number">6F</span> <span class="number">64</span> <span class="number">65</span> <span class="number">01</span> <span class="number">00</span> <span class="number">0F</span> <span class="number">4</span>C <span class="number">69</span> <span class="number">6</span>E <span class="number">65</span> <span class="number">4</span>E <span class="number">75</span> <span class="number">6</span>D <span class="number">62</span> <span class="number">65</span> <span class="number">72</span></span><br></pre></td></tr></table></figure></div>
+<p>常量池存放两大类常量：</p>
+<ul>
+<li><p>字面量(Literal):  如字符串，声明为final的常量等</p>
+</li>
+<li><p>符号引用(Symbolic References)：属于编译原理方面的概念，主要包含以下三类</p>
+<p>a. 类和接口的全限定名（Fully Qualified Name）</p>
+<p>b. 字段的名称和描述符（Descriptor）</p>
+<p>c. 方法的名称和描述符</p>
+</li>
+</ul>
+<p>每一个常量都是一张表，并且一共有14种不同结构的表，表开始的第一位是一个u1类型的标志位，代表当前常量属于那种常量类型。</p>
+<h3 id="标志位值对应的具体含义"><a href="#标志位值对应的具体含义" class="headerlink" title="标志位值对应的具体含义"></a>标志位值对应的具体含义</h3><table>
+<thead>
+<tr>
+<th>类型</th>
+<th>标志</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CONSTANT_utf8_info</td>
+<td>1</td>
+<td>UTF-8编码的字符串</td>
+</tr>
+<tr>
+<td>CONSTANT_Integer_info</td>
+<td>3</td>
+<td>整形字面量</td>
+</tr>
+<tr>
+<td>CONSTANT_Float_info</td>
+<td>4</td>
+<td>浮点型字面量</td>
+</tr>
+<tr>
+<td>CONSTANT_Long_info</td>
+<td>５</td>
+<td>长整型字面量</td>
+</tr>
+<tr>
+<td>CONSTANT_Double_info</td>
+<td>６</td>
+<td>双精度浮点型字面量</td>
+</tr>
+<tr>
+<td>CONSTANT_Class_info</td>
+<td>７</td>
+<td>类或接口的符号引用</td>
+</tr>
+<tr>
+<td>CONSTANT_String_info</td>
+<td>８</td>
+<td>字符串类型字面量</td>
+</tr>
+<tr>
+<td>CONSTANT_Fieldref_info</td>
+<td>９</td>
+<td>字段的符号引用</td>
+</tr>
+<tr>
+<td>CONSTANT_Methodref_info</td>
+<td>１０</td>
+<td>类中方法的符号引用</td>
+</tr>
+<tr>
+<td>CONSTANT_InterfaceMethodref_info</td>
+<td>１１</td>
+<td>接口中方法的符号引用</td>
+</tr>
+<tr>
+<td>CONSTANT_NameAndType_info</td>
+<td>１２</td>
+<td>字段或方法的符号引用</td>
+</tr>
+<tr>
+<td>CONSTANT_MothodType_info</td>
+<td>１６</td>
+<td>标志方法类型</td>
+</tr>
+<tr>
+<td>CONSTANT_MethodHandle_info</td>
+<td>１５</td>
+<td>表示方法句柄</td>
+</tr>
+<tr>
+<td>CONSTANT_InvokeDynamic_info</td>
+<td>１８</td>
+<td>表示一个动态方法调用点</td>
+</tr>
+</tbody>
+</table>
+<h3 id="常量池中常量项结构总表"><a href="#常量池中常量项结构总表" class="headerlink" title="常量池中常量项结构总表"></a>常量池中常量项结构总表</h3><table>
+<thead>
+<tr>
+<th style="text-align:left">常量</th>
+<th style="text-align:left">选项</th>
+<th style="text-align:left">类型</th>
+<th style="text-align:left">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">CONSTANT_Utf8_info</td>
+<td style="text-align:left">tag</td>
+<td style="text-align:left">u1</td>
+<td style="text-align:left">值为1</td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left">length</td>
+<td style="text-align:left">u2</td>
+<td style="text-align:left">UTF-8编码的字符串占用的字节数</td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left">bytes</td>
+<td style="text-align:left">u1</td>
+<td style="text-align:left">长度为length的UTF-8编码的字符串</td>
+</tr>
+<tr>
+<td style="text-align:left">CONSTANT_Integer_info</td>
+<td style="text-align:left">tag</td>
+<td style="text-align:left">u1</td>
+<td style="text-align:left">值为3</td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left">bytes</td>
+<td style="text-align:left">u4</td>
+<td style="text-align:left">按照高位在前存储的int值</td>
+</tr>
+<tr>
+<td style="text-align:left">CONSTANT_Float_info</td>
+<td style="text-align:left">tag</td>
+<td style="text-align:left">u1</td>
+<td style="text-align:left">值为4</td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left">bytes</td>
+<td style="text-align:left">u4</td>
+<td style="text-align:left">按照高位在前存储的float值</td>
+</tr>
+<tr>
+<td style="text-align:left">CONSTANT_Long_info</td>
+<td style="text-align:left">tag</td>
+<td style="text-align:left">u1</td>
+<td style="text-align:left">值为5</td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left">bytes</td>
+<td style="text-align:left">u8</td>
+<td style="text-align:left">按照高位在前存储的long值</td>
+</tr>
+<tr>
+<td style="text-align:left">CONSTANT_Double_info</td>
+<td style="text-align:left">tag</td>
+<td style="text-align:left">u1</td>
+<td style="text-align:left">值为6</td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left">bytes</td>
+<td style="text-align:left">u8</td>
+<td style="text-align:left">按照高位在前存储的double值</td>
+</tr>
+<tr>
+<td style="text-align:left">CONSTANT_Class_info</td>
+<td style="text-align:left">tag</td>
+<td style="text-align:left">u1</td>
+<td style="text-align:left">值为7</td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left">index</td>
+<td style="text-align:left">u2</td>
+<td style="text-align:left">指向全限定名常量项的索引</td>
+</tr>
+<tr>
+<td style="text-align:left">CONSTANT_String_info</td>
+<td style="text-align:left">tag</td>
+<td style="text-align:left">u1</td>
+<td style="text-align:left">值为8</td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left">index</td>
+<td style="text-align:left">u2</td>
+<td style="text-align:left">指向字符串字面量的索引</td>
+</tr>
+<tr>
+<td style="text-align:left">CONSTANT_Fieldref_info</td>
+<td style="text-align:left">tag</td>
+<td style="text-align:left">u1</td>
+<td style="text-align:left">值为9</td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left">index</td>
+<td style="text-align:left">u2</td>
+<td style="text-align:left">指向声明字段的类或接口描述符CONSTANT_Class_info的索引项</td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left">index</td>
+<td style="text-align:left">u2</td>
+<td style="text-align:left">指向字段描述符CONSTANT_NameAndType的索引项</td>
+</tr>
+<tr>
+<td style="text-align:left">CONSTANT_Methodref_info</td>
+<td style="text-align:left">tag</td>
+<td style="text-align:left">u1</td>
+<td style="text-align:left">值为10</td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left">index</td>
+<td style="text-align:left">u2</td>
+<td style="text-align:left">指向声明方法的类描述符CONSTANT_Class_info的索引项</td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left">index</td>
+<td style="text-align:left">u2</td>
+<td style="text-align:left">指向名称及类型描述符CONSTANT_NameAndType的索引项</td>
+</tr>
+<tr>
+<td style="text-align:left">CONSTANT_InterfaceMethodref_info</td>
+<td style="text-align:left">tag</td>
+<td style="text-align:left">u1</td>
+<td style="text-align:left">值为11</td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left">index</td>
+<td style="text-align:left">u2</td>
+<td style="text-align:left">指向声明方法的接口描述符CONSTANT_Class_info的索引项</td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left">index</td>
+<td style="text-align:left">u2</td>
+<td style="text-align:left">指向名称及类型描述符CONSTANT_NameAndType的索引项</td>
+</tr>
+<tr>
+<td style="text-align:left">CONSTANT_NameAndType_info</td>
+<td style="text-align:left">tag</td>
+<td style="text-align:left">u1</td>
+<td style="text-align:left">值为12</td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left">index</td>
+<td style="text-align:left">u2</td>
+<td style="text-align:left">指向该字段或方法名称常量项的索引</td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left">index</td>
+<td style="text-align:left">u2</td>
+<td style="text-align:left">指向该字段或方法描述的索引</td>
+</tr>
+<tr>
+<td style="text-align:left">CONSTANT_MethodHandle_info</td>
+<td style="text-align:left">tag</td>
+<td style="text-align:left">u1</td>
+<td style="text-align:left">值为15</td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left">reference_kind</td>
+<td style="text-align:left">u2</td>
+<td style="text-align:left">值必须在[1,9]之间，它决定了方法句柄的类型，方法句柄类型的值表示方法句柄的字节码行为</td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left">reference_index</td>
+<td style="text-align:left">u2</td>
+<td style="text-align:left">值必须是对常量池的有效引用</td>
+</tr>
+<tr>
+<td style="text-align:left">CONSTANT_MethodType_info</td>
+<td style="text-align:left">tag</td>
+<td style="text-align:left">u1</td>
+<td style="text-align:left">值为16</td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left">descriptor_index</td>
+<td style="text-align:left">u2</td>
+<td style="text-align:left">值必须是对常量池的有效引用,常量池在索引处的项必须是CONSTANT_Utf8_info结构,表示方法的描述符</td>
+</tr>
+<tr>
+<td style="text-align:left">CONSTANT_InvokeDynamic_info</td>
+<td style="text-align:left">tag</td>
+<td style="text-align:left">u1</td>
+<td style="text-align:left">值为18</td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left">bootstrap_method_attr_index</td>
+<td style="text-align:left">u2</td>
+<td style="text-align:left">值必须是当前Class文件中引导方法表的bootstrap methods[]数组的有效索引</td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left">name_and_type_index</td>
+<td style="text-align:left">u2</td>
+<td style="text-align:left">值必须是对当前常量池的有效索引,常量池在该处的索引必须是CONSTANT_NameAndType_info结构,表示方法名和方法描述符</td>
+</tr>
+</tbody>
+</table>
+<h3 id="Javap-：Class-字节码分析工具"><a href="#Javap-：Class-字节码分析工具" class="headerlink" title="Javap ：Class 字节码分析工具"></a>Javap ：Class 字节码分析工具</h3><p>使用方式<br><div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="JAVA"><figure class="iseeu highlight /java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">javap -verbose MyClass.class</span><br></pre></td></tr></table></figure></div></p>
+<p>示例</p>
+<p>通过Javap分析某文件后，输出如下结果<br><div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line">D:\idea project\demo\out\production\demo&gt;javap -verbose HeapOOM.class</span><br><span class="line">Classfile /D:/idea project/demo/out/production/demo/HeapOOM.class</span><br><span class="line">  Last modified 2019-4-16; size 1055 bytes</span><br><span class="line">  MD5 checksum 9bb713cc4933abd1b5aa25c296c1c4c7</span><br><span class="line">  Compiled from &quot;HeapOOM.java&quot;</span><br><span class="line">public class HeapOOM</span><br><span class="line">  minor version: 0</span><br><span class="line">  major version: 52</span><br><span class="line">  flags: ACC_PUBLIC, ACC_SUPER</span><br><span class="line">Constant pool:</span><br><span class="line">   #1 = Methodref          #13.#43        // java/lang/Object.&quot;&lt;init&gt;&quot;:()V</span><br><span class="line">   #2 = Class              #44            // java/util/ArrayList</span><br><span class="line">   #3 = Methodref          #2.#43         // java/util/ArrayList.&quot;&lt;init&gt;&quot;:()V</span><br><span class="line">   #4 = Long               50l</span><br><span class="line">   #6 = Methodref          #45.#46        // java/lang/Thread.sleep:(J)V</span><br><span class="line">   #7 = Class              #47            // HeapOOM$OOMObject</span><br><span class="line">   #8 = Methodref          #7.#43         // HeapOOM$OOMObject.&quot;&lt;init&gt;&quot;:()V</span><br><span class="line">   #9 = InterfaceMethodref #48.#49        // java/util/List.add:(Ljava/lang/Object;)Z</span><br><span class="line">  #10 = Methodref          #50.#51        // java/lang/System.gc:()V</span><br><span class="line">  #11 = Methodref          #12.#52        // HeapOOM.fillHeap:(I)V</span><br><span class="line">  #12 = Class              #53            // HeapOOM</span><br><span class="line">  #13 = Class              #54            // java/lang/Object</span><br><span class="line">  #14 = Utf8               OOMObject</span><br><span class="line">  #15 = Utf8               InnerClasses</span><br><span class="line">  #16 = Utf8               &lt;init&gt;</span><br><span class="line">  #17 = Utf8               ()V</span><br><span class="line">  #18 = Utf8               Code</span><br><span class="line">  #19 = Utf8               LineNumberTable</span><br><span class="line">  #20 = Utf8               LocalVariableTable</span><br><span class="line">  #21 = Utf8               this</span><br><span class="line">  #22 = Utf8               LHeapOOM;</span><br><span class="line">  #23 = Utf8               fillHeap</span><br><span class="line">  #24 = Utf8               (I)V</span><br><span class="line">  #25 = Utf8               i</span><br><span class="line">  #26 = Utf8               I</span><br><span class="line">  #27 = Utf8               num</span><br><span class="line">  #28 = Utf8               list</span><br><span class="line">  #29 = Utf8               Ljava/util/List;</span><br><span class="line">  #30 = Utf8               LocalVariableTypeTable</span><br><span class="line">  #31 = Utf8               Ljava/util/List&lt;LHeapOOM$OOMObject;&gt;;</span><br><span class="line">  #32 = Utf8               StackMapTable</span><br><span class="line">  #33 = Class              #55            // java/util/List</span><br><span class="line">  #34 = Utf8               Exceptions</span><br><span class="line">  #35 = Class              #56            // java/lang/InterruptedException</span><br><span class="line">  #36 = Utf8               main</span><br><span class="line">  #37 = Utf8               ([Ljava/lang/String;)V</span><br><span class="line">  #38 = Utf8               args</span><br><span class="line">  #39 = Utf8               [Ljava/lang/String;</span><br><span class="line">  #40 = Class              #57            // java/lang/Exception</span><br><span class="line">  #41 = Utf8               SourceFile</span><br><span class="line">  #42 = Utf8               HeapOOM.java</span><br><span class="line">  #43 = NameAndType        #16:#17        // &quot;&lt;init&gt;&quot;:()V</span><br><span class="line">  #44 = Utf8               java/util/ArrayList</span><br><span class="line">  #45 = Class              #58            // java/lang/Thread</span><br><span class="line">  #46 = NameAndType        #59:#60        // sleep:(J)V</span><br><span class="line">  #47 = Utf8               HeapOOM$OOMObject</span><br><span class="line">  #48 = Class              #55            // java/util/List</span><br><span class="line">  #49 = NameAndType        #61:#62        // add:(Ljava/lang/Object;)Z</span><br><span class="line">  #50 = Class              #63            // java/lang/System</span><br><span class="line">  #51 = NameAndType        #64:#17        // gc:()V</span><br><span class="line">  #52 = NameAndType        #23:#24        // fillHeap:(I)V</span><br><span class="line">  #53 = Utf8               HeapOOM</span><br><span class="line">  #54 = Utf8               java/lang/Object</span><br><span class="line">  #55 = Utf8               java/util/List</span><br><span class="line">  #56 = Utf8               java/lang/InterruptedException</span><br><span class="line">  #57 = Utf8               java/lang/Exception</span><br><span class="line">  #58 = Utf8               java/lang/Thread</span><br><span class="line">  #59 = Utf8               sleep</span><br><span class="line">  #60 = Utf8               (J)V</span><br><span class="line">  #61 = Utf8               add</span><br><span class="line">  #62 = Utf8               (Ljava/lang/Object;)Z</span><br><span class="line">  #63 = Utf8               java/lang/System</span><br><span class="line">  #64 = Utf8               gc</span><br></pre></td></tr></table></figure></div></p>
+<p>该文件的二进制显示<br><div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="JAVA"><figure class="iseeu highlight /java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"> Offset: <span class="number">00</span> <span class="number">01</span> <span class="number">02</span> <span class="number">03</span> <span class="number">04</span> <span class="number">05</span> <span class="number">06</span> <span class="number">07</span> <span class="number">08</span> <span class="number">09</span> <span class="number">0</span>A <span class="number">0</span>B <span class="number">0</span>C <span class="number">0</span>D <span class="number">0</span>E <span class="number">0F</span> 	</span><br><span class="line"><span class="number">00000000</span>: CA FE BA BE <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">34</span> <span class="number">00</span> <span class="number">41</span> <span class="number">0</span>A <span class="number">00</span> <span class="number">0</span>D <span class="number">00</span> <span class="number">2</span>B <span class="number">07</span>    J~:&gt;...<span class="number">4</span>.A....+.</span><br><span class="line"><span class="number">00000010</span>: <span class="number">00</span> <span class="number">2</span>C <span class="number">0</span>A <span class="number">00</span> <span class="number">02</span> <span class="number">00</span> <span class="number">2</span>B <span class="number">05</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">32</span>    .,....+........<span class="number">2</span></span><br><span class="line"><span class="number">00000020</span>: <span class="number">0</span>A <span class="number">00</span> <span class="number">2</span>D <span class="number">00</span> <span class="number">2</span>E <span class="number">07</span> <span class="number">00</span> <span class="number">2F</span> <span class="number">0</span>A <span class="number">00</span> <span class="number">07</span> <span class="number">00</span> <span class="number">2</span>B <span class="number">0</span>B <span class="number">00</span> <span class="number">30</span>    ..-..../....+..<span class="number">0</span></span><br><span class="line"><span class="number">00000030</span>: <span class="number">00</span> <span class="number">31</span> <span class="number">0</span>A <span class="number">00</span> <span class="number">32</span> <span class="number">00</span> <span class="number">33</span> <span class="number">0</span>A <span class="number">00</span> <span class="number">0</span>C <span class="number">00</span> <span class="number">34</span> <span class="number">07</span> <span class="number">00</span> <span class="number">35</span> <span class="number">07</span>    .<span class="number">1</span>..<span class="number">2.3</span>....<span class="number">4</span>..<span class="number">5</span>.</span><br><span class="line"><span class="number">00000040</span>: <span class="number">00</span> <span class="number">36</span> <span class="number">01</span> <span class="number">00</span> <span class="number">09</span> <span class="number">4F</span> <span class="number">4F</span> <span class="number">4</span>D <span class="number">4F</span> <span class="number">62</span> <span class="number">6</span>A <span class="number">65</span> <span class="number">63</span> <span class="number">74</span> <span class="number">01</span> <span class="number">00</span>    .<span class="number">6</span>...OOMObject..</span><br><span class="line"><span class="number">00000050</span>: <span class="number">0</span>C <span class="number">49</span> <span class="number">6</span>E <span class="number">6</span>E <span class="number">65</span> <span class="number">72</span> <span class="number">43</span> <span class="number">6</span>C <span class="number">61</span> <span class="number">73</span> <span class="number">73</span> <span class="number">65</span> <span class="number">73</span> <span class="number">01</span> <span class="number">00</span> <span class="number">06</span>    .InnerClasses...</span><br><span class="line"><span class="number">00000060</span>: <span class="number">3</span>C <span class="number">69</span> <span class="number">6</span>E <span class="number">69</span> <span class="number">74</span> <span class="number">3</span>E <span class="number">01</span> <span class="number">00</span> <span class="number">03</span> <span class="number">28</span> <span class="number">29</span> <span class="number">56</span> <span class="number">01</span> <span class="number">00</span> <span class="number">04</span> <span class="number">43</span>    &lt;init&gt;...()V...C</span><br><span class="line"><span class="number">00000070</span>: <span class="number">6F</span> <span class="number">64</span> <span class="number">65</span> <span class="number">01</span> <span class="number">00</span> <span class="number">0F</span> <span class="number">4</span>C <span class="number">69</span> <span class="number">6</span>E <span class="number">65</span> <span class="number">4</span>E <span class="number">75</span> <span class="number">6</span>D <span class="number">62</span> <span class="number">65</span> <span class="number">72</span></span><br></pre></td></tr></table></figure></div></p>
+<p>分析：</p>
+<ol>
+<li>可以看到，常量池的偏移量为(0x0000 0008),其对应的16进制值为<code>0x0041</code>,即10进制的65，与Javap显示结果相同，有64常量；</li>
+<li>接下来是第一个常量，偏移量0X0000 000A是其标志位，对应值为<code>0x000A</code>,即进制的10，查阅标志位值对应的具体含义可知，标志10代表的是<code>CONSTANT_Methodref_info</code>,也就是类中方法的符号引用。查阅<code>常量项结构总表</code>,其结构如下</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>CONSTANT_Methodref_info</th>
+<th>tag</th>
+<th>u1</th>
+<th>值为10</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td>index</td>
+<td>u2</td>
+<td>指向声明方法的类描述符CONSTANT_Class_info的索引项</td>
+</tr>
+<tr>
+<td></td>
+<td>index</td>
+<td>u2</td>
+<td>指向名称及类型描述符CONSTANT_NameAndType的索引项</td>
+</tr>
+</tbody>
+</table>
+<p>​    也就是接下来的4个字节，含义为</p>
+<p>​    a. 偏移量0x0000 000B: 值0x000D(12),也就是指向了常量池的第十二项常量</p>
+<p>​    b. 偏移量0x0000 0000D: 值0x002B(33),也就是指向了常量池的第四十三项常量</p>
+<p>​    再来看javap的显示结果的第一个常数,确实是Methodref类型，指向了13,43号常量</p>
+<div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#1 = Methodref          #13.#43        // java/lang/Object.&quot;&lt;init&gt;&quot;:()V</span><br></pre></td></tr></table></figure></div>
+<p>注意：<code>CONSTANT_Utf8_info</code>类型常量</p>
+<ul>
+<li>该类型的常量是用来记录<code>UTF-8编码的字符串</code>，它用<code>length</code>选项来表示字符串的大小，因为length的类型为u2，所以其长度最大为65535</li>
+<li>该类型的常量会被用来描述Class文件中方法名、字段名，也就是说，这也限制了它们的大小为65535,即Java不能定义超过64K大小的方法名或变量名</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">常量</th>
+<th style="text-align:left">选项</th>
+<th style="text-align:left">类型</th>
+<th style="text-align:left">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">CONSTANT_Utf8_info</td>
+<td style="text-align:left">tag</td>
+<td style="text-align:left">u1</td>
+<td style="text-align:left">值为1</td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left">length</td>
+<td style="text-align:left">u2</td>
+<td style="text-align:left">UTF-8编码的字符串占用的字节数</td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left">bytes</td>
+<td style="text-align:left">u1</td>
+<td style="text-align:left">长度为length的UTF-8编码的字符串</td>
+</tr>
+</tbody>
+</table>
+<h2 id="访问标志"><a href="#访问标志" class="headerlink" title="访问标志"></a>访问标志</h2><p>常量池结束后，紧接着的<strong>两个字节</strong>代表<code>访问标志（access_flags）</code>,这个标志用于识别一些类或者接口层次的访问信息，包括</p>
+<ul>
+<li>Class是接口还是类</li>
+<li>如果是类，是否被声明为final</li>
+<li>是否为public</li>
+<li>是否为abstract</li>
+<li>……</li>
+</ul>
+<h3 id="访问标志含义表"><a href="#访问标志含义表" class="headerlink" title="访问标志含义表"></a>访问标志含义表</h3><p>access_flags一共有16个标志位(2字节)可以使用，当前值定义了8个，每个标志位上的值都有特殊含义，没有则都为0</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">标志名称</th>
+<th style="text-align:left">标志值</th>
+<th style="text-align:left">含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">ACC_PUBLIC</td>
+<td style="text-align:left">0x0001</td>
+<td style="text-align:left">是否为public类型</td>
+</tr>
+<tr>
+<td style="text-align:left">ACC_FINAL</td>
+<td style="text-align:left">0x0010</td>
+<td style="text-align:left">是否被声明为final，只有类可设置</td>
+</tr>
+<tr>
+<td style="text-align:left">ACC_SUPER</td>
+<td style="text-align:left">0x0020</td>
+<td style="text-align:left">是否允许使用invokespecial字节码指令的新语义，invokespecial指令的语意在JDK 1.0.2发生过改变，为了区别这条指令使用哪种语义，JDK 1.0.2之后编译出来的类的这个标志都必须为真</td>
+</tr>
+<tr>
+<td style="text-align:left">ACC_INTERFACE</td>
+<td style="text-align:left">0x0200</td>
+<td style="text-align:left">标识这是一个接口</td>
+</tr>
+<tr>
+<td style="text-align:left">ACC_ABSTRACT</td>
+<td style="text-align:left">0x0400</td>
+<td style="text-align:left">是否为abstract类型，对于接口或者抽象类来说，此标志值为真，其他类值为假</td>
+</tr>
+<tr>
+<td style="text-align:left">ACC_SYNTHETIC</td>
+<td style="text-align:left">0x1000</td>
+<td style="text-align:left">标识这个类并非由用户代码产生的</td>
+</tr>
+<tr>
+<td style="text-align:left">ACC_ANNOTATION</td>
+<td style="text-align:left">0x2000</td>
+<td style="text-align:left">标识这是一个注解</td>
+</tr>
+<tr>
+<td style="text-align:left">ACC_ENUM</td>
+<td style="text-align:left">0x4000</td>
+<td style="text-align:left">标识这是一个枚举</td>
+</tr>
+</tbody>
+</table>
+<p>示例:假设一个类是普通java类，并不接口、枚举、注解,由用户代码产生，被public修饰，没有被声明为final，abstarct,由JDK1.8编译，那么根据表中定义，它的访问标志就是</p>
+<div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="JAVA"><figure class="iseeu highlight /java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//第一个0:不是枚举、注解,由用户代码产生</span></span><br><span class="line"><span class="comment">//第二个0：不是接口、abstract类型</span></span><br><span class="line"><span class="comment">//2：由JDK1.8编译</span></span><br><span class="line"><span class="comment">//1：为public类型</span></span><br><span class="line"><span class="number">0x0021</span></span><br></pre></td></tr></table></figure></div>
+<h2 id="索引、父类索引和与接口索引集合"><a href="#索引、父类索引和与接口索引集合" class="headerlink" title="索引、父类索引和与接口索引集合"></a>索引、父类索引和与接口索引集合</h2><p>Class由<code>类索引、父类索引、接口索引</code>这三项数据来确定这个类的继承关系，三个索引排序在访问标志之后</p>
+<p>类索引：</p>
+<ul>
+<li>使用两个u2类型数据的索引值表示，指向一个类型为<code>CONSTANT_Class_info</code>的类描述符常量，跟据该常量找到对应的<code>CONSTANT_Utf8_info</code>类型常量中的全限定字符串    </li>
+<li>用于确定该类的全限定名</li>
+</ul>
+<p>父类索引：</p>
+<ul>
+<li>使用两个u2类型数据的索引值表示，指向一个类型为<code>CONSTANT_Class_info</code>的类描述符常量，跟据该常量找到对应的<code>CONSTANT_Utf8_info</code>类型常量中的全限定字符串    </li>
+<li>用于确定类的父类的全限定名，父类索引只有一个</li>
+<li>所有类的父类索引都不为0，当然，除了java.lang.object</li>
+</ul>
+<p>接口索引</p>
+<ul>
+<li>u2类型数据的集合</li>
+<li>被实现的接口将会按照<code>implements</code>的顺序从左到右排列在索引集合中</li>
+<li>入口的u2类型数据为计数器(interfaces_counts)，表示索引表的容量，该类没有索引，则计数器值为0,后面接口索引不占用字节</li>
+</ul>
+<h2 id="字段表集合"><a href="#字段表集合" class="headerlink" title="字段表集合"></a>字段表集合</h2><p>字段表(field_info)</p>
+<ul>
+<li>用于描述接口或者类中声明的变量</li>
+<li><p>包括类级变量和实例级变量，不包括在方法内部声明的局部变量</p>
+</li>
+<li><p>字段表不会列出从父类接口中继承的字段，但有可能列出代码之中不存在的字段</p>
+</li>
+</ul>
+<p>字段可包含信息</p>
+<ul>
+<li>字段的作用域(public、private、protected)</li>
+<li>是实例变量还是类变量（static）</li>
+<li>可变性（final）</li>
+<li>并发可见性（volatile修饰符，是否强制从内存读写）</li>
+<li>可否被序列化(transient)</li>
+<li>字段数据类型（基本类型、对象、数组）</li>
+<li><p>字段名称</p>
+</li>
+<li><p>以上信息，对于修饰符，很容易用标志位来表示；而对于数据类型，字段名称，就需要引用常量池中的常量了</p>
+</li>
+</ul>
+<h3 id="字段表结构"><a href="#字段表结构" class="headerlink" title="字段表结构"></a>字段表结构</h3><table>
+<thead>
+<tr>
+<th style="text-align:center">类型</th>
+<th style="text-align:center">名称</th>
+<th style="text-align:center">数量</th>
+<th style="text-align:center">含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">u2</td>
+<td style="text-align:center">access_flags</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">字段和方法的访问修饰符</td>
+</tr>
+<tr>
+<td style="text-align:center">u2</td>
+<td style="text-align:center">name_index</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">常量池索引，代表字段的简单名称</td>
+</tr>
+<tr>
+<td style="text-align:center">u2</td>
+<td style="text-align:center">descriptor_index</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">常量池索引，代表字段和方法的描述符</td>
+</tr>
+<tr>
+<td style="text-align:center">u2</td>
+<td style="text-align:center">attributes_count</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">字段和方法的额外附加属性数量</td>
+</tr>
+<tr>
+<td style="text-align:center">attribute_info</td>
+<td style="text-align:center">attributes</td>
+<td style="text-align:center">attributes_count</td>
+<td style="text-align:center">字段和方法的额外的附加属性</td>
+</tr>
+</tbody>
+</table>
+<p>简单名称：没有类型和参数修饰的方法或字段名称，如<code>text()</code>的简单名称就是<code>text</code></p>
+<p>字段和方法的描述符：用来描述字段的数据类型、方法和参数列表（包括数量、类型以及顺序）和返回值</p>
+<h3 id="access-flags字段访问标志"><a href="#access-flags字段访问标志" class="headerlink" title="access_flags字段访问标志"></a>access_flags字段访问标志</h3><table>
+<thead>
+<tr>
+<th style="text-align:center">标志名称</th>
+<th style="text-align:center">标志值</th>
+<th style="text-align:center">含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">ACC_PUBLIC</td>
+<td style="text-align:center">0x0001</td>
+<td style="text-align:center">字段是否为public</td>
+</tr>
+<tr>
+<td style="text-align:center">ACC_PRIVATE</td>
+<td style="text-align:center">0x0002</td>
+<td style="text-align:center">字段是否为private</td>
+</tr>
+<tr>
+<td style="text-align:center">ACC_PROTECTED</td>
+<td style="text-align:center">0x0004</td>
+<td style="text-align:center">字段是否为protected</td>
+</tr>
+<tr>
+<td style="text-align:center">ACC_STATIC</td>
+<td style="text-align:center">0x0008</td>
+<td style="text-align:center">字段是否为static</td>
+</tr>
+<tr>
+<td style="text-align:center">ACC_FINAL</td>
+<td style="text-align:center">0x0010</td>
+<td style="text-align:center">字段是否为final</td>
+</tr>
+<tr>
+<td style="text-align:center">ACC_VOLATILE</td>
+<td style="text-align:center">0x0040</td>
+<td style="text-align:center">字段是否为volatile</td>
+</tr>
+<tr>
+<td style="text-align:center">ACC_TRANSIENT</td>
+<td style="text-align:center">0x0080</td>
+<td style="text-align:center">字段是否为transient</td>
+</tr>
+<tr>
+<td style="text-align:center">ACC_SYNTHETIC</td>
+<td style="text-align:center">0x1000</td>
+<td style="text-align:center">字段是否由编译器自动产生</td>
+</tr>
+<tr>
+<td style="text-align:center">ACC_ENUM</td>
+<td style="text-align:center">0x4000</td>
+<td style="text-align:center">字段是否是enum类型</td>
+</tr>
+</tbody>
+</table>
+<p>使用方法可以查看<code>访问标志/访问标志含义表</code></p>
+<h3 id="描述符字符含义"><a href="#描述符字符含义" class="headerlink" title="描述符字符含义"></a>描述符字符含义</h3><p>描述基本数据类型、void、对象</p>
+<table>
+<thead>
+<tr>
+<th>标志符</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>B</td>
+<td>基本数据类型byte</td>
+</tr>
+<tr>
+<td>C</td>
+<td>基本数据类型char</td>
+</tr>
+<tr>
+<td>D</td>
+<td>基本数据类型double</td>
+</tr>
+<tr>
+<td>F</td>
+<td>基本数据类型float</td>
+</tr>
+<tr>
+<td>I</td>
+<td>基本数据类型int</td>
+</tr>
+<tr>
+<td>J</td>
+<td>基本数据类型long</td>
+</tr>
+<tr>
+<td>S</td>
+<td>基本数据类型short</td>
+</tr>
+<tr>
+<td>Z</td>
+<td>基本数据类型boolean</td>
+</tr>
+<tr>
+<td>V</td>
+<td>基本数据类型void</td>
+</tr>
+<tr>
+<td>L</td>
+<td>对象类型,如Ljava/lang/Object</td>
+</tr>
+</tbody>
+</table>
+<p>描述数组：</p>
+<p>​    使用<code>[</code> + 描述字符来表示数组，如<code>int[]</code>将会被描述为 “[I” </p>
+<p>描述方法：</p>
+<ul>
+<li>按照先参数列表，后返回值的顺序描述,表示形式为<code>(参数列表)+返回值</code></li>
+<li>如<code>void inc()</code>,描述为<code>()V</code>;</li>
+<li>如<code>java.lang.String toStirng()</code>描述为<code>()Ljava/lang/String</code>;</li>
+<li>如int togo(int i, char[] source);描述为<code>(I[C)I</code></li>
+</ul>
+<h2 id="方法表"><a href="#方法表" class="headerlink" title="方法表"></a>方法表</h2><p>方法表中的代码，存放于方法属性表集合中的<code>Code</code>属性中</p>
+<h3 id="方法表结构"><a href="#方法表结构" class="headerlink" title="方法表结构"></a>方法表结构</h3><p>与字段表十分相似</p>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>名称</th>
+<th>数量</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>u2</td>
+<td>access_flags</td>
+<td>1</td>
+</tr>
+<tr>
+<td>u2</td>
+<td>name_index</td>
+<td>1</td>
+</tr>
+<tr>
+<td>u2</td>
+<td>descriptor_index</td>
+<td>1</td>
+</tr>
+<tr>
+<td>u2</td>
+<td>attributes_count</td>
+<td>1</td>
+</tr>
+<tr>
+<td>attribute_info</td>
+<td>attributes</td>
+<td>attributes_count</td>
+</tr>
+</tbody>
+</table>
+<h3 id="方法访问标志"><a href="#方法访问标志" class="headerlink" title="方法访问标志"></a>方法访问标志</h3><table>
+<thead>
+<tr>
+<th>标志名称</th>
+<th>标志值</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ACC_PUBLIC</td>
+<td>0x00 01</td>
+<td>方法是否为public</td>
+</tr>
+<tr>
+<td>ACC_PRIVATE</td>
+<td>0x00 02</td>
+<td>方法是否为private</td>
+</tr>
+<tr>
+<td>ACC_PROTECTED</td>
+<td>0x00 04</td>
+<td>方法是否为protected</td>
+</tr>
+<tr>
+<td>ACC_STATIC</td>
+<td>0x00 08</td>
+<td>方法是否为static</td>
+</tr>
+<tr>
+<td>ACC_FINAL</td>
+<td>0x00 10</td>
+<td>方法是否为final</td>
+</tr>
+<tr>
+<td>ACC_SYHCHRONRIZED</td>
+<td>0x00 20</td>
+<td>方法是否为synchronized</td>
+</tr>
+<tr>
+<td>ACC_BRIDGE</td>
+<td>0x00 40</td>
+<td>方法是否是有编译器产生的方法</td>
+</tr>
+<tr>
+<td>ACC_VARARGS</td>
+<td>0x00 80</td>
+<td>方法是否接受参数</td>
+</tr>
+<tr>
+<td>ACC_NATIVE</td>
+<td>0x01 00</td>
+<td>方法是否为native</td>
+</tr>
+<tr>
+<td>ACC_ABSTRACT</td>
+<td>0x04 00</td>
+<td>方法是否为abstract</td>
+</tr>
+<tr>
+<td>ACC_STRICTFP</td>
+<td>0x08 00</td>
+<td>方法是否为strictfp</td>
+</tr>
+<tr>
+<td>ACC_SYNTHETIC</td>
+<td>0x10 00</td>
+<td>方法是否是有编译器自动产生的</td>
+</tr>
+</tbody>
+</table>
+<h3 id="重载"><a href="#重载" class="headerlink" title="重载"></a>重载</h3><p>实现重载方法，需要满足</p>
+<ul>
+<li>与原方法具有相同的简单名称</li>
+<li>与原方法不同的特征签名</li>
+</ul>
+<p>特征签名：一个方法中各个参数在常量中的字段符号引用集合，也就是说返回值不包含在特征签名中，所以Java不能仅仅依靠返回值不同来重载方法。<strong>注意：在Class文件格式中特征签名范围更大，只要描述符不完全一致就可以，也就是返回值不同的两个方法也是可以共存的</strong></p>
+<h2 id="属性表集合"><a href="#属性表集合" class="headerlink" title="属性表集合"></a>属性表集合</h2><p>属性表</p>
+<ul>
+<li>在Class文件、字段表、方法表中，均有携带自己的属性表集合，以用于描述某些场景的专有信息</li>
+<li><p>属性表对数据项目的顺序没有严格限制，只需要属性名不重复即可</p>
+</li>
+<li><p>每个属性的名称都是从常量值中引用一个<code>CONSTANT_Utf8_info</code>常量来表示</p>
+</li>
+<li>属性的结构完全自定义，只需要一个u4长度的属性去说明属性值所占用的位数</li>
+</ul>
+<h3 id="最简单的属性表结构"><a href="#最简单的属性表结构" class="headerlink" title="最简单的属性表结构"></a>最简单的属性表结构</h3><table>
+<thead>
+<tr>
+<th>类型</th>
+<th>名称</th>
+<th>数量</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>u2</td>
+<td>attribute_name_index</td>
+<td>1</td>
+</tr>
+<tr>
+<td>u4</td>
+<td>attribute_length</td>
+<td>1</td>
+</tr>
+<tr>
+<td>u1</td>
+<td>info</td>
+<td>attribute_length</td>
+</tr>
+</tbody>
+</table>
+<h3 id="常用属性"><a href="#常用属性" class="headerlink" title="常用属性"></a>常用属性</h3><table>
+<thead>
+<tr>
+<th>属性名称</th>
+<th>使用位置</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Code</td>
+<td>方法表</td>
+<td>Java代码编译成的字节码指令</td>
+</tr>
+<tr>
+<td>ConstantValue</td>
+<td>字段表</td>
+<td>final关键字定义的常量值</td>
+</tr>
+<tr>
+<td>Deprecated</td>
+<td>类文件、字段表、方法表</td>
+<td>被声明为deprecated的方法和字段</td>
+</tr>
+<tr>
+<td>Exceptions</td>
+<td>方法表</td>
+<td>方法抛出的异常</td>
+</tr>
+<tr>
+<td>InnerClasses</td>
+<td>类文件</td>
+<td>内部类列表</td>
+</tr>
+<tr>
+<td>LineNumberTale</td>
+<td>Code属性</td>
+<td>Java源码的行号与字节码指令的对应关系</td>
+</tr>
+<tr>
+<td>LocalVariableTable</td>
+<td>Code属性</td>
+<td>方法的局部变量描述(局部变量作用域)</td>
+</tr>
+<tr>
+<td>SourceFile</td>
+<td>类文件</td>
+<td>源文件名称</td>
+</tr>
+<tr>
+<td>Synthetic</td>
+<td>类文件、方法表、字段表</td>
+<td>标识方法或字段是由编译器自动生成的</td>
+</tr>
+</tbody>
+</table>
+<h3 id="Code属性"><a href="#Code属性" class="headerlink" title="Code属性"></a>Code属性</h3><h1 id="相关脚注"><a href="#相关脚注" class="headerlink" title="相关脚注"></a>相关脚注</h1><div id="footnotes"><hr><div id="footnotelist"><ol style="list-style: none; padding-left: 0; margin-left: 40px"><li id="fn:1"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">1.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;">【MinorGC】从年轻代空间（包括Eden和Survivor区域）回收内存<a href="#fnref:1" rev="footnote"> ↩</a></span></li><li id="fn:2"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">2.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;">【FullGC】<a href="#fnref:2" rev="footnote"> ↩</a></span></li><li id="fn:3"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">3.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;">【浮动垃圾】在并发清除阶段，用户线程依旧在运行，那么可能产生新的垃圾，而这些垃圾已经是在标记之后了，所以这次清楚并不会清理，只能留在下次。这样的垃圾，就被成为浮动垃圾<a href="#fnref:3" rev="footnote"> ↩</a></span></li><li id="fn:4"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">4.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;">【并行（Parallel)】指多条垃圾收集线程并行工作，但此时用户线程仍然处于等待状态。<a href="#fnref:4" rev="footnote"> ↩</a></span></li><li id="fn:5"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">5.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;">【并发（Concurrent)】指用户线程与垃圾收集线程同时执行（但不一定是并行，可能会交替执行），用户程序在继续运行，而垃圾收集器运行在另一个CPU上。<a href="#fnref:5" rev="footnote"> ↩</a></span></li><li id="fn:6"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">6.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;">【吞吐量】CPU用于运行用户代码的时间与CPU总消耗时间的比值，即吞吐量=运行用户代码时间/(运行用户代码时间+垃圾回收时间)<a href="#fnref:6" rev="footnote"> ↩</a></span></li><li id="fn:7"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">7.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;">【老年代】按照分代收集算法划分java堆，老年代中的对象存活率高<a href="#fnref:7" rev="footnote"> ↩</a></span></li><li id="fn:8"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">8.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;">【新生代】按照分代收集算法划分java堆，新生代中的对象存活率低<a href="#fnref:8" rev="footnote"> ↩</a></span></li><li id="fn:9"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">9.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;">【大对象】需要大量连续空间的Java对象<a href="#fnref:9" rev="footnote"> ↩</a></span></li><li id="fn:10"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">10.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;">【-Xoss】设置本地方法栈大小<a href="#fnref:10" rev="footnote"> ↩</a></span></li><li id="fn:11"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">11.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;">需要远程主机提供RMI支持，可以使用Sun提供的jstatd工具简历远程RMI服务器<a href="#fnref:11" rev="footnote"> ↩</a></span></li><li id="fn:12"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">12.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;">【线程快照】当前虚拟机内每一条线程正在执行的方法堆栈集合<a href="#fnref:12" rev="footnote"> ↩</a></span></li><li id="fn:13"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">13.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;">的方式分割成若干个8位字节进行存储<a href="#fnref:13" rev="footnote"> ↩</a></span></li><li id="fn:13"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">13.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;">【永久代】其实是将GC分代算法扩展至方法区,HotSpot虚拟机特有。JDK1.7字符串常量池已经移除，JDK1.8完全移除永久代，原因是永久代更容易使内存溢出<a href="#fnref:13" rev="footnote"> ↩</a></span></li><li id="fn:13"><span style="display: inline-block; vertical-align: top; padding-right: 10px; margin-left: -40px">13.</span><span style="display: inline-block; vertical-align: top; margin-left: 10px;">【高位在前】被称为“Big-Endian”,具体是指最高位字节在地址最低位，最低为字节在地址最高位的顺序存储数据<a href="#fnref:13" rev="footnote"> ↩</a></span></li></ol></div></div>
       
     </div>
 
@@ -1677,7 +2645,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#JVM运行时数据区"><span class="nav-number">1.</span> <span class="nav-text">JVM运行时数据区</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#程序计数器"><span class="nav-number">1.1.</span> <span class="nav-text">程序计数器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Java虚拟机栈"><span class="nav-number">1.2.</span> <span class="nav-text">Java虚拟机栈</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#本地方法栈"><span class="nav-number">1.3.</span> <span class="nav-text">本地方法栈</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Java堆"><span class="nav-number">1.4.</span> <span class="nav-text">Java堆</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#方法区"><span class="nav-number">1.5.</span> <span class="nav-text">方法区</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#运行时常量池"><span class="nav-number">1.5.1.</span> <span class="nav-text">运行时常量池</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#直接内存"><span class="nav-number">1.6.</span> <span class="nav-text">直接内存</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#HotSpot虚拟机对象"><span class="nav-number">2.</span> <span class="nav-text">HotSpot虚拟机对象</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#对象的创建"><span class="nav-number">2.1.</span> <span class="nav-text">对象的创建</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对象的内存布局"><span class="nav-number">2.2.</span> <span class="nav-text">对象的内存布局</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#对象头"><span class="nav-number">2.2.1.</span> <span class="nav-text">对象头</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实例数据"><span class="nav-number">2.2.2.</span> <span class="nav-text">实例数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#对齐填充"><span class="nav-number">2.2.3.</span> <span class="nav-text">对齐填充</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对象的访问定位"><span class="nav-number">2.3.</span> <span class="nav-text">对象的访问定位</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#使用句柄访问"><span class="nav-number">2.3.1.</span> <span class="nav-text">使用句柄访问</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用直接指针"><span class="nav-number">2.3.2.</span> <span class="nav-text">使用直接指针</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#对象存活判定算法"><span class="nav-number">3.</span> <span class="nav-text">对象存活判定算法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#引用计数法"><span class="nav-number">3.1.</span> <span class="nav-text">引用计数法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#可达性分析算法"><span class="nav-number">3.2.</span> <span class="nav-text">可达性分析算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#活着的希望"><span class="nav-number">3.2.1.</span> <span class="nav-text">活着的希望</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#引用reference"><span class="nav-number">4.</span> <span class="nav-text">引用reference</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#方法区的回收"><span class="nav-number">5.</span> <span class="nav-text">方法区的回收</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#垃圾回收算法"><span class="nav-number">6.</span> <span class="nav-text">垃圾回收算法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#标记-清除算法-Mark-Sweep"><span class="nav-number">6.1.</span> <span class="nav-text">标记-清除算法(Mark-Sweep)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#复制收集算法-Copying"><span class="nav-number">6.2.</span> <span class="nav-text">复制收集算法(Copying)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#标记整理法"><span class="nav-number">6.3.</span> <span class="nav-text">标记整理法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分代收集算法（Generational-Collection）"><span class="nav-number">6.4.</span> <span class="nav-text">分代收集算法（Generational Collection）</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#垃圾收集器"><span class="nav-number">7.</span> <span class="nav-text">垃圾收集器</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Serial-收集器"><span class="nav-number">7.1.</span> <span class="nav-text">Serial 收集器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ParNew-收集器"><span class="nav-number">7.2.</span> <span class="nav-text">ParNew 收集器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Parallel-Scsvenge收集器"><span class="nav-number">7.3.</span> <span class="nav-text">Parallel Scsvenge收集器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Serial-Old-收集器"><span class="nav-number">7.4.</span> <span class="nav-text">Serial Old 收集器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Parallel-Old收集器"><span class="nav-number">7.5.</span> <span class="nav-text">Parallel Old收集器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CMS收集器"><span class="nav-number">7.6.</span> <span class="nav-text">CMS收集器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#G1收集器"><span class="nav-number">7.7.</span> <span class="nav-text">G1收集器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GC-日志"><span class="nav-number">7.8.</span> <span class="nav-text">GC 日志</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#垃圾收集器参数总结"><span class="nav-number">7.9.</span> <span class="nav-text">垃圾收集器参数总结</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#内存分配与回收策略"><span class="nav-number">8.</span> <span class="nav-text">内存分配与回收策略</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#虚拟机性能监控和故障处理工具"><span class="nav-number">9.</span> <span class="nav-text">虚拟机性能监控和故障处理工具</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#JDK命令行工具"><span class="nav-number">9.1.</span> <span class="nav-text">JDK命令行工具</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#jps-虚拟机j进程状况工具"><span class="nav-number">9.1.1.</span> <span class="nav-text">jps:虚拟机j进程状况工具</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#jstat-：-虚拟机统计信息监视工具"><span class="nav-number">9.1.2.</span> <span class="nav-text">jstat ： 虚拟机统计信息监视工具</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#jinfo-Java配置信息工具"><span class="nav-number">9.1.3.</span> <span class="nav-text">jinfo: Java配置信息工具</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#jmap：Java内存映像工具"><span class="nav-number">9.1.4.</span> <span class="nav-text">jmap：Java内存映像工具</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#jhat-虚拟机堆转储快照分析工具"><span class="nav-number">9.1.5.</span> <span class="nav-text">jhat: 虚拟机堆转储快照分析工具</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#jstack-Java堆栈跟踪工具"><span class="nav-number">9.1.6.</span> <span class="nav-text">jstack: Java堆栈跟踪工具</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Java-VisualVM"><span class="nav-number">10.</span> <span class="nav-text">Java VisualVM</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#内存监控功能"><span class="nav-number">10.1.</span> <span class="nav-text">内存监控功能</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#相关注脚"><span class="nav-number">11.</span> <span class="nav-text">相关注脚</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#JVM运行时数据区"><span class="nav-number">1.</span> <span class="nav-text">JVM运行时数据区</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#程序计数器"><span class="nav-number">1.1.</span> <span class="nav-text">程序计数器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Java虚拟机栈"><span class="nav-number">1.2.</span> <span class="nav-text">Java虚拟机栈</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#本地方法栈"><span class="nav-number">1.3.</span> <span class="nav-text">本地方法栈</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Java堆"><span class="nav-number">1.4.</span> <span class="nav-text">Java堆</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#方法区"><span class="nav-number">1.5.</span> <span class="nav-text">方法区</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#运行时常量池"><span class="nav-number">1.5.1.</span> <span class="nav-text">运行时常量池</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#直接内存"><span class="nav-number">1.6.</span> <span class="nav-text">直接内存</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#HotSpot虚拟机对象"><span class="nav-number">2.</span> <span class="nav-text">HotSpot虚拟机对象</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#对象的创建"><span class="nav-number">2.1.</span> <span class="nav-text">对象的创建</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对象的内存布局"><span class="nav-number">2.2.</span> <span class="nav-text">对象的内存布局</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#对象头"><span class="nav-number">2.2.1.</span> <span class="nav-text">对象头</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实例数据"><span class="nav-number">2.2.2.</span> <span class="nav-text">实例数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#对齐填充"><span class="nav-number">2.2.3.</span> <span class="nav-text">对齐填充</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对象的访问定位"><span class="nav-number">2.3.</span> <span class="nav-text">对象的访问定位</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#使用句柄访问"><span class="nav-number">2.3.1.</span> <span class="nav-text">使用句柄访问</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用直接指针"><span class="nav-number">2.3.2.</span> <span class="nav-text">使用直接指针</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#对象存活判定算法"><span class="nav-number">3.</span> <span class="nav-text">对象存活判定算法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#引用计数法"><span class="nav-number">3.1.</span> <span class="nav-text">引用计数法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#可达性分析算法"><span class="nav-number">3.2.</span> <span class="nav-text">可达性分析算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#活着的希望"><span class="nav-number">3.2.1.</span> <span class="nav-text">活着的希望</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#引用reference"><span class="nav-number">4.</span> <span class="nav-text">引用reference</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#方法区的回收"><span class="nav-number">5.</span> <span class="nav-text">方法区的回收</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#垃圾回收算法"><span class="nav-number">6.</span> <span class="nav-text">垃圾回收算法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#标记-清除算法-Mark-Sweep"><span class="nav-number">6.1.</span> <span class="nav-text">标记-清除算法(Mark-Sweep)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#复制收集算法-Copying"><span class="nav-number">6.2.</span> <span class="nav-text">复制收集算法(Copying)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#标记整理法"><span class="nav-number">6.3.</span> <span class="nav-text">标记整理法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分代收集算法（Generational-Collection）"><span class="nav-number">6.4.</span> <span class="nav-text">分代收集算法（Generational Collection）</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#垃圾收集器"><span class="nav-number">7.</span> <span class="nav-text">垃圾收集器</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Serial-收集器"><span class="nav-number">7.1.</span> <span class="nav-text">Serial 收集器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ParNew-收集器"><span class="nav-number">7.2.</span> <span class="nav-text">ParNew 收集器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Parallel-Scsvenge收集器"><span class="nav-number">7.3.</span> <span class="nav-text">Parallel Scsvenge收集器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Serial-Old-收集器"><span class="nav-number">7.4.</span> <span class="nav-text">Serial Old 收集器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Parallel-Old收集器"><span class="nav-number">7.5.</span> <span class="nav-text">Parallel Old收集器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CMS收集器"><span class="nav-number">7.6.</span> <span class="nav-text">CMS收集器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#G1收集器"><span class="nav-number">7.7.</span> <span class="nav-text">G1收集器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GC-日志"><span class="nav-number">7.8.</span> <span class="nav-text">GC 日志</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#垃圾收集器参数总结"><span class="nav-number">7.9.</span> <span class="nav-text">垃圾收集器参数总结</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#内存分配与回收策略"><span class="nav-number">8.</span> <span class="nav-text">内存分配与回收策略</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#虚拟机性能监控和故障处理工具"><span class="nav-number">9.</span> <span class="nav-text">虚拟机性能监控和故障处理工具</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#JDK命令行工具"><span class="nav-number">9.1.</span> <span class="nav-text">JDK命令行工具</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#jps-虚拟机j进程状况工具"><span class="nav-number">9.1.1.</span> <span class="nav-text">jps:虚拟机j进程状况工具</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#jstat-：-虚拟机统计信息监视工具"><span class="nav-number">9.1.2.</span> <span class="nav-text">jstat ： 虚拟机统计信息监视工具</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#jinfo-Java配置信息工具"><span class="nav-number">9.1.3.</span> <span class="nav-text">jinfo: Java配置信息工具</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#jmap：Java内存映像工具"><span class="nav-number">9.1.4.</span> <span class="nav-text">jmap：Java内存映像工具</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#jhat-虚拟机堆转储快照分析工具"><span class="nav-number">9.1.5.</span> <span class="nav-text">jhat: 虚拟机堆转储快照分析工具</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#jstack-Java堆栈跟踪工具"><span class="nav-number">9.1.6.</span> <span class="nav-text">jstack: Java堆栈跟踪工具</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Java-VisualVM"><span class="nav-number">10.</span> <span class="nav-text">Java VisualVM</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#内存监控功能"><span class="nav-number">10.1.</span> <span class="nav-text">内存监控功能</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Class类结构"><span class="nav-number">11.</span> <span class="nav-text">Class类结构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#魔数与Class版本号"><span class="nav-number">11.1.</span> <span class="nav-text">魔数与Class版本号</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常量池"><span class="nav-number">11.2.</span> <span class="nav-text">常量池</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#标志位值对应的具体含义"><span class="nav-number">11.2.1.</span> <span class="nav-text">标志位值对应的具体含义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常量池中常量项结构总表"><span class="nav-number">11.2.2.</span> <span class="nav-text">常量池中常量项结构总表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Javap-：Class-字节码分析工具"><span class="nav-number">11.2.3.</span> <span class="nav-text">Javap ：Class 字节码分析工具</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#访问标志"><span class="nav-number">11.3.</span> <span class="nav-text">访问标志</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#访问标志含义表"><span class="nav-number">11.3.1.</span> <span class="nav-text">访问标志含义表</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#索引、父类索引和与接口索引集合"><span class="nav-number">11.4.</span> <span class="nav-text">索引、父类索引和与接口索引集合</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#字段表集合"><span class="nav-number">11.5.</span> <span class="nav-text">字段表集合</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#字段表结构"><span class="nav-number">11.5.1.</span> <span class="nav-text">字段表结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#access-flags字段访问标志"><span class="nav-number">11.5.2.</span> <span class="nav-text">access_flags字段访问标志</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#描述符字符含义"><span class="nav-number">11.5.3.</span> <span class="nav-text">描述符字符含义</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#方法表"><span class="nav-number">11.6.</span> <span class="nav-text">方法表</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#方法表结构"><span class="nav-number">11.6.1.</span> <span class="nav-text">方法表结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方法访问标志"><span class="nav-number">11.6.2.</span> <span class="nav-text">方法访问标志</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#重载"><span class="nav-number">11.6.3.</span> <span class="nav-text">重载</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#属性表集合"><span class="nav-number">11.7.</span> <span class="nav-text">属性表集合</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#最简单的属性表结构"><span class="nav-number">11.7.1.</span> <span class="nav-text">最简单的属性表结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常用属性"><span class="nav-number">11.7.2.</span> <span class="nav-text">常用属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Code属性"><span class="nav-number">11.7.3.</span> <span class="nav-text">Code属性</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#相关脚注"><span class="nav-number">12.</span> <span class="nav-text">相关脚注</span></a></li></ol></div>
             
 
           </div>
