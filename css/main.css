@@ -1765,7 +1765,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #5e7705;
+  background: #ff12f1;
 }
 .feed-link,
 .chat {
@@ -2488,7 +2488,6 @@ body {
 .page-home .post,
 .page-post-detail .posts-expand,
 .page-archive .post-block,
-.tag,
 .category {
   margin-bottom: 50px;
   padding: 45px 36px 36px 36px;
