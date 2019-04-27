@@ -104,7 +104,7 @@
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://raw.githubusercontent.com/FameLsy/Images/master/Fullmetal%20Alchemist/wallhaven-569731.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/FameLsy/Images/master/MyBatis/MyBaits-core.png">
-<meta property="og:updated_time" content="2019-04-27T02:19:44.053Z">
+<meta property="og:updated_time" content="2019-04-27T06:25:06.926Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MyBatis">
 <meta name="twitter:image" content="https://raw.githubusercontent.com/FameLsy/Images/master/Fullmetal%20Alchemist/wallhaven-569731.png">
@@ -430,7 +430,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-04-27 10:19:44" itemprop="dateModified" datetime="2019-04-27T10:19:44+08:00">2019-04-27</time>
+                <time title="修改时间：2019-04-27 14:25:06" itemprop="dateModified" datetime="2019-04-27T14:25:06+08:00">2019-04-27</time>
               
             
           </span>
@@ -682,44 +682,38 @@
 <tr>
 <td style="text-align:left">cacheEnabled</td>
 <td style="text-align:left">全局地开启或关闭配置文件中的所有映射器已经配置的任何缓存。</td>
-<td style="text-align:left">true \</td>
-<td style="text-align:left">false</td>
-<td>true</td>
+<td style="text-align:left">true &#124; false</td>
+<td style="text-align:left">true</td>
 </tr>
 <tr>
 <td style="text-align:left">lazyLoadingEnabled</td>
 <td style="text-align:left">延迟加载的全局开关。当开启时，所有关联对象都会延迟加载。 特定关联关系中可通过设置 <code>fetchType</code>属性来覆盖该项的开关状态。</td>
-<td style="text-align:left">true \</td>
+<td style="text-align:left">true &#124; false</td>
 <td style="text-align:left">false</td>
-<td>false</td>
 </tr>
 <tr>
 <td style="text-align:left">aggressiveLazyLoading</td>
 <td style="text-align:left">当开启时，任何方法的调用都会加载该对象的所有属性。 否则，每个属性会按需加载（参考 <code>lazyLoadTriggerMethods</code>)。</td>
-<td style="text-align:left">true \</td>
-<td style="text-align:left">false</td>
-<td>false （在 3.4.1 及之前的版本默认值为 true）</td>
+<td style="text-align:left">true &#124; false</td>
+<td style="text-align:left">false （在 3.4.1 及之前的版本默认值为 true）</td>
 </tr>
 <tr>
 <td style="text-align:left">multipleResultSetsEnabled</td>
 <td style="text-align:left">是否允许单一语句返回多结果集（需要驱动支持）。</td>
-<td style="text-align:left">true \</td>
-<td style="text-align:left">false</td>
-<td>true</td>
+<td style="text-align:left">true &#124; false</td>
+<td style="text-align:left">true</td>
 </tr>
 <tr>
 <td style="text-align:left">useColumnLabel</td>
 <td style="text-align:left">使用列标签代替列名。不同的驱动在这方面会有不同的表现，具体可参考相关驱动文档或通过测试这两种不同的模式来观察所用驱动的结果。</td>
-<td style="text-align:left">true \</td>
-<td style="text-align:left">false</td>
-<td>true</td>
+<td style="text-align:left">true &#124; false</td>
+<td style="text-align:left">true</td>
 </tr>
 <tr>
 <td style="text-align:left">useGeneratedKeys</td>
 <td style="text-align:left">允许 JDBC 支持自动生成主键，需要驱动支持。 如果设置为 true 则这个设置强制使用自动生成主键，尽管一些驱动不能支持但仍可正常工作（比如 Derby）。</td>
-<td style="text-align:left">true \</td>
-<td style="text-align:left">false</td>
-<td>False</td>
+<td style="text-align:left">true &#124; false</td>
+<td style="text-align:left">False</td>
 </tr>
 <tr>
 <td style="text-align:left">autoMappingBehavior</td>
@@ -754,30 +748,26 @@
 <tr>
 <td style="text-align:left">safeRowBoundsEnabled</td>
 <td style="text-align:left">允许在嵌套语句中使用分页（RowBounds）。如果允许使用则设置为 false。</td>
-<td style="text-align:left">true \</td>
-<td style="text-align:left">false</td>
-<td>False</td>
+<td style="text-align:left">true &#124; false</td>
+<td style="text-align:left">False</td>
 </tr>
 <tr>
 <td style="text-align:left">safeResultHandlerEnabled</td>
 <td style="text-align:left">允许在嵌套语句中使用分页（ResultHandler）。如果允许使用则设置为 false。</td>
-<td style="text-align:left">true \</td>
-<td style="text-align:left">false</td>
-<td>True</td>
+<td style="text-align:left">true &#124; false</td>
+<td style="text-align:left">True</td>
 </tr>
 <tr>
 <td style="text-align:left">mapUnderscoreToCamelCase</td>
 <td style="text-align:left">是否开启自动驼峰命名规则（camel case）映射，即从经典数据库列名 A_COLUMN 到经典 Java 属性名 aColumn 的类似映射。</td>
-<td style="text-align:left">true \</td>
-<td style="text-align:left">false</td>
-<td>False</td>
+<td style="text-align:left">true &#124; false</td>
+<td style="text-align:left">False</td>
 </tr>
 <tr>
 <td style="text-align:left">localCacheScope</td>
 <td style="text-align:left">MyBatis 利用本地缓存机制（Local Cache）防止循环引用（circular references）和加速重复嵌套查询。 默认值为 SESSION，这种情况下会缓存一个会话中执行的所有查询。 若设置值为 STATEMENT，本地会话仅用在语句执行上，对相同 SqlSession 的不同调用将不会共享数据。</td>
-<td style="text-align:left">SESSION \</td>
-<td style="text-align:left">STATEMENT</td>
-<td>SESSION</td>
+<td style="text-align:left">SESSION &#124; STATEMENT</td>
+<td style="text-align:left">SESSION</td>
 </tr>
 <tr>
 <td style="text-align:left">jdbcTypeForNull</td>
@@ -806,16 +796,14 @@
 <tr>
 <td style="text-align:left">callSettersOnNulls</td>
 <td style="text-align:left">指定当结果集中值为 null 的时候是否调用映射对象的 setter（map 对象时为 put）方法，这在依赖于 Map.keySet() 或 null 值初始化的时候比较有用。注意基本类型（int、boolean 等）是不能设置成 null 的。</td>
-<td style="text-align:left">true \</td>
+<td style="text-align:left">true &#124; false</td>
 <td style="text-align:left">false</td>
-<td>false</td>
 </tr>
 <tr>
 <td style="text-align:left">returnInstanceForEmptyRow</td>
 <td style="text-align:left">当返回行的所有列都是空时，MyBatis默认返回 <code>null</code>。 当开启这个设置时，MyBatis会返回一个空实例。 请注意，它也适用于嵌套的结果集 （如集合或关联）。（新增于 3.4.2）</td>
-<td style="text-align:left">true \</td>
+<td style="text-align:left">true &#124; false</td>
 <td style="text-align:left">false</td>
-<td>false</td>
 </tr>
 <tr>
 <td style="text-align:left">logPrefix</td>
@@ -826,21 +814,14 @@
 <tr>
 <td style="text-align:left">logImpl</td>
 <td style="text-align:left">指定 MyBatis 所用日志的具体实现，未指定时将自动查找。</td>
-<td style="text-align:left">SLF4J \</td>
-<td style="text-align:left">LOG4J \</td>
-<td>LOG4J2 \</td>
-<td>JDK_LOGGING \</td>
-<td>COMMONS_LOGGING \</td>
-<td>STDOUT_LOGGING \</td>
-<td>NO_LOGGING</td>
-<td>未设置</td>
+<td style="text-align:left">SLF4J &#124; LOG4J \&#124;LOG4J2 &#124; JDK_LOGGING &#124; COMMONS_LOGGING &#124; STDOUT_LOGGING &#124; NO_LOGGING</td>
+<td style="text-align:left">未设置</td>
 </tr>
 <tr>
 <td style="text-align:left">proxyFactory</td>
 <td style="text-align:left">指定 Mybatis 创建具有延迟加载能力的对象所用到的代理工具。</td>
-<td style="text-align:left">CGLIB \</td>
-<td style="text-align:left">JAVASSIST</td>
-<td>JAVASSIST （MyBatis 3.3 以上）</td>
+<td style="text-align:left">CGLIB &#124; JAVASSIST</td>
+<td style="text-align:left">JAVASSIST （MyBatis 3.3 以上）</td>
 </tr>
 <tr>
 <td style="text-align:left">vfsImpl</td>
@@ -851,9 +832,8 @@
 <tr>
 <td style="text-align:left">useActualParamName</td>
 <td style="text-align:left">允许使用方法签名中的名称作为语句参数名称。 为了使用该特性，你的项目必须采用 Java 8 编译，并且加上 <code>-parameters</code> 选项。（新增于 3.4.1）</td>
-<td style="text-align:left">true \</td>
-<td style="text-align:left">false</td>
-<td>true</td>
+<td style="text-align:left">true &#124; false</td>
+<td style="text-align:left">true</td>
 </tr>
 <tr>
 <td style="text-align:left">configurationFactory</td>
