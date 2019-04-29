@@ -96,17 +96,20 @@
 
 
 
-  <meta name="description" content="我只是一个兴趣使然的程序员">
-<meta property="og:type" content="website">
-<meta property="og:title" content="分类">
-<meta property="og:url" content="https://masol.gitee.io/blog/categories/index.html">
+  <meta name="description" content="Java7中的HashMapHashMap的结构HashMap的结构使用数组+链表的方式实现。它的内部包含了一个单向链表Entry静态内部类和一个以Entry[]数组 1234// 内部静态类，是一个单项链表static class Entry&amp;lt;K,V&amp;gt; // 类型为 Entry&amp;lt;K,V&amp;gt;的一个数组transient Entry&amp;lt;K,V&amp;gt;[] table = (">
+<meta name="keywords" content="HashMap">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HashMap详解">
+<meta property="og:url" content="https://masol.gitee.io/blog/2018/03/23/HashMap/index.html">
 <meta property="og:site_name" content="Liisyu Blog">
-<meta property="og:description" content="我只是一个兴趣使然的程序员">
+<meta property="og:description" content="Java7中的HashMapHashMap的结构HashMap的结构使用数组+链表的方式实现。它的内部包含了一个单向链表Entry静态内部类和一个以Entry[]数组 1234// 内部静态类，是一个单项链表static class Entry&amp;lt;K,V&amp;gt; // 类型为 Entry&amp;lt;K,V&amp;gt;的一个数组transient Entry&amp;lt;K,V&amp;gt;[] table = (">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-04-20T13:57:32.000Z">
+<meta property="og:image" content="https://raw.githubusercontent.com/FameLsy/Images/master/javase/HashMap.png">
+<meta property="og:updated_time" content="2019-04-29T14:30:49.819Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="分类">
-<meta name="twitter:description" content="我只是一个兴趣使然的程序员">
+<meta name="twitter:title" content="HashMap详解">
+<meta name="twitter:description" content="Java7中的HashMapHashMap的结构HashMap的结构使用数组+链表的方式实现。它的内部包含了一个单向链表Entry静态内部类和一个以Entry[]数组 1234// 内部静态类，是一个单项链表static class Entry&amp;lt;K,V&amp;gt; // 类型为 Entry&amp;lt;K,V&amp;gt;的一个数组transient Entry&amp;lt;K,V&amp;gt;[] table = (">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/FameLsy/Images/master/javase/HashMap.png">
 
 
 
@@ -114,7 +117,7 @@
 
   
   
-  <link rel="canonical" href="https://masol.gitee.io/blog/categories/">
+  <link rel="canonical" href="https://masol.gitee.io/blog/2018/03/23/HashMap/">
 
 
 
@@ -124,7 +127,7 @@
   };
 </script>
 
-  <title>分类 | Liisyu Blog</title>
+  <title>HashMap详解 | Liisyu Blog</title>
   
 
 
@@ -244,7 +247,7 @@
         
         
           
-          <li class="menu-item menu-item-categories menu-item-active">
+          <li class="menu-item menu-item-categories">
 
     
     
@@ -308,28 +311,6 @@
   
     
 
-    
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-    
-
-  
-
-
   
 
   
@@ -377,102 +358,220 @@
 
   <div id="posts" class="posts-expand">
     
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://masol.gitee.io/blog/blog/2018/03/23/HashMap/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Liisyu">
+      <meta itemprop="description" content="我只是一个兴趣使然的程序员">
+      <meta itemprop="image" content="/blog/images/toux.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Liisyu Blog">
+    </span>
+
     
-    
-    <div class="post-block page">
       <header class="post-header">
 
-<h1 class="post-title" itemprop="name headline">分类
-
-</h1>
-
-<div class="post-meta">
-  
-  
-
-
-
-</div>
-
-</header>
-
-      
-      
-      
-      <div class="post-body">
         
         
-          <div class="category-all-page">
-            <div class="category-all-title">
+          <h1 class="post-title" itemprop="name headline">HashMap详解
+
               
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-              目前共计 12 个分类
-            </div>
-            <div class="category-all">
-              <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Algorithm/">Algorithm</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Blog/">Blog</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/DataBase/">DataBase</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/DataStructure/">DataStructure</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/DesignPatterns/">DesignPatterns</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Java/">Java</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Linux/">Linux</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Server/">Server</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Spring/">Spring</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Tools/">Tools</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Verification/">Verification</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/java/">java</a><span class="category-list-count">1</span></li></ul>
-            </div>
-          </div>
+            
+          </h1>
         
-      </div>
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-03-24 00:00:01" itemprop="dateCreated datePublished" datetime="2018-03-24T00:00:01+08:00">2018-03-24</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-04-29 22:30:49" itemprop="dateModified" datetime="2019-04-29T22:30:49+08:00">2019-04-29</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/blog/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
       
+
+      
+        <h1 id="Java7中的HashMap"><a href="#Java7中的HashMap" class="headerlink" title="Java7中的HashMap"></a>Java7中的HashMap</h1><h2 id="HashMap的结构"><a href="#HashMap的结构" class="headerlink" title="HashMap的结构"></a>HashMap的结构</h2><p>HashMap的结构使用数组+链表的方式实现。它的内部包含了一个单向链表Entry静态内部类和一个以Entry[]数组</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 内部静态类，是一个单项链表</span></span><br><span class="line"><span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Entry</span>&lt;<span class="title">K</span>,<span class="title">V</span>&gt; </span></span><br><span class="line"><span class="class">// 类型为 <span class="title">Entry</span>&lt;<span class="title">K</span>,<span class="title">V</span>&gt;的一个数组</span></span><br><span class="line">transient Entry&lt;K,V&gt;[] table = (Entry&lt;K,V&gt;[]) EMPTY_TABLE;</span><br></pre></td></tr></table></figure>
+<p>其结构图如下</p>
+<p><img src="https://raw.githubusercontent.com/FameLsy/Images/master/javase/HashMap.png" alt="HashMap"></p>
+<h2 id="HashMap相关变量介绍"><a href="#HashMap相关变量介绍" class="headerlink" title="HashMap相关变量介绍"></a>HashMap相关变量介绍</h2><table>
+<thead>
+<tr>
+<th>变量</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>capacity</td>
+<td>前数组容量，始终保持2^n，可以扩容，每次扩容大小为当前的2倍</td>
+</tr>
+<tr>
+<td>loadFactor</td>
+<td>负载因子，默认为 0.75</td>
+</tr>
+<tr>
+<td>threshold</td>
+<td>扩容的阈值，等于 capacity * loadFactor,达到阈值后数组将自动扩容</td>
+</tr>
+</tbody>
+</table>
+<h2 id="数组的初始化"><a href="#数组的初始化" class="headerlink" title="数组的初始化"></a>数组的初始化</h2><p>数组初始化需要确定数组的大小并计算数组扩容的阈值</p>
+<div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="JAVA"><figure class="iseeu highlight /java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">*<span class="doctag">@param</span> toSize： 数组的容量</span></span><br><span class="line"><span class="comment">*</span></span><br><span class="line"><span class="comment">**/</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">inflateTable</span><span class="params">(<span class="keyword">int</span> toSize)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// roundUpToPowerOf2用于保证当前的数组容量为2的n次方,如传入20,则返回32</span></span><br><span class="line">        <span class="keyword">int</span> capacity = roundUpToPowerOf2(toSize);</span><br><span class="line">		<span class="comment">//计算扩容阈值：capacity * loadFactory</span></span><br><span class="line">        threshold = (<span class="keyword">int</span>) Math.min(capacity * loadFactor, MAXIMUM_CAPACITY + <span class="number">1</span>);</span><br><span class="line">    	<span class="comment">//初始化一个数组</span></span><br><span class="line">        table = <span class="keyword">new</span> Entry[capacity];</span><br><span class="line">    </span><br><span class="line">    	<span class="comment">//用于初始化散列掩码值，会延迟初始化知道真正需要它的时候，(暂时不需要理解它)</span></span><br><span class="line">        initHashSeedAsNeeded(capacity);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></div>
+
       
     </div>
-    
-
-
 
     
+
     
     
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/blog/tags/HashMap/" rel="tag"># HashMap</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/2018/03/22/MyBatis.all/" rel="next" title="MyBatis">
+                <i class="fa fa-chevron-left"></i> MyBatis
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
   </div>
 
 
@@ -501,8 +600,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <div class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -744,6 +852,23 @@
         </div>
       </div>
 
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Java7中的HashMap"><span class="nav-number">1.</span> <span class="nav-text">Java7中的HashMap</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#HashMap的结构"><span class="nav-number">1.1.</span> <span class="nav-text">HashMap的结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HashMap相关变量介绍"><span class="nav-number">1.2.</span> <span class="nav-text">HashMap相关变量介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数组的初始化"><span class="nav-number">1.3.</span> <span class="nav-text">数组的初始化</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
       
 
       
