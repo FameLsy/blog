@@ -103,7 +103,12 @@
 <meta property="og:site_name" content="Liisyu Blog">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://raw.githubusercontent.com/FameLsy/Images/master/Fullmetal%20Alchemist/wallhaven-761430.png">
-<meta property="og:updated_time" content="2019-04-20T13:57:32.000Z">
+<meta property="og:image" content="https://raw.githubusercontent.com/FameLsy/Images/master/servlet/servlet.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/FameLsy/Images/master/servlet/servlet结构.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/FameLsy/Images/master/servlet/属性.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/FameLsy/Images/master/servlet/session.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/FameLsy/Images/master/servlet/filter.png">
+<meta property="og:updated_time" content="2019-05-12T13:39:06.973Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Servlet">
 <meta name="twitter:image" content="https://raw.githubusercontent.com/FameLsy/Images/master/Fullmetal%20Alchemist/wallhaven-761430.png">
@@ -429,7 +434,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-04-20 21:57:32" itemprop="dateModified" datetime="2019-04-20T21:57:32+08:00">2019-04-20</time>
+                <time title="修改时间：2019-05-12 21:39:06" itemprop="dateModified" datetime="2019-05-12T21:39:06+08:00">2019-05-12</time>
               
             
           </span>
@@ -483,6 +488,439 @@
       
         <p><img src="https://raw.githubusercontent.com/FameLsy/Images/master/Fullmetal%20Alchemist/wallhaven-761430.png" alt></p>
 <a id="more"></a>
+<h1 id="Servlet基础"><a href="#Servlet基础" class="headerlink" title="Servlet基础"></a>Servlet基础</h1><p><strong>Servlet规范是建立在HTTP规范基础上</strong>，HTTP 1.1规范支持OPTIONS、GET、POST、HEAD、PUT、DELETE以及TRACE等7中Web访问方式,<strong>只需要了解POST和GET即可</strong></p>
+<ol>
+<li><code>GET</code>: 表示查询信息，URL中可以附带少量信息，URL总长度不超过255个字符，且参数会显示在浏览器地址栏</li>
+<li>POST: 表示提交信息，一般用于大数据信息或者文件，长度不受限制，且参数不会显示在浏览器地址栏</li>
+</ol>
+<h2 id="Servlet-工作流程"><a href="#Servlet-工作流程" class="headerlink" title="Servlet 工作流程"></a>Servlet 工作流程</h2><p>servlet 工作流程:</p>
+<ol>
+<li>浏览器提交的请求是遵循HTTP协议的文本，而这段文本有服务器（以Tomcat为例）Tomcat接受并解析</li>
+<li>Tomcat将请求封装成了HttpServletRequest类型的request对象。所有HTTP头数据都可以通过request相应的方法查询到</li>
+<li>Tomcat把输出流封装为HttpServleteResponse类型的response对象，通过设置resonse属性就可以控制输出内容。</li>
+</ol>
+<p><img src="https://raw.githubusercontent.com/FameLsy/Images/master/servlet/servlet.png" alt="servlet"></p>
+<h2 id="Tomcat的目录结构"><a href="#Tomcat的目录结构" class="headerlink" title="Tomcat的目录结构"></a>Tomcat的目录结构</h2><p>Web程序部署在Tomcat的/webapps下面</p>
+<table>
+<thead>
+<tr>
+<th>文件夹</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>/</td>
+<td>Web应用根目录</td>
+</tr>
+<tr>
+<td>/WEB-INF/</td>
+<td>Tomcat会隐藏该文件夹下的所有文件，保护它们不能通过浏览器直接访问</td>
+</tr>
+<tr>
+<td>/WEB-INF/web.xml</td>
+<td>配置文件</td>
+</tr>
+<tr>
+<td>/WEB-INF/classes</td>
+<td>class类文件都放在该文件下面，包括Servlet类</td>
+</tr>
+<tr>
+<td>/WEB-INF/lib/</td>
+<td>jar包存放</td>
+</tr>
+</tbody>
+</table>
+<h1 id="Servlet结构"><a href="#Servlet结构" class="headerlink" title="Servlet结构"></a>Servlet结构</h1><p><img src="https://raw.githubusercontent.com/FameLsy/Images/master/servlet/servlet结构.png" alt="servlet结构"></p>
+<table>
+<thead>
+<tr>
+<th>接口/类</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ServletConfig</td>
+<td>接口，在初始化期间将信息传递给servlet的servlet配置对象</td>
+</tr>
+<tr>
+<td>Servlet</td>
+<td>接口，定义所有servlet必须实现的方法</td>
+</tr>
+<tr>
+<td>GenericServlet</td>
+<td>抽象类，一个通用的与协议无关的servlet</td>
+</tr>
+<tr>
+<td>HttpServlet</td>
+<td>抽象类，提供要创建子类的抽象类，以创建适合Web站点的<code>HTTP Servlet</code></td>
+</tr>
+<tr>
+<td>CGIServlet</td>
+<td>实现类，用于Web应用程序的CGI调用servlet，用于执行符合通用网关接口（CGI）规范的脚本</td>
+</tr>
+<tr>
+<td>DefaultServlet</td>
+<td>实现类，大多数Web应用程序的默认资源服务<code>servlet</code> ，用于提供静态资源，如HTML页面和图像</td>
+</tr>
+</tbody>
+</table>
+<h2 id="ServletConfig接口"><a href="#ServletConfig接口" class="headerlink" title="ServletConfig接口"></a>ServletConfig接口</h2><div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="JAVA"><figure class="iseeu highlight /java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">	<span class="comment">//返回此servlet实例的名称</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getServletName</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//返回对调用者正在执行的ServletContext的引用</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> ServletContext <span class="title">getServletContext</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//返回包含已命名的initialization参数，如果参数不存在，则返回null </span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getInitParameter</span><span class="params">(String name)</span></span>;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//返回servlet初始化参数的名称,保存在Enumeration对象中</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Enumeration&lt;String&gt; <span class="title">getInitParameterNames</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+<h2 id="Servlet-接口"><a href="#Servlet-接口" class="headerlink" title="Servlet 接口"></a>Servlet 接口</h2><div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="JAVA"><figure class="iseeu highlight /java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Servlet</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//初始化Servlet</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">(ServletConfig config)</span> <span class="keyword">throws</span> ServletException</span>;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//获取Servlet配置    </span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> ServletConfig <span class="title">getServletConfig</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//允许servlet响应请求   </span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">service</span><span class="params">(ServletRequest req, ServletResponse res)</span></span></span><br><span class="line"><span class="function">            <span class="keyword">throws</span> ServletException, IOException</span>;</span><br><span class="line"></span><br><span class="line">   <span class="comment">//返回有关servlet的信息，例如author，version和copyright</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getServletInfo</span><span class="params">()</span></span>;</span><br><span class="line">	</span><br><span class="line">  	 <span class="comment">//由servlet容器调用，以向servlet指示servlet正在停止服务。只有在servlet的service方法中的所有*线程都已经退出或超过一段时间后，才会调用此方法</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">destroy</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+<h2 id="GenericServlet"><a href="#GenericServlet" class="headerlink" title="GenericServlet"></a>GenericServlet</h2><h3 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h3><div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="JAVA"><figure class="iseeu highlight /java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//配置类</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">transient</span> ServletConfig config</span><br></pre></td></tr></table></figure></div>
+<h3 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h3><div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="JAVA"><figure class="iseeu highlight /java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">Override</span><br><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">getInitParameter</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> getServletConfig().getInitParameter(name);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Enumeration&lt;String&gt; <span class="title">getInitParameterNames</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">return</span> getServletConfig().getInitParameterNames();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> ServletConfig <span class="title">getServletConfig</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">return</span> config;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> ServletContext <span class="title">getServletContext</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">return</span> getServletConfig().getServletContext();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">(ServletConfig config)</span> <span class="keyword">throws</span> ServletException </span>&#123;</span><br><span class="line">	<span class="keyword">this</span>.config = config;</span><br><span class="line">	<span class="keyword">this</span>.init();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">getServletName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">return</span> config.getServletName();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+<h2 id="HttpSerlvet"><a href="#HttpSerlvet" class="headerlink" title="HttpSerlvet"></a>HttpSerlvet</h2><p>主要看以下两个方法</p>
+<div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="JAVA"><figure class="iseeu highlight /java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//处理GET请求</span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">doGet</span><span class="params">(HttpServletRequest req, HttpServletResponse resp)</span></span></span><br><span class="line"><span class="function">    <span class="keyword">throws</span> ServletException, IOException</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    String protocol = req.getProtocol();</span><br><span class="line">    String msg = lStrings.getString(<span class="string">"http.method_get_not_supported"</span>);</span><br><span class="line">    <span class="keyword">if</span> (protocol.endsWith(<span class="string">"1.1"</span>)) &#123;</span><br><span class="line">        resp.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED, msg);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        resp.sendError(HttpServletResponse.SC_BAD_REQUEST, msg);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//处理POST请求</span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">doPost</span><span class="params">(HttpServletRequest req, HttpServletResponse resp)</span> <span class="keyword">throws</span> ServletException, IOException </span>&#123;</span><br><span class="line">    String protocol = req.getProtocol();</span><br><span class="line">    String msg = lStrings.getString(<span class="string">"http.method_post_not_supported"</span>);</span><br><span class="line">    <span class="keyword">if</span> (protocol.endsWith(<span class="string">"1.1"</span>)) &#123;</span><br><span class="line">    	resp.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED, msg);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    	resp.sendError(HttpServletResponse.SC_BAD_REQUEST, msg);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+<h2 id="DefaultServlet"><a href="#DefaultServlet" class="headerlink" title="DefaultServlet"></a>DefaultServlet</h2><p>默认的Serlvet类</p>
+<div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="JAVA"><figure class="iseeu highlight /java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">()</span> <span class="keyword">throws</span> ServletException </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (getServletConfig().getInitParameter(<span class="string">"debug"</span>) != <span class="keyword">null</span>)</span><br><span class="line">        debug = Integer.parseInt(getServletConfig().getInitParameter(<span class="string">"debug"</span>));</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (getServletConfig().getInitParameter(<span class="string">"input"</span>) != <span class="keyword">null</span>)</span><br><span class="line">        input = Integer.parseInt(getServletConfig().getInitParameter(<span class="string">"input"</span>));</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (getServletConfig().getInitParameter(<span class="string">"output"</span>) != <span class="keyword">null</span>)</span><br><span class="line">        output = Integer.parseInt(getServletConfig().getInitParameter(<span class="string">"output"</span>));</span><br><span class="line"></span><br><span class="line">    listings = Boolean.parseBoolean(getServletConfig().getInitParameter(<span class="string">"listings"</span>));</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (getServletConfig().getInitParameter(<span class="string">"readonly"</span>) != <span class="keyword">null</span>)</span><br><span class="line">        readOnly = Boolean.parseBoolean(getServletConfig().getInitParameter(<span class="string">"readonly"</span>));</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (getServletConfig().getInitParameter(<span class="string">"gzip"</span>) != <span class="keyword">null</span>)</span><br><span class="line">        gzip = Boolean.parseBoolean(getServletConfig().getInitParameter(<span class="string">"gzip"</span>));</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (getServletConfig().getInitParameter(<span class="string">"sendfileSize"</span>) != <span class="keyword">null</span>)</span><br><span class="line">        sendfileSize =</span><br><span class="line">            Integer.parseInt(getServletConfig().getInitParameter(<span class="string">"sendfileSize"</span>)) * <span class="number">1024</span>;</span><br><span class="line"></span><br><span class="line">    fileEncoding = getServletConfig().getInitParameter(<span class="string">"fileEncoding"</span>);</span><br><span class="line"></span><br><span class="line">    globalXsltFile = getServletConfig().getInitParameter(<span class="string">"globalXsltFile"</span>);</span><br><span class="line">    contextXsltFile = getServletConfig().getInitParameter(<span class="string">"contextXsltFile"</span>);</span><br><span class="line">    localXsltFile = getServletConfig().getInitParameter(<span class="string">"localXsltFile"</span>);</span><br><span class="line">    readmeFile = getServletConfig().getInitParameter(<span class="string">"readmeFile"</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (getServletConfig().getInitParameter(<span class="string">"useAcceptRanges"</span>) != <span class="keyword">null</span>)</span><br><span class="line">        useAcceptRanges = Boolean.parseBoolean(getServletConfig().getInitParameter(<span class="string">"useAcceptRanges"</span>));</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Sanity check on the specified buffer sizes</span></span><br><span class="line">    <span class="keyword">if</span> (input &lt; <span class="number">256</span>)</span><br><span class="line">        input = <span class="number">256</span>;</span><br><span class="line">    <span class="keyword">if</span> (output &lt; <span class="number">256</span>)</span><br><span class="line">        output = <span class="number">256</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (debug &gt; <span class="number">0</span>) &#123;</span><br><span class="line">        log(<span class="string">"DefaultServlet.init:  input buffer size="</span> + input +</span><br><span class="line">            <span class="string">", output buffer size="</span> + output);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Load the web resources</span></span><br><span class="line">    resources = (WebResourceRoot) getServletContext().getAttribute(</span><br><span class="line">            Globals.RESOURCES_ATTR);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (resources == <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> UnavailableException(<span class="string">"No resources"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (getServletConfig().getInitParameter(<span class="string">"showServerInfo"</span>) != <span class="keyword">null</span>) &#123;</span><br><span class="line">        showServerInfo = Boolean.parseBoolean(getServletConfig().getInitParameter(<span class="string">"showServerInfo"</span>));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+<h2 id="CGIServlet"><a href="#CGIServlet" class="headerlink" title="CGIServlet"></a>CGIServlet</h2><p>todo</p>
+<h1 id="自定义Servlet实现"><a href="#自定义Servlet实现" class="headerlink" title="自定义Servlet实现"></a>自定义Servlet实现</h1><p>想要实现Servlet,只需要继承HttpServlet,主要重写三个方法</p>
+<ol>
+<li>doGet()</li>
+<li>doPost()</li>
+<li>getLastModified()</li>
+</ol>
+<div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="JAVA"><figure class="iseeu highlight /java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> liisyu</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2019/3/5</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">servlet</span> <span class="keyword">extends</span> <span class="title">HttpServlet</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">doGet</span><span class="params">(HttpServletRequest req, HttpServletResponse resp)</span> <span class="keyword">throws</span> ServletException, IOException </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.doGet(req, resp);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">doPost</span><span class="params">(HttpServletRequest req, HttpServletResponse resp)</span> <span class="keyword">throws</span> ServletException, IOException </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.doPost(req, resp);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//返回该Servlet生成的文档的更新时间，对Get方式访问有效</span></span><br><span class="line">    <span class="comment">//返回的时间为相对于1970.01.01 08:00:00的毫秒数</span></span><br><span class="line">	<span class="comment">//返回值是-1则认为是实时更新，默认-1</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">long</span> <span class="title">getLastModified</span><span class="params">(HttpServletRequest req)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">super</span>.getLastModified(req);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+<h1 id="Servlet-配置"><a href="#Servlet-配置" class="headerlink" title="Servlet-配置"></a>Servlet-配置</h1><p>主要配置</p>
+<ol>
+<li>&lt; servlet &gt;:配置类</li>
+<li>&lt; servlet-mapping &gt;：配置访问方式</li>
+</ol>
+<h2 id="配置serlvet"><a href="#配置serlvet" class="headerlink" title="配置serlvet"></a>配置serlvet</h2><p>定义完Servlet类后，还需要告诉Web容器该如何访问这个Servlet，而这个配置在web.xml中完成</p>
+<ol>
+<li>&lt; servlet-name &gt;: 可取任意字符串，唯一,用于其他标签使用(如&lt; servlet-mapping &gt;)</li>
+<li>&lt; servlet-class&gt;: 配置Serlvet类</li>
+<li>&lt; init-param &gt;: (可选)用于配置初始化参数<br> &lt; param-name &gt;: 配置参数名<br> &lt; param-value &gt;: 配置参数值</li>
+<li>&lt; load-on-startup &gt;: 配置加载方式<br> 值大于0: 在启动时加载该Servlet，值越小，优先级越高<br> 值为0：在第一次请求时加载</li>
+</ol>
+<div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="XML"><figure class="iseeu highlight /xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">servlet</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>MyServlet<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">servlet-class</span>&gt;</span>com.liisyu.servlet<span class="tag">&lt;/<span class="name">servlet-class</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">init-param</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">param-name</span>&gt;</span>encoding<span class="tag">&lt;/<span class="name">param-name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">param-value</span>&gt;</span>utf-8<span class="tag">&lt;/<span class="name">param-value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">init-param</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">load-on-startup</span>&gt;</span>1<span class="tag">&lt;/<span class="name">load-on-startup</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">servlet</span>&gt;</span></span><br></pre></td></tr></table></figure></div>
+<h2 id="配置servlet访问方式"><a href="#配置servlet访问方式" class="headerlink" title="配置servlet访问方式"></a>配置servlet访问方式</h2><p>配置好servlet类后，需要配置对其的访问方式，使用&lt; serlvet-mapping &gt;标签</p>
+<ol>
+<li>&lt; servlet-name&gt;: 指定引用的Serlvet名称，Servlet会使用该访问方式</li>
+<li>&lt; url-pattern &gt;: 配置该serlvet的访问方式<br> 如：/servlet,想要访问MyServlet，那么url为:<a href="http://localhost:8080/" target="_blank" rel="noopener">http://localhost:8080/</a> + 项目路径(如/serlvet) + ${url-pattern}<br> 允许通配符 <em> ,代表任意字符,如 /servlet/FirstServlet.</em>,表示可以访问任意后缀的FirstServlet  </li>
+</ol>
+<div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="XML"><figure class="iseeu highlight /xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">servlet-mapping</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>MyServlet<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>/servlet/MyServlet.*<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">servlet-mapping</span>&gt;</span></span><br></pre></td></tr></table></figure></div>
+<p>获取配置的初始化参数值<br><div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="JAVA"><figure class="iseeu highlight /java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// servlet方法</span></span><br><span class="line">getServletContext().getInitParam(String paramName)</span><br></pre></td></tr></table></figure></div></p>
+<h2 id="上下文参数"><a href="#上下文参数" class="headerlink" title="上下文参数"></a>上下文参数</h2><p>要想配置全局的参数，可以使用&lt; context-param &gt;标签</p>
+<div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="XML"><figure class="iseeu highlight /xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">context-param</span>&gt;</span> </span><br><span class="line">    <span class="tag">&lt;<span class="name">param-name</span>&gt;</span>allowed fil type&gt;<span class="tag">&lt;/<span class="name">param-name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">param-value</span>&gt;</span>.git, .jpg, .bmp<span class="tag">&lt;/<span class="name">param-value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">context-param</span>&gt;</span></span><br></pre></td></tr></table></figure></div>
+<p>在java中获取全局上下文，可以使用</p>
+<div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="JAVA"><figure class="iseeu highlight /java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 属于servlet的方法</span></span><br><span class="line">getServletConfig().getServletContext();</span><br></pre></td></tr></table></figure></div>
+<h1 id="Request请求"><a href="#Request请求" class="headerlink" title="Request请求"></a>Request请求</h1><p>请求会被封装成HttpServletRequest对象，包含了请求地址、请求参数等所有信息</p>
+<div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="JAVA"><figure class="iseeu highlight /java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//设置request编码方式</span></span><br><span class="line">req.setCharacterEncoding(<span class="string">"UTF-8"</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//其他req.getxxx方法,太多，看API</span></span><br></pre></td></tr></table></figure></div>
+<h1 id="Response响应"><a href="#Response响应" class="headerlink" title="Response响应"></a>Response响应</h1><p>服务器对浏览器的响应会被封装成HttpServletResponse对象，要对浏览器操作，只需操作该对象<br><div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="JAVA"><figure class="iseeu highlight /java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//设置response的编码方式</span></span><br><span class="line">resp.setCharacterEncoding(<span class="string">"UTF-8"</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//设置文档类型为HTML类型</span></span><br><span class="line">resp.setContentType(<span class="string">"text/html"</span>);</span><br><span class="line"></span><br><span class="line"> <span class="comment">//设置文档类型为HTML类型</span></span><br><span class="line">resp.setContentType(<span class="string">"image/jep"</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//设置文档类型为Word</span></span><br><span class="line">resp.setContentType(<span class="string">"application/msword"</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//获取字符型输出流，输出到浏览器</span></span><br><span class="line">PrintWriter writer = resp.getWriter();</span><br><span class="line"></span><br><span class="line"><span class="comment">//二进制输出流，比方说输出图片</span></span><br><span class="line">ServletOutputStream outputStream = resp.getOutputStream();</span><br><span class="line"></span><br><span class="line"><span class="comment">//输出</span></span><br><span class="line">writer.flush();</span><br><span class="line">outputStream.flush();</span><br></pre></td></tr></table></figure></div></p>
+<p>title: Servlet-资源<br>tags: </p>
+<ul>
+<li>Servlet-资源<br>categories: </li>
+<li>Servlet</li>
+</ul>
+<hr>
+<h1 id="Servlet-表单信息"><a href="#Servlet-表单信息" class="headerlink" title="Servlet-表单信息"></a>Servlet-表单信息</h1><h2 id="GET方式提交的表单"><a href="#GET方式提交的表单" class="headerlink" title="GET方式提交的表单"></a>GET方式提交的表单</h2><p>URL：路径 + “?”,各变量以 &amp; 相连</p>
+<p>可能需要设置编码方式<br><div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="JAVA"><figure class="iseeu highlight /java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">req.setCharacterEncoding(<span class="string">"utf-8"</span>);</span><br></pre></td></tr></table></figure></div></p>
+<p>获取各变量以 &amp; 相连的部分<br><div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="JAVA"><figure class="iseeu highlight /java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">request.getQueryString()</span><br></pre></td></tr></table></figure></div></p>
+<p>获取表单信息<br><div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="JAVA"><figure class="iseeu highlight /java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">request.getParameter(<span class="string">"name"</span>);</span><br></pre></td></tr></table></figure></div></p>
+<h2 id="POST方式提交的表单"><a href="#POST方式提交的表单" class="headerlink" title="POST方式提交的表单"></a>POST方式提交的表单</h2><p>URL: 不会变化</p>
+<p>该方法只返回null<br><div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="JAVA"><figure class="iseeu highlight /java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">request.getQueryString()</span><br></pre></td></tr></table></figure></div></p>
+<p>获取表单信息<br><div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="JAVA"><figure class="iseeu highlight /java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//获取单个参数</span></span><br><span class="line">request.getParameter(<span class="string">"name"</span>);</span><br><span class="line"><span class="comment">//获取同名多个参数，返回数组</span></span><br><span class="line">request.getParameters(<span class="string">"like"</span>);</span><br></pre></td></tr></table></figure></div></p>
+<h1 id="javaweb-资源"><a href="#javaweb-资源" class="headerlink" title="javaweb-资源"></a>javaweb-资源</h1><h2 id="配置资源"><a href="#配置资源" class="headerlink" title="配置资源"></a>配置资源</h2><p>对于一些资源，可以在web.xml使用标签&lt; env-entry &gt;来配置（该标签只能配置java.lang包下的标准类型变量，即Stirng和八种基本变量）</p>
+<div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="XML"><figure class="iseeu highlight /xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">env-entry</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">env-entry-name</span>&gt;</span>name<span class="tag">&lt;/<span class="name">env-entry-name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">env-entry-type</span>&gt;</span>java.lang.String<span class="tag">&lt;/<span class="name">env-entry-type</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">env-entry-value</span>&gt;</span>liisyu<span class="tag">&lt;/<span class="name">env-entry-value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">env-entry</span>&gt;</span></span><br></pre></td></tr></table></figure></div>
+<h2 id="注入资源"><a href="#注入资源" class="headerlink" title="注入资源"></a>注入资源</h2><p>Servlet是如何获取web.xml的初始参数的？  </p>
+<p>在java5.0后，引入了@Resource注解，可以帮我们将参数注射到Servlet类中(可注入java bean 、String、8大基础类)</p>
+<div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="JAVA"><figure class="iseeu highlight /java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Resource</span>(name=<span class="string">"name"</span>)</span><br><span class="line"><span class="keyword">private</span> String name;</span><br></pre></td></tr></table></figure></div>
+<h2 id="使用JDNI获取资源"><a href="#使用JDNI获取资源" class="headerlink" title="使用JDNI获取资源"></a>使用JDNI获取资源</h2><div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="JAVA"><figure class="iseeu highlight /java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Context context = <span class="keyword">new</span> InitialContext();</span><br><span class="line">String name = (String)context.loolup(<span class="string">"name"</span>);</span><br></pre></td></tr></table></figure></div>
+<h1 id="完整的生命周期"><a href="#完整的生命周期" class="headerlink" title="完整的生命周期"></a>完整的生命周期</h1><p>概述：</p>
+<ol>
+<li>Tomcat在启动的时候，会根据loadn-on-startup的值来创建Servlet(大于1: 启动时初始化；等于0，第一次请求时初始化)</li>
+<li>Servlet对象会处理所有客户的请求，且为单例形式，只有当服务器关闭时，才销毁该对象</li>
+<li>当多个客户端并发请求Servlet时，服务器会启动多个线程分别执行service()方法</li>
+</ol>
+<p>相关方法</p>
+<ol>
+<li>init (): Servlet通过该方法进行初始化</li>
+<li>service：Servlet通过该方法处理客户端请求</li>
+<li>destroy():通过该方法终止</li>
+<li>JVM垃圾回收</li>
+</ol>
+<p>init():</p>
+<ol>
+<li>创建和加载数据，这些数据存在于Serlvet的整个生命周期</li>
+<li>只被调用一次</li>
+<li>在Saerlvet第一次创建时调用</li>
+</ol>
+<p>service():</p>
+<ol>
+<li>用于处理客户掉的请求，根据HTTP的请求类型，来觉得调用doGet()或doPost()</li>
+<li>无需改动，修改方法直接重载doGet()或doPost()</li>
+</ol>
+<p>doGet():</p>
+<ol>
+<li>处理GET请求</li>
+</ol>
+<p>doPost():</p>
+<ol>
+<li>处理POST请求</li>
+<li>一种常用做法时在doPost()里调用doGet(),达到代码复用</li>
+</ol>
+<p>destroy:</p>
+<ol>
+<li>关闭数据库连接，停止后台线程，把Cooike列表或点击计数器写入磁盘，并执行其他类的清理</li>
+<li>调用该方法后，Servlet对象被比标记为回收，等待JVM清理</li>
+</ol>
+<h1 id="重定向与跳转"><a href="#重定向与跳转" class="headerlink" title="重定向与跳转"></a>重定向与跳转</h1><h2 id="跳转-forword"><a href="#跳转-forword" class="headerlink" title="跳转(forword)"></a>跳转(forword)</h2><p>跳转是通过RequestDispathcer对象的forward(aRequest, aResponse)方法来是实现的</p>
+<p>实现一个简单的Serlvet跳转到另一个Serlvet<br><div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="JAVA"><figure class="iseeu highlight /java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">RequestDispatcher dispatcher =</span><br><span class="line">    request.getRequestDispatcher(<span class="string">"/servlet/HelloServlet"</span>);</span><br><span class="line">dispatcher.forward(request,response);</span><br></pre></td></tr></table></figure></div></p>
+<blockquote>
+<p>注：<br>getRequestDispatcher()参数必须以”/“开始，表示Web根目录</p>
+</blockquote>
+<p>此外，forword()跳转不止这一种</p>
+<ol>
+<li>Servlet跳转到Servlet</li>
+<li>Servlet跳转到页面</li>
+<li>Servlet跳转到文件(包括WEB-INF下的文件)</li>
+<li>只要getRequestDispatcher()的参数路径不同，就可以跳转</li>
+</ol>
+<h2 id="重定向-Redirect"><a href="#重定向-Redirect" class="headerlink" title="重定向(Redirect):"></a>重定向(Redirect):</h2><p>重定向是利用服务器返回的状态码来实现的。当客户掉浏览器请求服务器时，服务器端会返回一个状态码</p>
+<p>设置状态码<br><div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="JAVA"><figure class="iseeu highlight /java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">response.setStatus(<span class="keyword">int</span> stauss)</span><br></pre></td></tr></table></figure></div></p>
+<p>状态码解释</p>
+<table>
+<thead>
+<tr>
+<th>状态码</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1xx</td>
+<td>信息状态码，表示请求已经被接受，正在处理</td>
+</tr>
+<tr>
+<td>2xx</td>
+<td>正确状态码，表示请求已被正确接受并处理，没有错误发生,如200(表示一切正常）</td>
+</tr>
+<tr>
+<td>3xx</td>
+<td>重定向状态码，如301（资源永久换位置,永久重定向）；302（资源临时换了地址,临时性重定向），通常服务器会发送HTTP Location来重定向到正确的新位置</td>
+</tr>
+<tr>
+<td>4xx</td>
+<td>请求错误状态码，如401(无权访问)，404(无资源)， 405(访问方式错误，如Servlet只接受Post访问)</td>
+</tr>
+<tr>
+<td>5xx</td>
+<td>服务器错误状态码，如500(程序出现异常而中途停止运行)</td>
+</tr>
+</tbody>
+</table>
+<h1 id="Cookie"><a href="#Cookie" class="headerlink" title="Cookie"></a>Cookie</h1><h2 id="Cookie常用属性"><a href="#Cookie常用属性" class="headerlink" title="Cookie常用属性"></a>Cookie常用属性</h2><p><img src="https://raw.githubusercontent.com/FameLsy/Images/master/servlet/属性.png" alt="属性"></p>
+<hr>
+<h2 id="Cookie-编码"><a href="#Cookie-编码" class="headerlink" title="Cookie-编码"></a>Cookie-编码</h2><p>对于编码，中文属于Unicode字符，占据4个字符，而英文数以ASCII字符，占据2个字符。</p>
+<p>Cookie中要使用中文，可以使用java.net.URLEncoder类进行编码<br><div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="JAVA"><figure class="iseeu highlight /java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> Cookie(</span><br><span class="line">    URLEncoder.encode(<span class="string">"姓名"</span>, <span class="string">"UTF-8"</span>),</span><br><span class="line">    URLEncoder.encode(<span class="string">"张三"</span>, <span class="string">"UTF-8"</span>)</span><br><span class="line">    )</span><br></pre></td></tr></table></figure></div></p>
+<p>对于解码，则使用java.net.URLDecoder类<br><div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="JAVA"><figure class="iseeu highlight /java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">URLDecoder.decode(aCookie.getName(), <span class="string">"UTF-8"</span>)</span><br><span class="line">URLDecoder.decode(aCookie.getValue(), <span class="string">"UTF-8"</span>)</span><br></pre></td></tr></table></figure></div></p>
+<h2 id="Cookie-有效期"><a href="#Cookie-有效期" class="headerlink" title="Cookie-有效期"></a>Cookie-有效期</h2><p>Cookie的maxAge控制着Cookie的有效期，单位为秒</p>
+<ol>
+<li>获取: getMaxAge()</li>
+<li>设置: setMaxAge()</li>
+</ol>
+<p>maxAge的值</p>
+<ol>
+<li>正数：cookie会在${maxAge}秒之后自动消失，浏览器会将maxAge持久化写入到本地Cookies文件中</li>
+<li>负数：仅在本浏览器窗口以及本窗口打开的子窗口有效，关闭窗口立即失效(maxAge默认-1)</li>
+<li>0：表示立即失效，因为Cookie机制没有提供删除Cookie操作，一般都设置为0，失效的Cookieh会被浏览器从Cooike文件中删除</li>
+</ol>
+<h2 id="Cookie-删除与修改"><a href="#Cookie-删除与修改" class="headerlink" title="Cookie-删除与修改"></a>Cookie-删除与修改</h2><p>Cookie并不提供删除和修改</p>
+<ol>
+<li>想要修改，只需要新建一个同名的Cooike，并添加到response中覆盖原有的Cooike</li>
+<li>想要删除，只需仙剑一个同名的Cookie，将其maxAge属性设置为0，并添加到response中覆盖原有的Cooike</li>
+<li>无论是修改还是Cookie，新建的Cookie除value、maxAge属性外，其他属性要一致。否则浏览器会将其视为不同的Cookie</li>
+</ol>
+<h2 id="Cookie的不可跨域名性"><a href="#Cookie的不可跨域名性" class="headerlink" title="Cookie的不可跨域名性"></a>Cookie的不可跨域名性</h2><ol>
+<li>Cookie在客户端由浏览器管理，它能保证A网站的Cookie只能由A网站使用，B网站无法使用，这就是不可跨域性</li>
+<li>浏览器保证不可跨域名性是通过域名</li>
+<li>正常情况下，即使是一级域名下的两个二级域名(如code.baidu.com、images.baidu.com),也是不共享Cookie的</li>
+</ol>
+<h2 id="Cookie设置共享"><a href="#Cookie设置共享" class="headerlink" title="Cookie设置共享"></a>Cookie设置共享</h2><p>使用的是Cookie的domain属性<br><div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">//所有baidu.com名下的二级域名都可以使用该Cookie</span><br><span class="line">aCookie.setDomain(&quot;.baidu.com&quot;);</span><br></pre></td></tr></table></figure></div></p>
+<blockquote>
+<p>注意:<br>domain参数必须以 . 开始</p>
+</blockquote>
+<p>想要为两个完全不同的域名设置共享Cookie，方式为</p>
+<ol>
+<li>生成两个Cookie</li>
+<li>生成的Cookie通过设置domain分别将对方域名添加进去</li>
+</ol>
+<h2 id="Cookie安全属性"><a href="#Cookie安全属性" class="headerlink" title="Cookie安全属性"></a>Cookie安全属性</h2><p>HTTP协议不光无状态，还不安全。使用HTTP协议的数据不经过任何加密就直接在网络上传播，有被截获的可能</p>
+<p>不希望Cookie在HTTP等非安全协议中传输，可以设置secure属性<br><div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="JAVA"><figure class="iseeu highlight /java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//浏览器将只会在HTTPS, SSL等安全协议中传输此Cookie</span></span><br><span class="line">aCookie.setSecure(<span class="keyword">true</span>);</span><br></pre></td></tr></table></figure></div></p>
+<blockquote>
+<p>注意<br>secure属性并不是对Cookie加密,想要更高的安全性,还是需要对Cookie内容进行加密,解密</p>
+</blockquote>
+<h2 id="Cookie-编码-1"><a href="#Cookie-编码-1" class="headerlink" title="Cookie-编码"></a>Cookie-编码</h2><p>对于编码，中文属于Unicode字符，占据4个字符，而英文数以ASCII字符，占据2个字符。</p>
+<p>Cookie中要使用中文，可以使用java.net.URLEncoder类进行编码<br><div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="JAVA"><figure class="iseeu highlight /java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> Cookie(</span><br><span class="line">    URLEncoder.encode(<span class="string">"姓名"</span>, <span class="string">"UTF-8"</span>),</span><br><span class="line">    URLEncoder.encode(<span class="string">"张三"</span>, <span class="string">"UTF-8"</span>)</span><br><span class="line">    )</span><br></pre></td></tr></table></figure></div></p>
+<p>对于解码，则使用java.net.URLDecoder类<br><div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="JAVA"><figure class="iseeu highlight /java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">URLDecoder.decode(aCookie.getName(), <span class="string">"UTF-8"</span>)</span><br><span class="line">URLDecoder.decode(aCookie.getValue(), <span class="string">"UTF-8"</span>)</span><br></pre></td></tr></table></figure></div></p>
+<h1 id="Session"><a href="#Session" class="headerlink" title="Session"></a>Session</h1><p>Session除Cookie外的另一种记录客户状态的机制,当客户端访问服务器时,服务器会将客户端的信息以session的形式保存到服务器.客户端再次访问时,只需要从Session中寻找该客户的状态即可</p>
+<p>Session 对应类为javax.servlet.http.HttpSession,属于key-value存储方式</p>
+<p>获取Session<br><div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="JAVA"><figure class="iseeu highlight /java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Session 不存在返回null</span></span><br><span class="line">request.getSession();</span><br><span class="line"><span class="comment">// Session不存在,如果aBoolean=true,新建一个Session再返回</span></span><br><span class="line">request.getSession(aBoolean);</span><br></pre></td></tr></table></figure></div></p>
+<p>设置/获取session属性<br><div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="JAVA"><figure class="iseeu highlight /java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">aSession.setAttribute(key, value);</span><br><span class="line">aSession. getAttribute(key);</span><br></pre></td></tr></table></figure></div></p>
+<h2 id="session常用方法"><a href="#session常用方法" class="headerlink" title="session常用方法"></a>session常用方法</h2><p><img src="https://raw.githubusercontent.com/FameLsy/Images/master/servlet/session.png" alt="session"></p>
+<h2 id="Servlet-session-生命周期"><a href="#Servlet-session-生命周期" class="headerlink" title="Servlet-session-生命周期"></a>Servlet-session-生命周期</h2><p>生命周期</p>
+<ol>
+<li>Session在客户端第一次请求时创建,需要注意的是只有在访问jsp,servlet等程序时才会创建(JSP底层时通过Servlet实现的),只访问HTML等静态资源时不会产生Session的;(为了获取高速度,Session一般保存在内存中)</li>
+<li>当用户持续访问,服务器每次都会刷新Session的最后访问时间</li>
+<li>用户每次访问服务器,服务器就会认为该用户的Session活跃了一次</li>
+<li>如果Session长时间不活跃,服务器会从内存中删除Session</li>
+</ol>
+<h2 id="Servlet-session-浏览器"><a href="#Servlet-session-浏览器" class="headerlink" title="Servlet-session-浏览器"></a>Servlet-session-浏览器</h2><p>从浏览器到服务器来讲,Session需要浏览器的支持</p>
+<ol>
+<li>因为HTTP的无状态性,Session需要通过Cookie来作为标识</li>
+<li>服务器会自动向浏览器发送一个名为JSESSIONID的Cookie,它的值为该Session的id</li>
+<li>该Cookie的maxAge为-1,仅在当前浏览器有效,且不同窗口不共享</li>
+</ol>
+<blockquote>
+<p>注意<br>新开的窗口会生成新的Session,但子窗口除外<br>子窗口会公用父窗口的Session(右键-&gt;在新窗口打开,就是子窗口)  </p>
+</blockquote>
+<h2 id="Servlet-session-有效期"><a href="#Servlet-session-有效期" class="headerlink" title="Servlet-session-有效期"></a>Servlet-session-有效期</h2><p>Session的有效期</p>
+<ol>
+<li>由maxInactiveInterval属性控制,一旦超时(从不活跃的时间算起),Session就会被删除</li>
+<li>Tomcat中session默认时间为20分钟<div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="JAVA"><figure class="iseeu highlight /java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">aSession.setMaxInactiveInterval(<span class="keyword">int</span> seconds);</span><br><span class="line">aSession.getMaxInactiveInterval();</span><br></pre></td></tr></table></figure></div>
+</li>
+</ol>
+<p>session还提供了立即失效的方法<br><div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="JAVA"><figure class="iseeu highlight /java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">aSession.invalidate();</span><br></pre></td></tr></table></figure></div></p>
+<p>此外,session超时时间可以通过web.xml来设置<br><div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="XML"><figure class="iseeu highlight /xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- web.xml --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">session-config</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 单位:分 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">session-timeout</span>&gt;</span>60<span class="tag">&lt;/<span class="name">session-timeout</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">session-config</span>&gt;</span></span><br></pre></td></tr></table></figure></div></p>
+<h2 id="如果Cookie被禁用"><a href="#如果Cookie被禁用" class="headerlink" title="如果Cookie被禁用"></a>如果Cookie被禁用</h2><p>当某些浏览器并不支持Cookie或者Cookie被禁用的话,想要使用Session,需要进行URL地址重写</p>
+<ol>
+<li>原理是将Session的id信息写到URL地址中</li>
+<li>服务器通过解析URL获取Session的id</li>
+</ol>
+<p>假设由如下URL<br><div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">www.lalaal.com?name=li&amp;age=18</span><br></pre></td></tr></table></figure></div></p>
+<p>通过以下方法可以实现URL地址重<br><div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="JAVA"><figure class="iseeu highlight /java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">response.encodeURL(<span class="string">"www.lalaal.com?name=li&amp;age=18"</span>);</span><br></pre></td></tr></table></figure></div></p>
+<p>该方法会自动判断浏览器支不支持Cookie,如果不支持,则将Seesino的id重写到URL中,此时,URL可能变为<br><div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">www.lalaal.com;jsessionid=0UIJHGIGGIOGIUGHJLJIUGI?name=li&amp;age=18</span><br></pre></td></tr></table></figure></div></p>
+<p>如果是页面重定向,则使用以下方法(效果与encodeURL()方法相同)<br><div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="JAVA"><figure class="iseeu highlight /java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">response.sendRedirect(repsonse.encodeRedirectURL(<span class="string">"www.lalaal.com?name=li&amp;age=18"</span>))</span><br></pre></td></tr></table></figure></div></p>
+<h2 id="Session手动禁止使用Cookie"><a href="#Session手动禁止使用Cookie" class="headerlink" title="Session手动禁止使用Cookie"></a>Session手动禁止使用Cookie</h2><p>JavaWeb通过配置来禁止Cookie,具体步骤为</p>
+<ol>
+<li>打开META-INF(没有则自己创,该目录与WEB-INF同级)</li>
+<li>打开context.xml(没有自己创),输入以下内容</li>
+</ol>
+<div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="XML"><figure class="iseeu highlight /xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version='1.0' encoding='UTF-8'&gt;</span></span><br><span class="line"><span class="meta">&lt;Context path='/mywebpapp' cookie='false' /&gt;</span></span><br></pre></td></tr></table></figure></div>
+<p>也可以修改tomcat全局配置文件<br><div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="XML"><figure class="iseeu highlight /xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- conf/context.xml --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">Context</span> <span class="attr">cookie</span>=<span class="string">'false'</span> /&gt;</span></span><br></pre></td></tr></table></figure></div></p>
+<blockquote>
+<p>注意<br>改配置只是禁止Session使用Cookie作为标识,斌不能阻止其他Cookie的读写</p>
+</blockquote>
+<hr>
+<h2 id="Session对比cookie"><a href="#Session对比cookie" class="headerlink" title="Session对比cookie"></a>Session对比cookie</h2><ol>
+<li>存储方式不同:<br> Cookie只能保存ASCII字符,如果要存储Unicode或二进制数据,需要进行编码;<br> Session可以存取任何类型数据,从基本类到Java类都没有问题  </li>
+<li>存储位置不同:<br> Cookie存放客户端浏览器中<br> Session存放在服务器中  </li>
+<li>隐私安全不同:<br> Cookie是对客户端可见的,恶意程序可能会复制,修改Cookie的内容;<br> Session是服务器可见的,对客户端透明(所以Cookie不宜保存敏感信息,如账号密码)  </li>
+<li>有效期不同:<br> Cookie可以通过setMaxAge(Integet.MAX_VALUE)来达到永久记录信息;<br> Session无法永久记录信息,因为其依赖于Cookie,而该Cookie又是maxAge=-1,只要关闭了浏览器Session就会失效,且设置过长时间的Seesion会导致内存溢出  </li>
+<li>对服务器负担不同:<br> Cookie是保存在客户端的,不占用服务器资源;<br> Session保存在服务器内存中,如果访问用户多,会造成产生大量Session,消耗服务器大量内存  </li>
+<li>浏览器支持不同:  <pre><code>Cookie一旦被禁用,就会失效;Cookie可以设置成本浏览器窗口和子窗口内有效(maxAge=-1),或所有浏览器窗口有效(maxAge&gt;0);  
+Session只能在本浏览器窗口和子窗口有效;Session在Cookie被禁用的情况下,可以使用URL地址重写方式生效;  
+</code></pre></li>
+<li>跨域名不同:<br> Cookie支持跨域名访问(通过domain属性)<br> Session只能在它所在的域名有效</li>
+</ol>
+<h1 id="过滤器-Filter"><a href="#过滤器-Filter" class="headerlink" title="过滤器(Filter)"></a>过滤器(Filter)</h1><p>过滤器: </p>
+<ul>
+<li>用于在Servlet之外对request和response进行修改</li>
+</ul>
+<p>滤镜链(FilterChain):</p>
+<ol>
+<li>包含多个过滤器</li>
+<li>request抵达Servlet之前会先经过滤镜链中所有的过滤器</li>
+<li>response从Servlet传送到客户端浏览器之前也会先经过滤镜链中所有的过滤器</li>
+</ol>
+<p>Filter处理过程:</p>
+<p><img src="https://raw.githubusercontent.com/FameLsy/Images/master/servlet/filter.png" alt="filter"></p>
+<h2 id="Filter接口"><a href="#Filter接口" class="headerlink" title="Filter接口"></a>Filter接口</h2><p>Filter接口：javax.serlvet.Filter</p>
+<p>Filter接口的三个方法</p>
+<ol>
+<li>init()</li>
+<li>doFilter()</li>
+<li>destryo()</li>
+</ol>
+<div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="JAVA"><figure class="iseeu highlight /java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Filter</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">    *web程序启动时调用，用于初始化Filter</span></span><br><span class="line"><span class="comment">    *<span class="doctag">@param</span> filterConfig 从该参数获取初始化信息，ServletContext</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">(FilterConfig filterConfig)</span> <span class="keyword">throws</span> ServletException</span>;</span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">    *过滤器具体处理方法</span></span><br><span class="line"><span class="comment">    *<span class="doctag">@param</span> chain 滤镜链，通过chain.doFilter(request, response)将请求传给下一个Filter或Servlet</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doFilter</span><span class="params">(ServletRequest request, ServletResponse response,</span></span></span><br><span class="line"><span class="function"><span class="params">                         FilterChain chain)</span></span></span><br><span class="line"><span class="function">            <span class="keyword">throws</span> IOException, ServletException</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">destroy</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+<blockquote>
+<p>注:<br>chain.doFilter(request, response)会将请求传递给chain中的下一个Filter直到所有Filter走完，则交给Servlet处理</p>
+</blockquote>
+<h2 id="Filter配置"><a href="#Filter配置" class="headerlink" title="Filter配置"></a>Filter配置</h2><p>Filter需要配置在web.xml中才能生效,用法类似于Serlvet的配置</p>
+<div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="XML"><figure class="iseeu highlight /xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- web.xml --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">filter</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">filter-name</span>&gt;</span>MyFilter<span class="tag">&lt;/<span class="name">filter-name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">filter-class</span>&gt;</span>com.liisyu.MyFilter<span class="tag">&lt;/<span class="name">filter-class</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">init-param</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">param-name</span>&gt;</span>param<span class="tag">&lt;/<span class="name">param-name</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">param-value</span>&gt;</span>param<span class="tag">&lt;/<span class="name">param-value</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">init-param</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">filter</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">filter-mapping</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">filter-name</span>&gt;</span>MyFilter<span class="tag">&lt;/<span class="name">filter-name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>/jsp/*<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>*.do<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dispatcher</span>&gt;</span>REQUEST<span class="tag">&lt;/<span class="name">dispatcher</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dispatcher</span>&gt;</span>FORWARD<span class="tag">&lt;/<span class="name">dispatcher</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">filter-mapping</span>&gt;</span></span><br></pre></td></tr></table></figure></div>
+<p>在&lt; url-pattern &gt;标签中配置过滤规则，可以多个</p>
+<p>在&lt; dispatcher &gt;标签中配置达到Servlet的方式</p>
+<ol>
+<li>REQUEST: 表示仅当直接请求Serlvet时才生效,默认</li>
+<li>FORWORD: 表示仅当某Servlet通过FORWORD到该Serlvet时才生效</li>
+<li>INCLUDE: JSP相关</li>
+<li>ERROR: JSP相关</li>
+</ol>
+<blockquote>
+<p>注:<br>必须同时满足&lt; url-pattern &gt;和&lt; dispatcher &gt;,才能使Filter生效<br>多个Filter同时满足时，执行顺序按照&lt; filter-mapping &gt;的配置顺序执行</p>
+</blockquote>
+<h1 id="监听器（Listener）"><a href="#监听器（Listener）" class="headerlink" title="监听器（Listener）"></a>监听器（Listener）</h1><p>Listener用于监听Java web中的事件，例如创建、修改、删除Session、request、context等</p>
+<p>当某一事件触发时（无需知道它怎么触发），就会调用相应的Listener(无需知道怎么调用)，开发者关心的是在Linstener中编写处理代码</p>
+<p>配置监听器非常简单<br><div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="XML"><figure class="iseeu highlight /xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- web.xml --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">listener</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">listener-class</span>&gt;</span></span><br><span class="line">        com.liisyu.listener.MyListener</span><br><span class="line">    <span class="tag">&lt;/<span class="name">listener-class</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">listener</span>&gt;</span></span><br></pre></td></tr></table></figure></div></p>
+<h2 id="Servlet-Listener-分类"><a href="#Servlet-Listener-分类" class="headerlink" title="Servlet-Listener-分类"></a>Servlet-Listener-分类</h2><p>Servlet 2.5规范中，共有8种监听器接口和6种事件</p>
+<p>一类是监控对象的创建与销毁</p>
+<ol>
+<li>HttpSessionListener: 监控Session的创建与销毁</li>
+<li>ServletContextListener: 监控context的创建与销毁</li>
+<li>ServletRequestListener: 监控request的创建与销毁</li>
+</ol>
+<p>一类是监控对象的属性变化</p>
+<ol>
+<li>HttpSessionAttributeListener</li>
+<li>ServletContextAttributeListener</li>
+<li>ServletRequestAttributeListener</li>
+</ol>
+<p>一类是监听Session对象</p>
+<ol>
+<li>HttpSessionBindingListener</li>
+<li>HttpSessionActivationListener</li>
+</ol>
+<h2 id="监控对象的创建与销毁"><a href="#监控对象的创建与销毁" class="headerlink" title="监控对象的创建与销毁"></a>监控对象的创建与销毁</h2><p>HttpSessionListener:</p>
+<ol>
+<li>创建Session时执行sessionCreated()</li>
+<li>超时或执行session.invalidate()时执行sessionDestroyed()</li>
+<li>可用于收集在线者的信息</li>
+</ol>
+<p>ServletContextListener:</p>
+<ol>
+<li>服务器启动或者热部署war包时执行contextInitialized()方法</li>
+<li>服务器关闭或者只关闭该Web时执行contextDestroy()方法</li>
+<li>可用于启动时获取web.xml里的配置参数</li>
+</ol>
+<p>ServletRequestListener:</p>
+<ol>
+<li>用户每次请求request都会执行requestInitailzed()方法</li>
+<li>request处理完毕自动销毁前执行requestDestroy()方法</li>
+<li>注意一个HTML中如果有多个图片，一次请求会出发多个request事件</li>
+</ol>
+<h2 id="监控对象的属性变化"><a href="#监控对象的属性变化" class="headerlink" title="监控对象的属性变化"></a>监控对象的属性变化</h2><p>HttpSessionAttributeListener：</p>
+<ol>
+<li>添加属性：执行sessionAdded()</li>
+<li>更新属性：执行sessionReplaced()</li>
+<li>删除属性：执行sessionRemoved()</li>
+</ol>
+<p>ServletContextAttributeListener</p>
+<ol>
+<li>添加属性：执行contextAdded()</li>
+<li>更新属性：执行contextReplaced()</li>
+<li>删除属性：执行contextRemoved()</li>
+</ol>
+<p>ServletRequestAttributeListener</p>
+<ol>
+<li>添加属性：执行requestAdded()</li>
+<li>更新属性：执行requestReplaced()</li>
+<li>删除属性：执行requestRemoved()</li>
+</ol>
+<h2 id="监听Session对象"><a href="#监听Session对象" class="headerlink" title="监听Session对象"></a>监听Session对象</h2><p>HttpSessionBindingListener:</p>
+<ol>
+<li>当对象被放到Session里时执行valueBound()</li>
+<li>当对象从Session里移除，执行valueUnbound()</li>
+<li>对象必须实现了Listener</li>
+</ol>
+<p>HttpSessionActivationListener</p>
+<ol>
+<li>服务器关闭时，会将Session内容保存到硬盘上（钝化过程），会执行sessionWillPassivate()</li>
+<li>服务器启动时，会将Session内容从硬盘上重新加载,会执行sessionDidActivate()</li>
+<li>对象必须实现了Listener</li>
+</ol>
+
       
     </div>
 
@@ -574,8 +1012,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <div class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -819,6 +1266,23 @@
         </div>
       </div>
 
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Servlet基础"><span class="nav-number">1.</span> <span class="nav-text">Servlet基础</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Servlet-工作流程"><span class="nav-number">1.1.</span> <span class="nav-text">Servlet 工作流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Tomcat的目录结构"><span class="nav-number">1.2.</span> <span class="nav-text">Tomcat的目录结构</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Servlet结构"><span class="nav-number">2.</span> <span class="nav-text">Servlet结构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ServletConfig接口"><span class="nav-number">2.1.</span> <span class="nav-text">ServletConfig接口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Servlet-接口"><span class="nav-number">2.2.</span> <span class="nav-text">Servlet 接口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GenericServlet"><span class="nav-number">2.3.</span> <span class="nav-text">GenericServlet</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#属性"><span class="nav-number">2.3.1.</span> <span class="nav-text">属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方法"><span class="nav-number">2.3.2.</span> <span class="nav-text">方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HttpSerlvet"><span class="nav-number">2.4.</span> <span class="nav-text">HttpSerlvet</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DefaultServlet"><span class="nav-number">2.5.</span> <span class="nav-text">DefaultServlet</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CGIServlet"><span class="nav-number">2.6.</span> <span class="nav-text">CGIServlet</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#自定义Servlet实现"><span class="nav-number">3.</span> <span class="nav-text">自定义Servlet实现</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Servlet-配置"><span class="nav-number">4.</span> <span class="nav-text">Servlet-配置</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#配置serlvet"><span class="nav-number">4.1.</span> <span class="nav-text">配置serlvet</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置servlet访问方式"><span class="nav-number">4.2.</span> <span class="nav-text">配置servlet访问方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#上下文参数"><span class="nav-number">4.3.</span> <span class="nav-text">上下文参数</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Request请求"><span class="nav-number">5.</span> <span class="nav-text">Request请求</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Response响应"><span class="nav-number">6.</span> <span class="nav-text">Response响应</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Servlet-表单信息"><span class="nav-number">7.</span> <span class="nav-text">Servlet-表单信息</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#GET方式提交的表单"><span class="nav-number">7.1.</span> <span class="nav-text">GET方式提交的表单</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#POST方式提交的表单"><span class="nav-number">7.2.</span> <span class="nav-text">POST方式提交的表单</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#javaweb-资源"><span class="nav-number">8.</span> <span class="nav-text">javaweb-资源</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#配置资源"><span class="nav-number">8.1.</span> <span class="nav-text">配置资源</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#注入资源"><span class="nav-number">8.2.</span> <span class="nav-text">注入资源</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用JDNI获取资源"><span class="nav-number">8.3.</span> <span class="nav-text">使用JDNI获取资源</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#完整的生命周期"><span class="nav-number">9.</span> <span class="nav-text">完整的生命周期</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#重定向与跳转"><span class="nav-number">10.</span> <span class="nav-text">重定向与跳转</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#跳转-forword"><span class="nav-number">10.1.</span> <span class="nav-text">跳转(forword)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#重定向-Redirect"><span class="nav-number">10.2.</span> <span class="nav-text">重定向(Redirect):</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Cookie"><span class="nav-number">11.</span> <span class="nav-text">Cookie</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Cookie常用属性"><span class="nav-number">11.1.</span> <span class="nav-text">Cookie常用属性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Cookie-编码"><span class="nav-number">11.2.</span> <span class="nav-text">Cookie-编码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Cookie-有效期"><span class="nav-number">11.3.</span> <span class="nav-text">Cookie-有效期</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Cookie-删除与修改"><span class="nav-number">11.4.</span> <span class="nav-text">Cookie-删除与修改</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Cookie的不可跨域名性"><span class="nav-number">11.5.</span> <span class="nav-text">Cookie的不可跨域名性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Cookie设置共享"><span class="nav-number">11.6.</span> <span class="nav-text">Cookie设置共享</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Cookie安全属性"><span class="nav-number">11.7.</span> <span class="nav-text">Cookie安全属性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Cookie-编码-1"><span class="nav-number">11.8.</span> <span class="nav-text">Cookie-编码</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Session"><span class="nav-number">12.</span> <span class="nav-text">Session</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#session常用方法"><span class="nav-number">12.1.</span> <span class="nav-text">session常用方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Servlet-session-生命周期"><span class="nav-number">12.2.</span> <span class="nav-text">Servlet-session-生命周期</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Servlet-session-浏览器"><span class="nav-number">12.3.</span> <span class="nav-text">Servlet-session-浏览器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Servlet-session-有效期"><span class="nav-number">12.4.</span> <span class="nav-text">Servlet-session-有效期</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如果Cookie被禁用"><span class="nav-number">12.5.</span> <span class="nav-text">如果Cookie被禁用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Session手动禁止使用Cookie"><span class="nav-number">12.6.</span> <span class="nav-text">Session手动禁止使用Cookie</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Session对比cookie"><span class="nav-number">12.7.</span> <span class="nav-text">Session对比cookie</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#过滤器-Filter"><span class="nav-number">13.</span> <span class="nav-text">过滤器(Filter)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Filter接口"><span class="nav-number">13.1.</span> <span class="nav-text">Filter接口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Filter配置"><span class="nav-number">13.2.</span> <span class="nav-text">Filter配置</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#监听器（Listener）"><span class="nav-number">14.</span> <span class="nav-text">监听器（Listener）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Servlet-Listener-分类"><span class="nav-number">14.1.</span> <span class="nav-text">Servlet-Listener-分类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#监控对象的创建与销毁"><span class="nav-number">14.2.</span> <span class="nav-text">监控对象的创建与销毁</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#监控对象的属性变化"><span class="nav-number">14.3.</span> <span class="nav-text">监控对象的属性变化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#监听Session对象"><span class="nav-number">14.4.</span> <span class="nav-text">监听Session对象</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
       
 
       
