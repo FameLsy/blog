@@ -1,0 +1,1781 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/blog/css/main.css?v=7.1.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png?v=7.1.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png?v=7.1.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png?v=7.1.0">
+
+
+  <link rel="mask-icon" href="/blog/images/logo.svg?v=7.1.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/blog/',
+    scheme: 'Muse',
+    version: '7.1.0',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="keywords" content="Http">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Http学习">
+<meta property="og:url" content="https://masol.gitee.io/blog/2019/05/17/Ｈttp/index.html">
+<meta property="og:site_name" content="Liisyu Blog">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://raw.githubusercontent.com/FameLsy/Images/master/Fullmetal%20Alchemist/wallhaven-520810.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/FameLsy/Images/master/http/7层架构.gif">
+<meta property="og:image" content="https://raw.githubusercontent.com/FameLsy/Images/master/http/四七.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/FameLsy/Images/master/http/http.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/FameLsy/Images/master/http/数据包.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/FameLsy/Images/master/http/三次握手.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/FameLsy/Images/master/http/四次挥手.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/FameLsy/Images/master/http/URI2.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/FameLsy/Images/master/http/URI.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/FameLsy/Images/master/http/报文.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/FameLsy/Images/master/http/请求报文.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/FameLsy/Images/master/http/响应报文.png">
+<meta property="og:updated_time" content="2019-05-18T00:42:48.994Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Http学习">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/FameLsy/Images/master/Fullmetal%20Alchemist/wallhaven-520810.jpg">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="https://masol.gitee.io/blog/2019/05/17/Ｈttp/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Http学习 | Liisyu Blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/blog/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Liisyu Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/blog/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/blog/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/blog/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/blog/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-navigation">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/blog/navigation/" rel="section"><i class="menu-item-icon fa fa-fw fa-diamond"></i> <br>导航</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://masol.gitee.io/blog/blog/2019/05/17/Ｈttp/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Liisyu">
+      <meta itemprop="description" content="我只是一个兴趣使然的程序员">
+      <meta itemprop="image" content="/blog/images/toux.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Liisyu Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Http学习
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-05-18 08:42:48" itemprop="dateCreated datePublished" datetime="2019-05-18T08:42:48+08:00">2019-05-18</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/blog/categories/Http/" itemprop="url" rel="index"><span itemprop="name">Http</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="https://raw.githubusercontent.com/FameLsy/Images/master/Fullmetal%20Alchemist/wallhaven-520810.jpg" alt></p>
+<a id="more"></a>
+<h1 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h1><h2 id="协议（protocol）"><a href="#协议（protocol）" class="headerlink" title="协议（protocol）"></a>协议（protocol）</h2><p>所谓的协议，指的是不同的硬件、操作系统之间的通信需要一种的<strong>规则</strong></p>
+<h2 id="OSI标准"><a href="#OSI标准" class="headerlink" title="OSI标准"></a>OSI标准</h2><p><strong>OSI提出了一个标准，并非真正的实现。</strong></p>
+<p>7层模型主要包括：</p>
+<ol>
+<li>物理层：主要定义物理设备标准，如网线的接口类型、光纤的接口类型、各种传输介质的传输速率等。它的主要作用是传输比特流（就是由1、0转化为电流强弱来进行传输,到达目的地后在转化为1、0，也就是我们常说的模数转换与数模转换）。这一层的数据叫做比特。</li>
+<li>数据链路层：主要将从物理层接收的数据进行MAC地址（网卡的地址）的封装与解封装。常把这一层的数据叫做帧。在这一层工作的设备是交换机，数据通过交换机来传输。</li>
+<li>网络层：主要将从下层接收到的数据进行IP地址（例192.168.0.1)的封装与解封装。在这一层工作的设备是路由器，常把这一层的数据叫做数据包。</li>
+<li>传输层：定义了一些传输数据的协议和端口号（WWW端口80等），如：TCP（传输控制协议，传输效率低，可靠性强，用于传输可靠性要求高，数据量大的数据），UDP（用户数据报协议，与TCP特性恰恰相反，用于传输可靠性要求不高，数据量小的数据，如QQ聊天数据就是通过这种方式传输的）。 主要是将从下层接收的数据进行分段进行传输，到达目的地址后在进行重组。常常把这一层数据叫做段。</li>
+<li>会话层：通过传输层（端口号：传输端口与接收端口）建立数据传输的通路。主要在你的系统之间发起会话或或者接受会话请求（设备之间需要互相认识可以是IP也可以是MAC或者是主机名）</li>
+<li>表示层：主要是进行对接收的数据进行解释、加密与解密、压缩与解压缩等（也就是把计算机能够识别的东西转换成人能够能识别的东西（如图片、声音等））</li>
+<li>应用层 主要是一些终端的应用，比如说FTP（各种文件下载），WEB（IE浏览），QQ之类的（你就把它理解成我们在电脑屏幕上可以看到的东西．就 是终端应用</li>
+</ol>
+<p><img src="https://raw.githubusercontent.com/FameLsy/Images/master/http/7层架构.gif" alt="七层架构"></p>
+<h2 id="TCP-IP协议族"><a href="#TCP-IP协议族" class="headerlink" title="TCP/IP协议族"></a>TCP/IP协议族</h2><p>TCP/IP 是互联网相关的各类协议族的总称，其中最重要的一点是<strong>分层</strong>。TCP/IP是遵循OSI标准的一个具体实现</p>
+<p><img src="https://raw.githubusercontent.com/FameLsy/Images/master/http/四七.png" alt="四七"></p>
+<h3 id="TCP-IP-的分层管理"><a href="#TCP-IP-的分层管理" class="headerlink" title="TCP/IP 的分层管理"></a>TCP/IP 的分层管理</h3><p>TCP/IP 协议族按层次分别分为以下 4 层：<code>应用层</code>、<code>传输层</code>、<code>网络层</code>和<code>数据链路层</code></p>
+<h4 id="应用层"><a href="#应用层" class="headerlink" title="应用层"></a>应用层</h4><p>应用层决定了<strong>向用户提供应用服务时通信的活动</strong>，在CP/IP 协议族内预存了各类通用的应用服务。如FTP（File<br>Transfer Protocol，文件传输协议）、 DNS（Domain Name System，域名系统）、HTTP</p>
+<h4 id="传输层"><a href="#传输层" class="headerlink" title="传输层"></a>传输层</h4><p>传输层<strong>提供处于网络连接中的两台计算机之间的数据传输</strong>，存在两个不同性值的协议：TCP（Transmission ControlProtocol，传输控制协议）和 UDP（User Data Protocol，用户数据报协议）</p>
+<h4 id="网络层"><a href="#网络层" class="headerlink" title="网络层"></a>网络层</h4><p>网络层又名网络互连层，<strong>用来处理在网络上流动的数据包（数据包是网络传输的最小数据单位），通过该层决定传输线路</strong>，如IP协议就位于网络层</p>
+<h4 id="链路层"><a href="#链路层" class="headerlink" title="链路层"></a>链路层</h4><p>链路层又名数据链路层，网络接口层，<strong>用来处理连接网络的硬件部分</strong>，包括控制操作系统、硬件的设备驱<br>动、NIC（Network Interface Card，网络适配器，即网卡），及光纤等物理可见部分（还包括连接器等一切传输媒介）</p>
+<h3 id="TCP-IP通信传输过程"><a href="#TCP-IP通信传输过程" class="headerlink" title="TCP/IP通信传输过程"></a>TCP/IP通信传输过程</h3><p>TCP/IP通信，采用<code>封装（encapsulate）</code>方式将数据信息包装起来进行传输。</p>
+<p>以HTTP为例，结合图</p>
+<ol>
+<li>在应用层（HTTP 协议），发出一个HTTP请求</li>
+<li>在传输层（TCP 协议），把从应用层处收到的数据（HTTP 请求报文）进行分割，并在各个报文上打上标记序号及端<br>口号后转发给网络层</li>
+<li>在网络层（IP 协议），增加作为通信目的地的 MAC 地址后转发给链路层</li>
+<li>到服务器端，在依次去掉首部，获得真正的HTTP数据</li>
+</ol>
+<p><img src="https://raw.githubusercontent.com/FameLsy/Images/master/http/http.png" alt="http"></p>
+<h2 id="IP协议"><a href="#IP协议" class="headerlink" title="IP协议"></a>IP协议</h2><p>IP（Internet Protocol）网际协议位于网络层，<strong>几乎所有使用网络的系统都会用到 IP 协议。</strong>其作用是把各种数据包传送给对方，为了保证数据传送到目的地，需要满足两个重要的条件</p>
+<ol>
+<li>IP地址：指明了节点被分配到的地址（可变换）</li>
+<li>MAC （Media Access Control Address）地址：指网卡所属的固定地址（基本不变）</li>
+</ol>
+<p><strong>IP间的通信依赖于MAC地址</strong>。除局域网外，往往需要经过多台计算机和网络设备中转才会连接到目的地，主要是利用了MAC地址进行搜索下一个中转目标。此时，需要采用<code>ARP协议（AddressResolution Protocol）</code>，该协议可以根通信方的 IP 地址反查出对应的 MAC 地址</p>
+<h2 id="数据包"><a href="#数据包" class="headerlink" title="数据包"></a>数据包</h2><ol>
+<li><p>源端口号（ 16 位）：它（连同源主机 IP 地址）标识源主机的一个应用进程。</p>
+</li>
+<li><p>目的端口号（ 16 位）：它（连同目的主机 IP 地址）标识目的主机的一个应用进程。这两个值加上 IP 报头中的源主机 IP 地址和目的主机 IP 地址唯一确定一个 TCP 连接。</p>
+</li>
+<li>顺序号seq（ 32 位）：用来标识从 TCP 源端向 TCP 目的端发送的数据字节流，它表示在这个报文段中的第一个数据字节的顺序号。如果将字节流看作在两个应用程序间的单向流动，则 TCP 用顺序号对每个字节进行计数。序号是 32bit 的无符号数，序号到达 2 的32次方 － 1 后又从 0 开始。当建立一个新的连接时， SYN 标志变 1 ，顺序号字段包含由这个主机选择的该连接的初始顺序号 ISN （ Initial Sequence Number ）。</li>
+<li>确认号ack（ 32 位）：包含发送确认的一端所期望收到的下一个顺序号。因此，确认序号应当是上次已成功收到数据字节顺序号加 1 。只有 ACK 标志为 1 时确认序号字段才有效。 TCP 为应用层提供全双工服务，这意味数据能在两个方向上独立地进行传输。因此，连接的每一端必须保持每个方向上的传输数据顺序号。</li>
+<li>TCP 报头长度（ 4 位）：给出报头中 32bit 字的数目，它实际上指明数据从哪里开始。需要这个值是因为任选字段的长度是可变的。这个字段占 4bit ，因此 TCP 最多有 60 字节的首部。然而，没有任选字段，正常的长度是 20 字节。</li>
+<li>保留位（ 6 位）：保留给将来使用，目前必须置为 0 。</li>
+<li>控制位（ control flags ， 6 位）：在 TCP 报头中有 6 个标志比特，它们中的多个可同时被设置为 1 。依次为：<br> a. URG ：为 1 表示紧急指针有效，为 0 则忽略紧急指针值。<br> b. ACK ：为 1 表示确认号有效，为 0 表示报文中不包含确认信息，忽略确认号字段。<br> c. PSH ：为 1 表示是带有 PUSH 标志的数据，指示接收方应该尽快将这个报文段交给应用层而不用等待缓冲区装满。<br> d. RST ：用于复位由于主机崩溃或其他原因而出现错误的连接。它还可以用于拒绝非法的报文段和拒绝连接请求。一般情况下，如果收到一个 RST 为 1 的报文，那么一定发生了某些问题。<br> e. SYN ：同步序号，为 1 表示连接请求，用于建立连接和使顺序号同步（ synchronize ）。<br> f. FIN ：用于释放连接，为 1 表示发送方已经没有数据发送了，即关闭本方数据流。</li>
+<li>窗口大小（ 16 位）：数据字节数，表示从确认号开始，本报文的源方可以接收的字节数，即源方接收窗口大小。窗口大小是一个 16bit 字段，因而窗口大小最大为 65535字节。</li>
+<li>校验和（ 16 位）：此校验和是对整个的 TCP 报文段，包括 TCP 头部和 TCP 数据，以 16 位字进行计算所得。这是一个强制性的字段，一定是由发送端计算和存储，并由接收端进行验证。</li>
+<li>紧急指针（ 16 位）：只有当 URG 标志置 1 时紧急指针才有效。TCP 的紧急方式是发送端向另一端发送紧急数据的一种方式。</li>
+<li>选项：最常见的可选字段是最长报文大小，又称为 MSS(Maximum Segment Size) 。每个连接方通常都在通信的第一个报文段（为建立连接而设置 SYN 标志的那个段）中指明这个选项，它指明本端所能接收的最大长度的报文段。选项长度不一定是 32 位字的整数倍，所以要加填充位，使得报头长度成为整字数。</li>
+<li>数据： TCP 报文段中的数据部分是可选的。在一个连接建立和一个连接终止时，双方交换的报文段仅有 TCP 首部。如果一方没有数据要发送，也使用没有任何数据的首部来确认收到的数据。在处理超时的许多情况中，也会发送不带任何数据的报文段。</li>
+</ol>
+<p><img src="https://raw.githubusercontent.com/FameLsy/Images/master/http/数据包.png" alt="数据包"></p>
+<h2 id="TCP协议三次握手"><a href="#TCP协议三次握手" class="headerlink" title="TCP协议三次握手"></a>TCP协议三次握手</h2><p>TCP 位于传输层，可以提供<strong>可靠</strong>的字节流服务。为了确保可靠性，即保证数据传送给目标，TCP协议采用了<code>三次握手策略</code></p>
+<ol>
+<li>第一次握手：客户端首先发送SYN=1标志,并随机产生<code>seq</code>的数据包给服务器，根据SYN=1，服务器知道客户端要求建立联机</li>
+<li>第二次握手：服务器接收到数据包后，回传一个 <code>ack</code>(值为客户端seq+1) 标志,SYN=1,ACK标志=1，随机产生服务器<code>seq</code>的数据包以示传达确认信息</li>
+<li>第三次握手：客户端确认<code>ack</code>是否正确，即确认seq+1和ACK标志=1，若正确，再回传一个ack（值为服务器端的seq+1）,ACK标志=1的数据包，服务器确认ack和ACK标志=1，正确则建立成功</li>
+</ol>
+<p><img src="https://raw.githubusercontent.com/FameLsy/Images/master/http/三次握手.png" alt="三次握手"></p>
+<h2 id="TCP协议四次挥手"><a href="#TCP协议四次挥手" class="headerlink" title="TCP协议四次挥手"></a>TCP协议四次挥手</h2><p>TCP断开连接要进行四次，这是由于TCP的半关闭造成的。因为TCP连接是全双工的(即数据可在两个方向上同时传递)所以进行关闭时每个方向上都要单独进行关闭。这个单方向的关闭就叫半关闭。当一方完成它的数据发送任务，就发送一个FIN来向另一方通告将要终止这个方向的连接。</p>
+<p>第一次： 关闭客户端到服务器的连接：首先客户端A发送一个FIN，用来关闭客户到服务器的数据传送，然后等待服务器的确认。其中终止标志位FIN=1，序列号seq=u。随后客户端进入终止等待状态。</p>
+<p>第二次： 服务器收到这个FIN，它发回一个ACK，确认号ack为收到的序号加1。服务器进入关闭等待状态。（此时客户端不能发送信息服务器，而服务器还可以发送信息给客户端，即半关闭状态）</p>
+<p>第三次： 关闭服务器到客户端的连接：也是发送一个FIN给客户端，等待客户端确认</p>
+<p>第四次： 客户段收到FIN后，并发回一个ACK报文确认，并将确认序号seq设置为收到序号加1。随后服务器端关闭，而客户端需要经过时间等待计时器设置的2MSL后，才关闭</p>
+<p><img src="https://raw.githubusercontent.com/FameLsy/Images/master/http/四次挥手.png" alt="四次回收"></p>
+<p>为什么需要等待2MSL？</p>
+<p>当客户端发送ACK后，服务器端确认完毕，可以直接关闭。但对于客户端来说，存在以下两种情况</p>
+<ol>
+<li>服务器没有接收到ACK</li>
+<li>服务器接收到ACK</li>
+</ol>
+<p>而<strong>2MSL</strong>，正是去向ACK消息最大存活时间（MSL) + 来向FIN消息的最大存活时间(MSL)。等待2MSL时间，客户端可以放心地关闭。</p>
+<h2 id="DNS服务"><a href="#DNS服务" class="headerlink" title="DNS服务"></a>DNS服务</h2><p>DNS（Domain Name System）服务位于应用层，<strong>提供通过域名查找 IP 地址，或逆向从 IP 地址反查域名的服务</strong></p>
+<h2 id="URI和URL"><a href="#URI和URL" class="headerlink" title="URI和URL"></a>URI和URL</h2><p>URI：统一资源标识符，用字符串标识某一互联网资源</p>
+<p>URL：统一资源定位符，表示资源的地点（互联网上所处的位置）</p>
+<h3 id="URL和URI区别"><a href="#URL和URI区别" class="headerlink" title="URL和URI区别"></a>URL和URI区别</h3><p>URI可被视为定位符（URL）和名称（URN）的组合，URN定义某个资源的身份，而URL提供查找资源的方法。所以可以说，URL是URI的子集。实际上，可以近似认为URL就是URI</p>
+<p><img src="https://raw.githubusercontent.com/FameLsy/Images/master/http/URI2.png" alt="URI2"></p>
+<h3 id="URI完整格式"><a href="#URI完整格式" class="headerlink" title="URI完整格式"></a>URI完整格式</h3><p>完整格式如下：</p>
+<p><img src="https://raw.githubusercontent.com/FameLsy/Images/master/http/URI.png" alt="URI"></p>
+<table>
+<thead>
+<tr>
+<th>信息</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>协议方案名</td>
+<td>可以是http、https、file等协议，获取访问资源时要指定协议类型。不区分字母大小写，最后附一个冒号（:）</td>
+</tr>
+<tr>
+<td>登录信息</td>
+<td>（可选）指定用户名和密码作为从服务器端获取资源时必要的登录信息（身份认证）</td>
+</tr>
+<tr>
+<td>服务器地址</td>
+<td>指定待访问的服务器地址，可以是域名、IPv4(192.167.2.2)、IPv6([0:0:0:0:0:0:0:1])</td>
+</tr>
+<tr>
+<td>服务器端口号</td>
+<td>（可选）指定服务器连接的网络端口号，浏览器默认一般是80</td>
+</tr>
+<tr>
+<td>带层次的文件路径</td>
+<td>指定服务器上的文件路径来定位特指的资源</td>
+</tr>
+<tr>
+<td>查询字符串</td>
+<td>（可选）针对已指定的文件路径内的资源，可以使用查询字符串传入任意参数</td>
+</tr>
+<tr>
+<td>片段标识符</td>
+<td>（可选）使用片段标识符通常可标记出已获取资源中的子资源（文档内的某个位置）。但在 <code>RFC</code> 中并没有明确规定其使用方法</td>
+</tr>
+</tbody>
+</table>
+<p>RFC（Request for Comments，征求修正意见书）：互联网的设计文档，要是不按照 RFC 标准执行，就有可能导致无法通信的状况</p>
+<h1 id="Http协议"><a href="#Http协议" class="headerlink" title="Http协议"></a>Http协议</h1><p>HTTP 通常被译为<code>超文本传输协议</code>，严谨的译名应该为<code>超文本转移协议</code>。<strong>HTTP是一种无状态的协议</strong>，也就是说它不会保留之前一切的请求或响应报文的信息，这样做是为了更快地处理大量事务，确保协议的可伸缩性。<strong>如果需要保存状态，可以使用Cooike技术</strong></p>
+<h2 id="HTTP报文"><a href="#HTTP报文" class="headerlink" title="HTTP报文"></a>HTTP报文</h2><p>HTTP报文大致可分为报文首部和报文主体两块，使用空行划分，且报文主体并不一定有</p>
+<p><img src="https://raw.githubusercontent.com/FameLsy/Images/master/http/报文.png" alt="报文"></p>
+<p>报文</p>
+<h3 id="请求报文"><a href="#请求报文" class="headerlink" title="请求报文"></a>请求报文</h3><p>客户端发送给服务器端<code>请求报文</code>，其由方法、URI、协议版本、请求首部字段、内容实体五部分组成</p>
+<p><img src="https://raw.githubusercontent.com/FameLsy/Images/master/http/请求报文.png" alt="请求报文"></p>
+<h3 id="响应报文"><a href="#响应报文" class="headerlink" title="响应报文"></a>响应报文</h3><p>服务器端会返回给客户端<code>响应报文</code>，其由协议版本、状态码、状态码的原因短语、相应首部字段、主主体组成。</p>
+<p><img src="https://raw.githubusercontent.com/FameLsy/Images/master/http/响应报文.png" alt="响应报文"></p>
+<h3 id="报文主体和实体主体"><a href="#报文主体和实体主体" class="headerlink" title="报文主体和实体主体"></a>报文主体和实体主体</h3><p>报文：是 HTTP 通信中的基本单位，由 8 位组字节流（octet sequence，其中 octet 为 8 个比特）组成，用于传输请求或响应的实体主体</p>
+<p>实体：作为请求或响应的有效载荷数据被传输，其内容由实体首部和实体主体组成</p>
+<h3 id="传输速率提升"><a href="#传输速率提升" class="headerlink" title="传输速率提升"></a>传输速率提升</h3><p>HTTP 在传输数据时可以<strong>按照数据原貌直接传输</strong>，但也可以在传输过程中<strong>通过编码提升传输速率</strong>。</p>
+<h4 id="压缩传输的内容编码"><a href="#压缩传输的内容编码" class="headerlink" title="压缩传输的内容编码"></a>压缩传输的内容编码</h4><p>内容编码指明<strong>应用在实体内容上的编码格式，并保持实体信息原样压缩</strong>。内容编码后的实体由客户端接收并负责解码。常见内容编码有</p>
+<ol>
+<li>gzip(GNU zip)</li>
+<li>compress(UNIX系统标准压缩)</li>
+<li>deflate(zlib)</li>
+<li>identity(不进行编码)</li>
+</ol>
+<h4 id="分块传输编码"><a href="#分块传输编码" class="headerlink" title="分块传输编码"></a>分块传输编码</h4><p>在 HTTP 通信过程中，请求的编码<strong>实体资源尚未全部传输完成之前，浏览器无法显示请求页面</strong>，但传输大容量数据时，可以采用分块传输编码的方式，把实体主体分给成多块，使浏览器逐步显示页面。</p>
+<p>分块传输编码会将实体主体分成多个部分（块）。每一块都会用十六进制来标记块的大小，而实体主体的最后一块会使用“<code>0(CR+LF)</code>”来标记。使用分块传输编码的实体主体会由接收的客户端负责解码，恢复到编码前的实体主。</p>
+<h3 id="发送多种数据"><a href="#发送多种数据" class="headerlink" title="发送多种数据"></a>发送多种数据</h3><p>在发送邮件时，在邮件里写入文字并添加多份附件，原因时其采用了MIME（Multipurpose Internet Mail Extensions，多用途因特网邮件扩展）机制，它允许邮件处理文本、图片、视频等多个不同类型的数据。在 MIME 扩展中会使用一种称为<code>多部分对象集合（Multipart）</code>的方法，来容纳多份不同类型的数据。</p>
+<p>在HTTP通信中，在报文主体内可能含有多类型实体，需要在首部字段里加上<code>Content-type</code></p>
+<p>多部分对象集合包含的对象如下</p>
+<ol>
+<li><p>multipart/form-data： 在 Web 表单文件上传时使用</p>
+</li>
+<li><p>multipart/byteranges： 状态码 206（Partial Content，部分内容）响应报文包含了多个范围的内容时使用</p>
+</li>
+<li><p>multipart/form-data</p>
+<div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="JAVA"><figure class="iseeu highlight /java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//boundary 通过指定的字符串，来划分多部分对象集合指明的各类实体</span></span><br><span class="line"><span class="comment">//利用--XX 来表示实体的开始，在这里是--AaB03x</span></span><br><span class="line"><span class="comment">//利用--XX-- 来表示多部分对象集合最后，在这里是--AaB03x--</span></span><br><span class="line">Content-Type: multipart/form-data; boundary=AaB03x</span><br><span class="line">　--AaB03x</span><br><span class="line">Content-Disposition: form-data; name=<span class="string">"field1"</span></span><br><span class="line">　</span><br><span class="line">Joe Blow</span><br><span class="line">--AaB03x</span><br><span class="line">Content-Disposition: form-data; name=<span class="string">"pics"</span>; filename=<span class="string">"file1.txt"</span></span><br><span class="line">Content-Type: text/plain</span><br><span class="line">　</span><br><span class="line">...（file1.txt的数据）...</span><br><span class="line">--AaB03x--</span><br></pre></td></tr></table></figure></div>
+</li>
+</ol>
+<ol start="4">
+<li><p>multipart/byteranges</p>
+<div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">HTTP/1.1 206 Partial Content</span><br><span class="line">Date: Fri, 13 Jul 2012 02:45:26 GMT</span><br><span class="line">Last-Modified: Fri, 31 Aug 2007 02:02:20 GMT</span><br><span class="line">Content-Type: multipart/byteranges; boundary=THIS_STRING_SEPARATES</span><br><span class="line">--THIS_STRING_SEPARATES</span><br><span class="line">Content-Type: application/pdf</span><br><span class="line">Content-Range: bytes 500-999/8000</span><br><span class="line">--THIS_STRING_SEPARATES</span><br><span class="line">Content-Type: application/pdf</span><br><span class="line">Content-Range: bytes 7000-7999/8000</span><br><span class="line">...（范围指定的数据）...</span><br><span class="line">--THIS_STRING_SEPARATES--</span><br></pre></td></tr></table></figure></div>
+</li>
+</ol>
+<h3 id="范围请求"><a href="#范围请求" class="headerlink" title="范围请求"></a>范围请求</h3><p>即可以请求一个资源的部分部分内容。执行范围请求时，会用到首部字段 <code>Range</code> 来指定资源的 <code>byte</code> 范围。针对范围请求，响应会返回状态码为 <code>206 Partial Content</code> 的响应报文；另外，对于多重范围的范围请求，响应会在首部字段 Content-Type 标明 multipart/byteranges 后返回响应报文。如果服务器端无法响应范围请求，则会返回状态码 200 OK 和完整的实体内容</p>
+<div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="JAVA"><figure class="iseeu highlight /java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//请求5001~10 000 字节</span></span><br><span class="line">Range: bytes=<span class="number">5001</span>-<span class="number">10000</span></span><br><span class="line"><span class="comment">//请求从 5001 字节之后全部的</span></span><br><span class="line">Range: bytes=<span class="number">5001</span>-</span><br><span class="line"><span class="comment">//请求从一开始到 3000 字节和 5000~7000 字节的多重范围</span></span><br><span class="line">Range: bytes=-<span class="number">3000</span>, <span class="number">5000</span>-<span class="number">7000</span></span><br></pre></td></tr></table></figure></div>
+<h3 id="内容协商"><a href="#内容协商" class="headerlink" title="内容协商"></a>内容协商</h3><p>内容协商机制是指<strong>客户端和服务器端就响应的资源内容进行交涉，然后提供给客户端最为适合的资源</strong>。如对相同内容的资源，请求中文版而不是英文版。</p>
+<p>内容协商会以响应资源的语言、字符集、编码方式等作为判断的基准。在报文中为以下首部字段</p>
+<ol>
+<li>Accept</li>
+<li>Accept-Charset</li>
+<li>Accept-Encoding</li>
+<li>Accept-Language</li>
+<li>Content-Language</li>
+</ol>
+<p>此外还有三种内容协商技术</p>
+<ol>
+<li>服务器驱动协商：以请求的首部字段为参考，在服务器端自动处理</li>
+<li>客户端驱动协商：用户从浏览器显示的可选项列表中手动选择或使用JS脚本在Web 页面上自动进行上述选<br>择</li>
+<li>透明协商：由服务器端和客户端各自进行内容协商的</li>
+</ol>
+<h2 id="请求方法"><a href="#请求方法" class="headerlink" title="请求方法"></a>请求方法</h2><p>请求方法用于告知服务器意图，主要有以下几种</p>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GET</td>
+<td>用来请求访问已被 URI 识别的资源</td>
+</tr>
+<tr>
+<td>POST</td>
+<td>传输实体主体</td>
+</tr>
+<tr>
+<td>PUT</td>
+<td>传输文件（无验证机制，任何人都可以上传文件，不安全）</td>
+</tr>
+<tr>
+<td>HEAD</td>
+<td>获得报文首部，与GET方式类似，只是不返回报文主体部分</td>
+</tr>
+<tr>
+<td>DELETE</td>
+<td>删除文件（无验证机制，任何人都可以删除文件，不安全）</td>
+</tr>
+<tr>
+<td>OPTIONS</td>
+<td>用来查询针对请求 URI 指定的资源支持的方法</td>
+</tr>
+<tr>
+<td>TRACE</td>
+<td>让 Web 服务器端将之前的请求通信环回给客户端的方法</td>
+</tr>
+<tr>
+<td>CONNECT</td>
+<td>要求在与代理服务器通信时建立隧道，实现用隧道协议进行 TCP 通信。主要的隧道协议有SSL（Secure Sockets Layer，安全套接层）和TLS（Transport Layer Security，传输层安全）</td>
+</tr>
+</tbody>
+</table>
+<h2 id="持久连接"><a href="#持久连接" class="headerlink" title="持久连接"></a>持久连接</h2><p>在HTTP协议初始版本，每一次HTTP通信就要断开一次TCP协议，这样做无疑会导致通信量的增加。而HTTP/1.1支持持久协议（HTTP Persistent Connections),，<strong>只要任意一端没有明确提出断开连接，则保持 TCP 连接状态</strong>,从而减少开销</p>
+<h2 id="管线化"><a href="#管线化" class="headerlink" title="管线化"></a>管线化</h2><p>由于持久连接，使得一个TCP可以接受多个请求，而管线化技术，可以并行发送多个请求，而不是发一个请求，响应之后才可以发送下一个</p>
+<h2 id="Cookie"><a href="#Cookie" class="headerlink" title="Cookie"></a>Cookie</h2><p>HTTP协议是无状态协议，由于不必保存状态，自然可减少服务器的 CPU 及内存资源的消耗。Cookie技术可以再保留状态的同时，同时只为服务器带来极少的负担，它<strong>通过在请求和响应报文中写入 Cookie 信息来控制客户端的状态</strong>，具体为</p>
+<ol>
+<li>Cookie 会根据从服务器端发送的响应报文内的一个叫做 Set-Cookie 的首部字段信息，通知客户端保存 Cookie。</li>
+<li>当下次客户端再往该服务器发送请求时，客户端会自动在请求报文中加入 Cookie 值后发送出去。</li>
+<li>服务器端发现客户端发送过来的 Cookie 后，会去检查究竟是从哪一个客户端发来的连接请求，然后对比服务器上的记录，最后得到之前的状态信息</li>
+</ol>
+<p>第一次请求报文</p>
+<div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="JAVA"><figure class="iseeu highlight /java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">GET /reader/ HTTP/<span class="number">1.1</span></span><br><span class="line">Host: hackr.jp</span><br></pre></td></tr></table></figure></div>
+<p>响应报文</p>
+<div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="JAVA"><figure class="iseeu highlight /java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">HTTP/<span class="number">1.1</span> <span class="number">200</span> OK</span><br><span class="line">Date: Thu, <span class="number">12</span> Jul <span class="number">2012</span> <span class="number">07</span>:<span class="number">12</span>:<span class="number">20</span> GMT</span><br><span class="line">Server: Apache</span><br><span class="line">＜Set-Cookie: sid=<span class="number">1342077140226724</span>; path=/; expires=Wed,</span><br><span class="line"><span class="number">10</span>-Oct-<span class="number">12</span> <span class="number">07</span>:<span class="number">12</span>:<span class="number">20</span> GMT＞<span class="comment">//生成Cookie信息</span></span><br><span class="line">Content-Type: text/plain; charset=UTF-<span class="number">8</span></span><br></pre></td></tr></table></figure></div>
+<p>再次请求的请求报文</p>
+<div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="JAVA"><figure class="iseeu highlight /java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">GET /image/ HTTP/<span class="number">1.1</span></span><br><span class="line">Host: hackr.jp</span><br><span class="line">Cookie: sid=<span class="number">1342077140226724</span><span class="comment">// 发送保存的Cookie信息</span></span><br></pre></td></tr></table></figure></div>
+<h1 id="HTTP状态码"><a href="#HTTP状态码" class="headerlink" title="HTTP状态码"></a>HTTP状态码</h1><p>状态码的职责是<strong>当客户端向服务器端发送请求时，描述返回的请求结果</strong>，由3个数字和原因短语组成，其中第一个数字指定了相应类别</p>
+<table>
+<thead>
+<tr>
+<th>状态码</th>
+<th>类别</th>
+<th>原因短语</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1XX</td>
+<td>Informational（信息性状态码）</td>
+<td>接收的请求正在处理</td>
+</tr>
+<tr>
+<td>2XX</td>
+<td>Success（成功状态码）</td>
+<td>请求正常处理完毕</td>
+</tr>
+<tr>
+<td>3XX</td>
+<td>Redirection（重定向状态码）</td>
+<td>需要进行附加操作以完成请求</td>
+</tr>
+<tr>
+<td>4XX</td>
+<td>Client Error（客户端错误状态码）</td>
+<td>服务器无法处理请求</td>
+</tr>
+<tr>
+<td>5XX</td>
+<td>Server Error</td>
+<td>（服务器错误状态码） 服务器处理请求出错</td>
+</tr>
+</tbody>
+</table>
+<h2 id="常见状态码"><a href="#常见状态码" class="headerlink" title="常见状态码"></a>常见状态码</h2><table>
+<thead>
+<tr>
+<th>数字</th>
+<th>原因短语</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>200</td>
+<td>OK</td>
+<td>客户端发来的请求在服务器端被正常处理</td>
+</tr>
+<tr>
+<td>204</td>
+<td>No Content</td>
+<td>服务器接收的请求已成功处理，但不返回任何实体的主体</td>
+</tr>
+<tr>
+<td>206</td>
+<td>Partial Content</td>
+<td>状态码表示客户端进行了范围请求，而服务器成功执行了这部分的GET 请求。响应报文中包含由 Content-Range 指定范围的实体内容</td>
+</tr>
+<tr>
+<td>301</td>
+<td>Moved Permanently</td>
+<td>永久性重定向。表示请求的资源已被分配了新的 URI，以后应使用资源现在所指的 URI</td>
+</tr>
+<tr>
+<td>302</td>
+<td>Found</td>
+<td>临时性重定向。表示请求的资源已被分配了新的 URI，希望用户（本次）能使用新的 URI 访问。禁止将POST变成GET，但可以不遵守</td>
+</tr>
+<tr>
+<td>303</td>
+<td>See Other</td>
+<td>表示由于请求对应的资源存在着另一个 URI，<strong>应使用 GET方法定向获取请求的资源</strong></td>
+</tr>
+<tr>
+<td>304</td>
+<td>Not Modified</td>
+<td>表示客户端发送附带条件的请时，服务器端允许请求访问资源，但未满足条件。</td>
+</tr>
+<tr>
+<td>307</td>
+<td>Temporary Redirect</td>
+<td>临时重定向，与302相同，但会遵从标准，不会讲POST变成GET</td>
+</tr>
+<tr>
+<td>400</td>
+<td>Bad Request</td>
+<td>表示请求报文中存在语法错误。当错误发生时，需修改请求的内容后再次发送请求</td>
+</tr>
+<tr>
+<td>401</td>
+<td>Unauthorized</td>
+<td>表示发送的请求需要有通过 HTTP 认证（BASIC 认证、DIGEST 认证）的认证信息。若之前已进行过 1 次请求，则表示用 户认证失败</td>
+</tr>
+<tr>
+<td>403</td>
+<td>Forbidden</td>
+<td>表明对请求资源的访问被服务器拒绝</td>
+</tr>
+<tr>
+<td>404</td>
+<td>Not Found</td>
+<td>表明服务器上无法找到请求的资源</td>
+</tr>
+<tr>
+<td>500</td>
+<td>Internal Server Error</td>
+<td>表明服务器端在执行请求时发生了错误</td>
+</tr>
+<tr>
+<td>503</td>
+<td>Service Unavailable</td>
+<td>表明服务器暂时处于超负载或正在进行停机维护，现在无法处理请求</td>
+</tr>
+</tbody>
+</table>
+<h1 id="HTTP-首部"><a href="#HTTP-首部" class="headerlink" title="HTTP 首部"></a>HTTP 首部</h1><p>HTTP首部字段根据实际用途被分为以下 4 种类型</p>
+<ol>
+<li>通用首部字段：请求报文和响应报文两方都会使用的首部。</li>
+<li>请求首部字段：从客户端向服务器端发送请求报文时使用的首部</li>
+<li>响应首部字段：从服务器端向客户端返回响应报文时使用的首</li>
+<li>实体首部字段：针对请求报文和响应报文的实体部分使用的首部</li>
+</ol>
+<p>此外还存在一些非HTTP/1.1的首部字段，如Cookie、Set-Cookie等</p>
+<h1 id="WEB安全"><a href="#WEB安全" class="headerlink" title="WEB安全"></a>WEB安全</h1><p>HTTP缺点：</p>
+<ol>
+<li>通信使用明文（不加密），内容可能会被窃听</li>
+<li>不验证通信方的身份，因此有可能遭遇伪装</li>
+<li>无法证明报文的完整性，所以有可能已遭篡改</li>
+</ol>
+<h2 id="加密"><a href="#加密" class="headerlink" title="加密"></a>加密</h2><p>TCP/IP 是可能被窃听的网络，就算是加密过的通信，也会被窃听，只是窃听的是加密后的报文信息。为了防止被窃听，可以进行的加密处理有</p>
+<ol>
+<li>通信加密：即HTTPS</li>
+<li>内容的加密：对内容本身进行加密</li>
+</ol>
+<h3 id="通信加密"><a href="#通信加密" class="headerlink" title="通信加密"></a>通信加密</h3><p>HTTP 协议中没有加密机制，但可以通过和 SSL（Secure Socket Layer，安全套接层）或TLS（Transport Layer Security，安全层传输协议）的组合使用，加密 HTTP 的通信内容。它会在服务器和客户端之间，建立一个安全的通信线路。与SSL 组合使用的 HTTP 被称为 <code>HTTPS（HTTPSecure，超文本传输安全协议）</code></p>
+<h3 id="内容加密"><a href="#内容加密" class="headerlink" title="内容加密"></a>内容加密</h3><p>对内容本身进行加密，要求客户端和服务器同时具备加密和解密机制。但内容还是存在被篡改的可能</p>
+<h2 id="身份验证"><a href="#身份验证" class="headerlink" title="身份验证"></a>身份验证</h2><p>HTTP 协议中的请求和响应不会对通信方进行确认，也就是说服务器不管是谁的请求都会返回一个响应，那么就可能存在以下隐患</p>
+<ol>
+<li>无法确定请求发送至目标的 Web 服务器是否是按真实意图返回响应的那台服务器，可能是伪装的WEB服务器</li>
+<li>无法确定响应返回到的客户端是否是按真实意图接收响应的那个客户端，可能是伪装的客户端</li>
+<li>无法确定正在通信的对方是否具备访问权限</li>
+<li>无法判定请求是来自何方、出自谁手</li>
+<li>即使是无意义的请求也会照单全收（DOS攻击，发送海量请求）</li>
+</ol>
+<p>SSL除了提供加密处理外，还提供了<code>证书</code>，证书由值得信任的第三方机构颁发，用以证明服务器和客户端是<br>实际存在的，且证书伪造极为困难。通过持有的证书，来进行认证。</p>
+<h2 id="防止篡改"><a href="#防止篡改" class="headerlink" title="防止篡改"></a>防止篡改</h2><p>由于 HTTP 协议无法证明通信的报文完整性，因此，在请求或响应送出之后直到对方接收之前的这段时间内，请求或响应的内容可能遭到篡改却无法得知。</p>
+<p>对于防止篡改，较为常用的是MD5 和 SHA-1 等散列值校验的方法，以及用来确认文件的数字签名方法（可以查看《哈希算法》数据校验 一小节）</p>
+<h1 id="HTTPS"><a href="#HTTPS" class="headerlink" title="HTTPS"></a>HTTPS</h1><p>HTTPS 并非是应用层的一种新协议。只是 HTTP 通信接口部分用SSL（Secure Socket Layer）和 TLS（Transport Layer Security）协议代替而已。与HTTP的区别在于，HTTP是直接和TCP进行通信，而HTTPS是先和SSL通信，再由SSL和TCP进行通信，从而获得加密、证书、完整性保护等功能</p>
+<h2 id="密钥技术"><a href="#密钥技术" class="headerlink" title="密钥技术"></a>密钥技术</h2><p>SSL 采用一种叫做<code>公开密钥加密（Public-key cryptography）</code>的加密处理方式，在加密和解密都会用到密钥。没有密钥就无法对密码解密。</p>
+<h3 id="如何将密钥安全的发送"><a href="#如何将密钥安全的发送" class="headerlink" title="如何将密钥安全的发送"></a>如何将密钥安全的发送</h3><p>公开密钥加密使用一对非对称的密钥。一把叫做私有密钥（private key），另一把叫做公开密钥（public key）。私有密钥不能让任何人知道，公开密钥任何人都可以获取</p>
+<ul>
+<li>对于发送密文的一方，使用对方的公开密钥进行加密处理，而它本身也不知道如何解密。也就是说，公开密钥只负责加密</li>
+<li>收到密文的一方，通过私钥进行解密。也就是说，私钥只负责解密</li>
+</ul>
+<p>利用这种方式，不需要发送用来解密的私有密钥，也不必担心密钥被攻击者窃听而盗走。而且根据密文和公开密钥，恢复信息原文是极为困难的。</p>
+<h3 id="如何保证公钥的正确性"><a href="#如何保证公钥的正确性" class="headerlink" title="如何保证公钥的正确性"></a>如何保证公钥的正确性</h3><p>公开密钥本身也有可能被篡改。解决的方式为，可以使用由数字证书认证机构（CA，CertificateAuthority）和其相关机关颁发的公开密钥证书。<strong>数字证书认证机构处于客户端与服务器双方都可信赖的第三方机构的立场上</strong>，业务流程如下</p>
+<ol>
+<li><p>由服务器向认证机构提出公开密钥的申请</p>
+</li>
+<li><p>认证机构对申请的企业进行审核，审核通过后会对已申请的公钥进行数字签名（用于验证企业），并将该公钥放入公钥证书</p>
+</li>
+<li><p>服务器将公钥证书发送给客户端</p>
+</li>
+<li><p>客户端<strong>利用对应 CA 的公钥解密签名数据</strong>，进行验证，验证通过说明</p>
+<p>a. 公开密钥的是真实有效的数字证书认证机构</p>
+<p>b. 服务器的公开密钥是值得信赖的</p>
+</li>
+</ol>
+<p>每个浏览器都内置了信赖的CA，如果CA不被信任，则找不到对应 CA 的证书，证书也会被判定非法。也就是说光篡改公钥不行，还得搞定CA的认证。伪造数字签名显然不可能，但<strong>如果客户端乱加CA认证，还是不能保证公钥的正确性。</strong></p>
+<h2 id="HTTPS的安全通信机制"><a href="#HTTPS的安全通信机制" class="headerlink" title="HTTPS的安全通信机制"></a>HTTPS的安全通信机制</h2><p>HTTPS 的通信步骤如下</p>
+<ol>
+<li>客户端通过发送<code>Client Hello</code>报文开始 SSL 通信。报文中包含客户端支持的 SSL 的指定版本、加密组件（Cipher Suite）列表（所使用的加密算法及密钥长度等）</li>
+<li>服务器可进行 SSL 通信时，会以<code>Server Hello</code>报文作为应答。和客户端一样，在报文中包含 SSL 版本以及加密组件。服务器的加密组件内容是从接收到的客户端加密组件内筛选出来的。</li>
+<li>服务器发送 <code>Certificate</code>（证书） 报文。报文中包含公开密钥证书</li>
+<li>最后服务器发送<code>Server Hello Done</code> 报文通知客户端，最初阶段的 SSL 握手协商部分结束</li>
+<li>SSL 第一次握手结束之后，客户端以 <code>Client Key Exchange</code>报文作为回应。报文中包含通信加密中使用的一种被称为 Pre-master secret 的随机密码串。该报文已用步骤 3 中的公开密钥进行加密</li>
+<li>接着客户端继续发送<code>Change Cipher Spec</code>报文。该报文会提示服务器，在此报文之后的通信会采用 Pre-master secret 密钥加密</li>
+<li>客户端发送 <code>Finished</code>报文。该报文包含连接至今全部报文的整体校验值。这次握手协商是否能够成功，要以服务器是否能够正确解密该报文作为判定标准</li>
+<li>服务器同样发送 <code>Change Cipher Spec</code> 报文。</li>
+<li>服务器同样发送 <code>Finished</code> 报文。</li>
+<li>服务器和客户端的 <code>Finished</code> 报文交换完毕之后，SSL 连接就算建立完成。当然，通信会受到 SSL 的保护。从此处开始进行应用层协议的通信，即发送 HTTP 请求。</li>
+<li>最后由客户端断开连接。断开连接时，发送 <code>close_notify</code> 报文。这步之后再发送 T<code>CP FIN</code> 报文来关闭与 TCP的通信。</li>
+</ol>
+<h1 id="WEB攻击"><a href="#WEB攻击" class="headerlink" title="WEB攻击"></a>WEB攻击</h1><p>Web的攻击模式有以下两种</p>
+<ol>
+<li><p>主动攻击：直接针对服务器上的资源进行攻击，具有代表性的攻击是 SQL 注入攻击和 OS 命令注入攻击。</p>
+</li>
+<li><p>被动攻击：利用圈套策略执行攻击代码的攻击模式，步骤如下</p>
+<p>a. 攻击者诱使用户触发已设置好的陷阱，而陷阱会启动发送已嵌入攻击代码的 HTTP 请求</p>
+<p>b. 当用户不知不觉中招之后，用户的浏览器或邮件客户端就会触发这个陷阱</p>
+<p>c. 中招后的用户浏览器会把含有攻击代码的 HTTP 请求发送给作为攻击目标的 Web 应用，运行攻击代码</p>
+<p>d. 执行完攻击代码，存在安全漏洞的 Web 应用会成为攻击者的跳板，可能导致用户所持的 Cookie 等个人信息被窃取，登录状态中的用户权限遭恶意滥用等后果。</p>
+</li>
+</ol>
+<h2 id="输出转义存在的安全漏洞"><a href="#输出转义存在的安全漏洞" class="headerlink" title="输出转义存在的安全漏洞"></a>输出转义存在的安全漏洞</h2><p>实施 Web 应用的安全对策可大致分为以下两部分</p>
+<ol>
+<li>客户端的验证</li>
+<li>Web端的验证：包括输入值验证和输出值转义</li>
+</ol>
+<h3 id="XSS攻击"><a href="#XSS攻击" class="headerlink" title="XSS攻击"></a>XSS攻击</h3><p>跨站脚本攻击（Cross-Site Scripting，XSS）是指通过存在安全漏洞的Web 网站注册用户的浏览器内运行非法的 HTML 标签或 JavaScript 进行的一种攻击</p>
+<p>如下是一个页面的代码，用于输入ID</p>
+<div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="HTML"><figure class="iseeu highlight /html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"logo"</span>&gt;</span>   </span><br><span class="line">	<span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"/img/logo.gif"</span> <span class="attr">alt</span>=<span class="string">"E! 拍卖会"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span> </span><br><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">"http://example.jp/login"</span> <span class="attr">method</span>=<span class="string">"post"</span> <span class="attr">id</span>=<span class="string">"login"</span>&gt;</span> </span><br><span class="line">   <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"input_id"</span>&gt;</span></span><br><span class="line">   	ID <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">name</span>=<span class="string">"ID"</span> <span class="attr">value</span>=<span class="string">"yama"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure></div>
+<p>如下URI可以自动注入ID的值</p>
+<div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="HTML"><figure class="iseeu highlight /html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://example.jp/login?ID=xxx"</span><br></pre></td></tr></table></figure></div>
+<p>如果此时URI变成</p>
+<div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="PLAIN"><figure class="iseeu highlight /plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://example.jp/login?ID=&quot;&gt;&lt;script&gt;alert(&quot;你被攻击了&quot;);&lt;/script&gt;&lt;span+s=&quot;</span><br></pre></td></tr></table></figure></div>
+<p>那么整个页面就会被注入JS脚本(如果是恶意的话，你的某些信息就会被获取了)</p>
+<div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="HTML"><figure class="iseeu highlight /html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"logo"</span>&gt;</span>   </span><br><span class="line">	<span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"/img/logo.gif"</span> <span class="attr">alt</span>=<span class="string">"E! 拍卖会"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span> </span><br><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">"http://example.jp/login"</span> <span class="attr">method</span>=<span class="string">"post"</span> <span class="attr">id</span>=<span class="string">"login"</span>&gt;</span> </span><br><span class="line">   <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"input_id"</span>&gt;</span></span><br><span class="line">   	ID <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">name</span>=<span class="string">"ID"</span> <span class="attr">value</span>=<span class="string">" "</span>&gt;</span> </span><br><span class="line">       <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript">alert(<span class="string">"你被攻击了"</span>);</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span><span class="tag">&lt;<span class="name">span+s=""</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br><span class="line">   </span><br><span class="line"><span class="comment">&lt;!--比方说调用远程的js文件进行攻击 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">http://hackr.jp/xss.js</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure></div>
+<h3 id="SQL注入"><a href="#SQL注入" class="headerlink" title="SQL注入"></a>SQL注入</h3><p>源代码</p>
+<div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="SQL"><figure class="iseeu highlight /sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> title,<span class="built_in">text</span> <span class="keyword">FROM</span> newsTbl <span class="keyword">WHERE</span> <span class="keyword">id</span>=<span class="string">""</span> <span class="keyword">and</span> passwd=<span class="string">""</span></span><br></pre></td></tr></table></figure></div>
+<p>注入</p>
+<div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="SQL"><figure class="iseeu highlight /sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 表示注释，如下注入后就无需密码就可以获取到资源了</span></span><br><span class="line"><span class="keyword">SELECT</span> title,<span class="built_in">text</span> <span class="keyword">FROM</span> newsTbl <span class="keyword">WHERE</span> <span class="keyword">id</span>=<span class="string">""</span> <span class="keyword">or</span> <span class="number">1</span> = <span class="number">1</span> <span class="comment">-- and passwd=?</span></span><br></pre></td></tr></table></figure></div>
+<p>todo</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/blog/tags/Http/" rel="tag"># Http</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/2018/03/23/HashMap/" rel="next" title="HashMap详解">
+                <i class="fa fa-chevron-left"></i> HashMap详解
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/blog/images/toux.jpg" alt="Liisyu">
+            
+              <p class="site-author-name" itemprop="name">Liisyu</p>
+              <div class="site-description motion-element" itemprop="description">我只是一个兴趣使然的程序员</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/blog/archives/">
+                
+                    <span class="site-state-item-count">21</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/blog/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">12</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/blog/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">19</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="http://liisyu.gitee.io/cv/" title="简历 &rarr; http://liisyu.gitee.io/cv/" rel="noopener" target="_blank"><i class="fa fa-fw fa-user-o"></i>简历</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="mailto:575600714@qq.com.com" title="E-Mail(QQ) &rarr; mailto:575600714@qq.com.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail(QQ)</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="mailto:swordmaster2014@gmail.com" title="E-Mail(Google) &rarr; mailto:swordmaster2014@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-google"></i>E-Mail(Google)</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/FameLsy" title="GitHub &rarr; https://github.com/FameLsy" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://gitee.com/liisyu" title="Gitee &rarr; https://gitee.com/liisyu" rel="noopener" target="_blank"><i class="fa fa-fw fa-git-square"></i>Gitee</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://blog.csdn.net/masorl" title="CSDN &rarr; https://blog.csdn.net/masorl" rel="noopener" target="_blank"><i class="fa fa-fw fa-tree"></i>CSDN</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="tencent://message/?uin=575600714&Site=qq&Menu=yes" title="QQ &rarr; tencent://message/?uin=575600714&Site=qq&Menu=yes" rel="noopener" target="_blank"><i class="fa fa-fw fa-qq"></i>QQ</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://messilessblog.com/" title="https://messilessblog.com/" rel="noopener" target="_blank">汪酱 BLOG</a>
+                  </li>
+                
+              </ul>
+			   
+            </div>
+          
+
+          
+            
+          
+          
+
+    <div class="wechat-box">
+      <div class="weixin-description">微信扫一扫，联系我</div>
+	  <img src="/blog/images/wechat.jpg" alt="wechat">
+    </div>
+
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#基础"><span class="nav-number">1.</span> <span class="nav-text">基础</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#协议（protocol）"><span class="nav-number">1.1.</span> <span class="nav-text">协议（protocol）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#OSI标准"><span class="nav-number">1.2.</span> <span class="nav-text">OSI标准</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TCP-IP协议族"><span class="nav-number">1.3.</span> <span class="nav-text">TCP/IP协议族</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#TCP-IP-的分层管理"><span class="nav-number">1.3.1.</span> <span class="nav-text">TCP/IP 的分层管理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#应用层"><span class="nav-number">1.3.1.1.</span> <span class="nav-text">应用层</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#传输层"><span class="nav-number">1.3.1.2.</span> <span class="nav-text">传输层</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#网络层"><span class="nav-number">1.3.1.3.</span> <span class="nav-text">网络层</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#链路层"><span class="nav-number">1.3.1.4.</span> <span class="nav-text">链路层</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TCP-IP通信传输过程"><span class="nav-number">1.3.2.</span> <span class="nav-text">TCP/IP通信传输过程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IP协议"><span class="nav-number">1.4.</span> <span class="nav-text">IP协议</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据包"><span class="nav-number">1.5.</span> <span class="nav-text">数据包</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TCP协议三次握手"><span class="nav-number">1.6.</span> <span class="nav-text">TCP协议三次握手</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TCP协议四次挥手"><span class="nav-number">1.7.</span> <span class="nav-text">TCP协议四次挥手</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DNS服务"><span class="nav-number">1.8.</span> <span class="nav-text">DNS服务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#URI和URL"><span class="nav-number">1.9.</span> <span class="nav-text">URI和URL</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#URL和URI区别"><span class="nav-number">1.9.1.</span> <span class="nav-text">URL和URI区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#URI完整格式"><span class="nav-number">1.9.2.</span> <span class="nav-text">URI完整格式</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Http协议"><span class="nav-number">2.</span> <span class="nav-text">Http协议</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#HTTP报文"><span class="nav-number">2.1.</span> <span class="nav-text">HTTP报文</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#请求报文"><span class="nav-number">2.1.1.</span> <span class="nav-text">请求报文</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#响应报文"><span class="nav-number">2.1.2.</span> <span class="nav-text">响应报文</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#报文主体和实体主体"><span class="nav-number">2.1.3.</span> <span class="nav-text">报文主体和实体主体</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#传输速率提升"><span class="nav-number">2.1.4.</span> <span class="nav-text">传输速率提升</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#压缩传输的内容编码"><span class="nav-number">2.1.4.1.</span> <span class="nav-text">压缩传输的内容编码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分块传输编码"><span class="nav-number">2.1.4.2.</span> <span class="nav-text">分块传输编码</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#发送多种数据"><span class="nav-number">2.1.5.</span> <span class="nav-text">发送多种数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#范围请求"><span class="nav-number">2.1.6.</span> <span class="nav-text">范围请求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#内容协商"><span class="nav-number">2.1.7.</span> <span class="nav-text">内容协商</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#请求方法"><span class="nav-number">2.2.</span> <span class="nav-text">请求方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#持久连接"><span class="nav-number">2.3.</span> <span class="nav-text">持久连接</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#管线化"><span class="nav-number">2.4.</span> <span class="nav-text">管线化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Cookie"><span class="nav-number">2.5.</span> <span class="nav-text">Cookie</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#HTTP状态码"><span class="nav-number">3.</span> <span class="nav-text">HTTP状态码</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#常见状态码"><span class="nav-number">3.1.</span> <span class="nav-text">常见状态码</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#HTTP-首部"><span class="nav-number">4.</span> <span class="nav-text">HTTP 首部</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#WEB安全"><span class="nav-number">5.</span> <span class="nav-text">WEB安全</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#加密"><span class="nav-number">5.1.</span> <span class="nav-text">加密</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#通信加密"><span class="nav-number">5.1.1.</span> <span class="nav-text">通信加密</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#内容加密"><span class="nav-number">5.1.2.</span> <span class="nav-text">内容加密</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#身份验证"><span class="nav-number">5.2.</span> <span class="nav-text">身份验证</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#防止篡改"><span class="nav-number">5.3.</span> <span class="nav-text">防止篡改</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#HTTPS"><span class="nav-number">6.</span> <span class="nav-text">HTTPS</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#密钥技术"><span class="nav-number">6.1.</span> <span class="nav-text">密钥技术</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#如何将密钥安全的发送"><span class="nav-number">6.1.1.</span> <span class="nav-text">如何将密钥安全的发送</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何保证公钥的正确性"><span class="nav-number">6.1.2.</span> <span class="nav-text">如何保证公钥的正确性</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HTTPS的安全通信机制"><span class="nav-number">6.2.</span> <span class="nav-text">HTTPS的安全通信机制</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#WEB攻击"><span class="nav-number">7.</span> <span class="nav-text">WEB攻击</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#输出转义存在的安全漏洞"><span class="nav-number">7.1.</span> <span class="nav-text">输出转义存在的安全漏洞</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#XSS攻击"><span class="nav-number">7.1.1.</span> <span class="nav-text">XSS攻击</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SQL注入"><span class="nav-number">7.1.2.</span> <span class="nav-text">SQL注入</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Liisyu</span>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/blog/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/blog/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/blog/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/blog/js/utils.js?v=7.1.0"></script>
+
+  <script src="/blog/js/motion.js?v=7.1.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/blog/js/schemes/muse.js?v=7.1.0"></script>
+
+
+
+  
+  <script src="/blog/js/scrollspy.js?v=7.1.0"></script>
+<script src="/blog/js/post-details.js?v=7.1.0"></script>
+
+
+
+  
+
+
+  <script src="/blog/js/next-boot.js?v=7.1.0"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/blog/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <script type="text/javascript" src="/blog/js/clipboard.min.js"></script>  
+  <script type="text/javascript" src="/blog/js/clipboard-use.js"></script>
+</body>
+</html>
