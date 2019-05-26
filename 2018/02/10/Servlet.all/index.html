@@ -1319,6 +1319,18 @@ Session只能在本浏览器窗口和子窗口有效;Session在Cookie被禁用�
         
 
 
+  <script>
+    var _mtac = {};
+    (function() {
+      var mta = document.createElement("script");
+      mta.src = "https://pingjs.qq.com/h5/stats.js";
+      mta.setAttribute("name", "MTAH5");
+      mta.setAttribute("sid", "your-tencent-mta-id");
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(mta, s);
+    })();
+  </script>
+
 
 
 
