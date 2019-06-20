@@ -96,16 +96,23 @@
 
 
 
-  <meta name="description" content="我只是一个兴趣使然的程序员">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Liisyu Blog">
-<meta property="og:url" content="https://bestgakki.com/index.html">
+  <meta name="description" content="容器关系以下是BeanFactory的继承关系图     接口 描述     BeanFactory 接口定义了基本的IoC容器的规范，在这个接口定义中，包括了一些操作IoCR容器的基本方法，如getBean()   HierarchicalBeanFactory 为BeanFactory添加了双亲IoC容器的管理功能，如getParentBeanFactory()方法   Configurab">
+<meta name="keywords" content="Spring">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring-ioc源码">
+<meta property="og:url" content="https://bestgakki.com/2019/06/17/Spring-IOC源码/index.html">
 <meta property="og:site_name" content="Liisyu Blog">
-<meta property="og:description" content="我只是一个兴趣使然的程序员">
+<meta property="og:description" content="容器关系以下是BeanFactory的继承关系图     接口 描述     BeanFactory 接口定义了基本的IoC容器的规范，在这个接口定义中，包括了一些操作IoCR容器的基本方法，如getBean()   HierarchicalBeanFactory 为BeanFactory添加了双亲IoC容器的管理功能，如getParentBeanFactory()方法   Configurab">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://raw.githubusercontent.com/FameLsy/Images/master/Fullmetal%20Alchemist/wallhaven-k97jgq.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/FameLsy/Images/master/spring/iocp.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/FameLsy/Images/master/spring/resource.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/FameLsy/Images/master/spring/XHYL.png">
+<meta property="og:updated_time" content="2019-06-20T05:14:15.749Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Liisyu Blog">
-<meta name="twitter:description" content="我只是一个兴趣使然的程序员">
+<meta name="twitter:title" content="Spring-ioc源码">
+<meta name="twitter:description" content="容器关系以下是BeanFactory的继承关系图     接口 描述     BeanFactory 接口定义了基本的IoC容器的规范，在这个接口定义中，包括了一些操作IoCR容器的基本方法，如getBean()   HierarchicalBeanFactory 为BeanFactory添加了双亲IoC容器的管理功能，如getParentBeanFactory()方法   Configurab">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/FameLsy/Images/master/Fullmetal%20Alchemist/wallhaven-k97jgq.png">
 
 
 
@@ -113,7 +120,7 @@
 
   
   
-  <link rel="canonical" href="https://bestgakki.com/">
+  <link rel="canonical" href="https://bestgakki.com/2019/06/17/Spring-IOC源码/">
 
 
 
@@ -123,7 +130,7 @@
   };
 </script>
 
-  <title>Liisyu Blog</title>
+  <title>Spring-ioc源码 | Liisyu Blog</title>
   
 
 
@@ -171,8 +178,7 @@
     
   
 
-  <div class="container sidebar-position-left 
-  page-home">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -210,7 +216,7 @@
         
         
           
-          <li class="menu-item menu-item-home menu-item-active">
+          <li class="menu-item menu-item-home">
 
     
     
@@ -352,9 +358,9 @@
           
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
 
@@ -386,10 +392,8 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/06/17/Spring-IOC源码/" class="post-title-link" itemprop="url">Spring-ioc源码</a>
+          <h1 class="post-title" itemprop="name headline">Spring-ioc源码
+
               
             
           </h1>
@@ -483,9 +487,7 @@
       
 
       
-        
-          
-            <p><img src="https://raw.githubusercontent.com/FameLsy/Images/master/Fullmetal%20Alchemist/wallhaven-k97jgq.png" alt></p>
+        <p><img src="https://raw.githubusercontent.com/FameLsy/Images/master/Fullmetal%20Alchemist/wallhaven-k97jgq.png" alt></p>
 <h1 id="容器关系"><a href="#容器关系" class="headerlink" title="容器关系"></a>容器关系</h1><p>以下是BeanFactory的继承关系图</p>
 <p><img src="https://raw.githubusercontent.com/FameLsy/Images/master/spring/iocp.png" alt="iocp"></p>
 <table>
@@ -1160,8 +1162,6 @@
 </blockquote>
 <div class="highlight-wrap" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" contenteditable="false" data-rel="JAVA"><figure class="iseeu highlight /java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">*AbstractApplicationContext#publishEvent</span></span><br><span class="line"><span class="comment">**/</span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">publishEvent</span><span class="params">(Object event, @Nullable ResolvableType eventType)</span> </span>&#123;</span><br><span class="line">    <span class="comment">//Assert.notNull(event, "Event must not be null");</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// Decorate event as an ApplicationEvent if necessary</span></span><br><span class="line">    ApplicationEvent applicationEvent;</span><br><span class="line">    <span class="keyword">if</span> (event <span class="keyword">instanceof</span> ApplicationEvent) &#123;</span><br><span class="line">        applicationEvent = (ApplicationEvent) event;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">        applicationEvent = <span class="keyword">new</span> PayloadApplicationEvent&lt;&gt;(<span class="keyword">this</span>, event);</span><br><span class="line">        <span class="keyword">if</span> (eventType == <span class="keyword">null</span>) &#123;</span><br><span class="line">            eventType = ((PayloadApplicationEvent) applicationEvent).getResolvableType();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Multicast right now if possible - or lazily once the multicaster is initialized</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>.earlyApplicationEvents != <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">this</span>.earlyApplicationEvents.add(applicationEvent);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">        getApplicationEventMulticaster().multicastEvent(applicationEvent, eventType);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Publish event via parent context as well...</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>.parent != <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">this</span>.parent <span class="keyword">instanceof</span> AbstractApplicationContext) &#123;</span><br><span class="line">            ((AbstractApplicationContext) <span class="keyword">this</span>.parent).publishEvent(event, eventType);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">this</span>.parent.publishEvent(event);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
 
-          
-        
       
     </div>
 
@@ -1182,356 +1182,36 @@
 
     <footer class="post-footer">
       
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://bestgakki.com/2019/05/23/docker.all/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Liisyu">
-      <meta itemprop="description" content="我只是一个兴趣使然的程序员">
-      <meta itemprop="image" content="/images/toux.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Liisyu Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/05/23/docker.all/" class="post-title-link" itemprop="url">Docker</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-05-24 11:11:11" itemprop="dateCreated datePublished" datetime="2019-05-24T11:11:11+08:00">2019-05-24</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2019-05-26 21:57:32" itemprop="dateModified" datetime="2019-05-26T21:57:32+08:00">2019-05-26</time>
-              
-            
-          </span>
-
+        <div class="post-tags">
           
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Docker/" itemprop="url" rel="index"><span itemprop="name">Docker</span></a></span>
-
-                
-                
-              
-            </span>
+            <a href="/tags/Spring/" rel="tag"># Spring</a>
           
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
         </div>
-      </header>
-    
+      
 
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
+      
       
       
 
       
-        
-          <p><img src="https://raw.githubusercontent.com/FameLsy/Images/master/Fullmetal%20Alchemist/wallhaven-520807.png" alt></p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2019/05/23/docker.all/#more" rel="contents">
-                阅读全文 &raquo;
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/05/23/docker.all/" rel="next" title="Docker">
+                <i class="fa fa-chevron-left"></i> Docker
               </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://bestgakki.com/2019/05/17/Ｈttp/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Liisyu">
-      <meta itemprop="description" content="我只是一个兴趣使然的程序员">
-      <meta itemprop="image" content="/images/toux.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Liisyu Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/05/17/Ｈttp/" class="post-title-link" itemprop="url">Http学习</a>
-              
             
-          </h1>
-        
+          </div>
 
-        <div class="post-meta">
-          <span class="post-time">
+          <span class="post-nav-divider"></span>
 
+          <div class="post-nav-prev post-nav-item">
             
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-05-18 08:42:48" itemprop="dateCreated datePublished" datetime="2019-05-18T08:42:48+08:00">2019-05-18</time>
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Http/" itemprop="url" rel="index"><span itemprop="name">Http</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
+          </div>
         </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
       
 
       
-        
-          <p><img src="https://raw.githubusercontent.com/FameLsy/Images/master/Fullmetal%20Alchemist/wallhaven-520810.jpg" alt></p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2019/05/17/Ｈttp/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
       
     </footer>
   </div>
@@ -1541,1271 +1221,15 @@
   </article>
 
 
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://bestgakki.com/2018/03/23/HashMap/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Liisyu">
-      <meta itemprop="description" content="我只是一个兴趣使然的程序员">
-      <meta itemprop="image" content="/images/toux.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Liisyu Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2018/03/23/HashMap/" class="post-title-link" itemprop="url">HashMap详解</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2018-03-24 00:00:01" itemprop="dateCreated datePublished" datetime="2018-03-24T00:00:01+08:00">2018-03-24</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2019-05-07 21:47:51" itemprop="dateModified" datetime="2019-05-07T21:47:51+08:00">2019-05-07</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/源码解析/" itemprop="url" rel="index"><span itemprop="name">源码解析</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p><img src="https://raw.githubusercontent.com/FameLsy/Images/master/Fullmetal%20Alchemist/wallhaven-389534.jpg" alt></p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2018/03/23/HashMap/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
   </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://bestgakki.com/2018/03/22/MyBatis.all/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Liisyu">
-      <meta itemprop="description" content="我只是一个兴趣使然的程序员">
-      <meta itemprop="image" content="/images/toux.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Liisyu Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2018/03/22/MyBatis.all/" class="post-title-link" itemprop="url">MyBatis</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2018-03-23 00:00:01" itemprop="dateCreated datePublished" datetime="2018-03-23T00:00:01+08:00">2018-03-23</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2019-04-27 14:25:06" itemprop="dateModified" datetime="2019-04-27T14:25:06+08:00">2019-04-27</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/DataBase/" itemprop="url" rel="index"><span itemprop="name">DataBase</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p><img src="https://raw.githubusercontent.com/FameLsy/Images/master/Fullmetal%20Alchemist/wallhaven-569731.png" alt></p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2018/03/22/MyBatis.all/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://bestgakki.com/2018/02/19/git.all/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Liisyu">
-      <meta itemprop="description" content="我只是一个兴趣使然的程序员">
-      <meta itemprop="image" content="/images/toux.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Liisyu Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2018/02/19/git.all/" class="post-title-link" itemprop="url">Git</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2018-02-20 00:00:01" itemprop="dateCreated datePublished" datetime="2018-02-20T00:00:01+08:00">2018-02-20</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2019-05-03 15:00:36" itemprop="dateModified" datetime="2019-05-03T15:00:36+08:00">2019-05-03</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Tools/" itemprop="url" rel="index"><span itemprop="name">Tools</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p><img src="https://raw.githubusercontent.com/FameLsy/Images/master/Fullmetal%20Alchemist/wallhaven-389511.jpg" alt></p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2018/02/19/git.all/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://bestgakki.com/2018/02/18/DesignPatterns.all/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Liisyu">
-      <meta itemprop="description" content="我只是一个兴趣使然的程序员">
-      <meta itemprop="image" content="/images/toux.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Liisyu Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2018/02/18/DesignPatterns.all/" class="post-title-link" itemprop="url">DesignPatterns</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2018-02-19 00:00:01" itemprop="dateCreated datePublished" datetime="2018-02-19T00:00:01+08:00">2018-02-19</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2019-05-07 14:20:04" itemprop="dateModified" datetime="2019-05-07T14:20:04+08:00">2019-05-07</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/DesignPatterns/" itemprop="url" rel="index"><span itemprop="name">DesignPatterns</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p><img src="https://raw.githubusercontent.com/FameLsy/Images/master/Fullmetal%20Alchemist/wallhaven-382615.jpg" alt></p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2018/02/18/DesignPatterns.all/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://bestgakki.com/2018/02/17/DataStructure.all/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Liisyu">
-      <meta itemprop="description" content="我只是一个兴趣使然的程序员">
-      <meta itemprop="image" content="/images/toux.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Liisyu Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2018/02/17/DataStructure.all/" class="post-title-link" itemprop="url">DataStructure</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2018-02-18 00:00:01" itemprop="dateCreated datePublished" datetime="2018-02-18T00:00:01+08:00">2018-02-18</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2019-05-07 21:46:31" itemprop="dateModified" datetime="2019-05-07T21:46:31+08:00">2019-05-07</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/DataStructure/" itemprop="url" rel="index"><span itemprop="name">DataStructure</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p><img src="https://raw.githubusercontent.com/FameLsy/Images/master/Fullmetal%20Alchemist/wallhaven-382608.jpg" alt></p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2018/02/17/DataStructure.all/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://bestgakki.com/2018/02/16/Algorithm.all/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Liisyu">
-      <meta itemprop="description" content="我只是一个兴趣使然的程序员">
-      <meta itemprop="image" content="/images/toux.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Liisyu Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2018/02/16/Algorithm.all/" class="post-title-link" itemprop="url">DataStructure</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2018-02-17 00:00:01" itemprop="dateCreated datePublished" datetime="2018-02-17T00:00:01+08:00">2018-02-17</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2019-05-07 21:46:29" itemprop="dateModified" datetime="2019-05-07T21:46:29+08:00">2019-05-07</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/DataStructure/" itemprop="url" rel="index"><span itemprop="name">DataStructure</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p><img src="https://raw.githubusercontent.com/FameLsy/Images/master/Fullmetal%20Alchemist/wallhaven-380237.jpg" alt></p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2018/02/16/Algorithm.all/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://bestgakki.com/2018/02/15/Centos.all/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Liisyu">
-      <meta itemprop="description" content="我只是一个兴趣使然的程序员">
-      <meta itemprop="image" content="/images/toux.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Liisyu Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2018/02/15/Centos.all/" class="post-title-link" itemprop="url">Centos</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2018-02-16 00:00:01" itemprop="dateCreated datePublished" datetime="2018-02-16T00:00:01+08:00">2018-02-16</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2019-05-12 19:09:49" itemprop="dateModified" datetime="2019-05-12T19:09:49+08:00">2019-05-12</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p><img src="https://raw.githubusercontent.com/FameLsy/Images/master/Fullmetal%20Alchemist/wallhaven-335846.png" alt></p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2018/02/15/Centos.all/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-  </section>
-
-  
-  <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
-  </nav>
-
 
 
           </div>
           
+
+  
+
+
 
         </div>
         
@@ -2825,8 +1249,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <div class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -3073,6 +1506,23 @@
       </div>
 
       
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#容器关系"><span class="nav-number">1.</span> <span class="nav-text">容器关系</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#其他相关核心类介绍"><span class="nav-number">2.</span> <span class="nav-text">其他相关核心类介绍</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#BeanFactory容器的设计原理"><span class="nav-number">3.</span> <span class="nav-text">BeanFactory容器的设计原理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#配置文件的封装过程"><span class="nav-number">4.</span> <span class="nav-text">配置文件的封装过程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#资源解析器"><span class="nav-number">5.</span> <span class="nav-text">资源解析器</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#加载BeanDefinition过程"><span class="nav-number">6.</span> <span class="nav-text">加载BeanDefinition过程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#正式Bean定义加载"><span class="nav-number">6.1.</span> <span class="nav-text">正式Bean定义加载</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#获取Document的过程"><span class="nav-number">6.2.</span> <span class="nav-text">获取Document的过程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Xml验证模式读取"><span class="nav-number">6.2.1.</span> <span class="nav-text">Xml验证模式读取</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#加载Document"><span class="nav-number">6.2.2.</span> <span class="nav-text">加载Document</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#EntityResovler"><span class="nav-number">6.2.3.</span> <span class="nav-text">EntityResovler</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Bean定义解析与注册过程"><span class="nav-number">6.3.</span> <span class="nav-text">Bean定义解析与注册过程</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#默认标签解析过程"><span class="nav-number">7.</span> <span class="nav-text">默认标签解析过程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#bean标签的解析与注册"><span class="nav-number">7.1.</span> <span class="nav-text">bean标签的解析与注册</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#解析元素"><span class="nav-number">7.1.1.</span> <span class="nav-text">解析元素</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#BeanDefintion"><span class="nav-number">7.1.2.</span> <span class="nav-text">BeanDefintion</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解析元素并封装BeanDeinfition的过程"><span class="nav-number">7.1.3.</span> <span class="nav-text">解析元素并封装BeanDeinfition的过程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#bean属性解析"><span class="nav-number">7.1.3.1.</span> <span class="nav-text">bean属性解析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#元数据的解析"><span class="nav-number">7.1.3.2.</span> <span class="nav-text">元数据的解析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#子元素lookup-mtthod的解析"><span class="nav-number">7.1.3.3.</span> <span class="nav-text">子元素lookup-mtthod的解析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#子元素repalced-method的解析"><span class="nav-number">7.1.3.4.</span> <span class="nav-text">子元素repalced-method的解析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#子元素constructor-arg的解析"><span class="nav-number">7.1.3.5.</span> <span class="nav-text">子元素constructor-arg的解析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#子元素property的解析"><span class="nav-number">7.1.3.6.</span> <span class="nav-text">子元素property的解析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#子元素qualifier的解析"><span class="nav-number">7.1.3.7.</span> <span class="nav-text">子元素qualifier的解析</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#自定义标签的解析过程"><span class="nav-number">8.</span> <span class="nav-text">自定义标签的解析过程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#获取Bean的过程"><span class="nav-number">9.</span> <span class="nav-text">获取Bean的过程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#在缓存中获取单例Bean"><span class="nav-number">9.1.</span> <span class="nav-text">在缓存中获取单例Bean</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#从bean实例中获取对象"><span class="nav-number">9.2.</span> <span class="nav-text">从bean实例中获取对象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#获取单例"><span class="nav-number">9.3.</span> <span class="nav-text">获取单例</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#创建Bean的过程"><span class="nav-number">10.</span> <span class="nav-text">创建Bean的过程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#解析override属性"><span class="nav-number">10.1.</span> <span class="nav-text">解析override属性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实例化bean的前置处理"><span class="nav-number">10.2.</span> <span class="nav-text">实例化bean的前置处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建Bean"><span class="nav-number">10.3.</span> <span class="nav-text">创建Bean</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建bean实例"><span class="nav-number">10.4.</span> <span class="nav-text">创建bean实例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#记录创建bean的ObjectFatory"><span class="nav-number">10.5.</span> <span class="nav-text">记录创建bean的ObjectFatory</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#属性注入过程"><span class="nav-number">11.</span> <span class="nav-text">属性注入过程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#根据名称自动注入"><span class="nav-number">11.1.</span> <span class="nav-text">根据名称自动注入</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Spring对循环依赖的处理"><span class="nav-number">12.</span> <span class="nav-text">Spring对循环依赖的处理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#构造器循环依赖"><span class="nav-number">12.1.</span> <span class="nav-text">构造器循环依赖</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#setter循环依赖"><span class="nav-number">12.2.</span> <span class="nav-text">setter循环依赖</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#prototype范围的依赖处理"><span class="nav-number">12.3.</span> <span class="nav-text">prototype范围的依赖处理</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ApplicationContext容器的设计原理"><span class="nav-number">13.</span> <span class="nav-text">ApplicationContext容器的设计原理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#上下文容器的初始化过程"><span class="nav-number">14.</span> <span class="nav-text">上下文容器的初始化过程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#环境准备流程"><span class="nav-number">14.1.</span> <span class="nav-text">环境准备流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#获取BeanFactory"><span class="nav-number">14.2.</span> <span class="nav-text">获取BeanFactory</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#对BeanFactory的自定义"><span class="nav-number">14.2.1.</span> <span class="nav-text">对BeanFactory的自定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#加载BeanDefinitions"><span class="nav-number">14.2.2.</span> <span class="nav-text">加载BeanDefinitions</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对BeanFactory的功能扩展"><span class="nav-number">14.3.</span> <span class="nav-text">对BeanFactory的功能扩展</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#SpEL语言的支持"><span class="nav-number">14.3.1.</span> <span class="nav-text">SpEL语言的支持</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#属性注册编辑器"><span class="nav-number">14.3.2.</span> <span class="nav-text">属性注册编辑器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#后置处理器的添加"><span class="nav-number">14.3.3.</span> <span class="nav-text">后置处理器的添加</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设置忽略依赖"><span class="nav-number">14.3.4.</span> <span class="nav-text">设置忽略依赖</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#注册相关依赖"><span class="nav-number">14.3.5.</span> <span class="nav-text">注册相关依赖</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#BeanFactory的后处理"><span class="nav-number">14.4.</span> <span class="nav-text">BeanFactory的后处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#激活BeanFactoryPostProcessor"><span class="nav-number">14.5.</span> <span class="nav-text">激活BeanFactoryPostProcessor</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#了解BeanFactoryPostProcessor"><span class="nav-number">14.5.1.</span> <span class="nav-text">了解BeanFactoryPostProcessor</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#激活BeanFactoryPostProcessor-1"><span class="nav-number">14.5.2.</span> <span class="nav-text">激活BeanFactoryPostProcessor</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#注册BeanPostProcessor"><span class="nav-number">14.6.</span> <span class="nav-text">注册BeanPostProcessor</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#初始化消息资源，即国际化"><span class="nav-number">14.7.</span> <span class="nav-text">初始化消息资源，即国际化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#初始化应用消息广播器"><span class="nav-number">14.8.</span> <span class="nav-text">初始化应用消息广播器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#注册监听器"><span class="nav-number">14.9.</span> <span class="nav-text">注册监听器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#初始化非延迟加载单例"><span class="nav-number">14.10.</span> <span class="nav-text">初始化非延迟加载单例</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ConversionService的设置"><span class="nav-number">14.10.1.</span> <span class="nav-text">ConversionService的设置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#冻结配置"><span class="nav-number">14.10.2.</span> <span class="nav-text">冻结配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实例化所有非延迟加载的bean"><span class="nav-number">14.10.3.</span> <span class="nav-text">实例化所有非延迟加载的bean</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#完成刷新"><span class="nav-number">14.11.</span> <span class="nav-text">完成刷新</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#上下文生命周期处理器"><span class="nav-number">14.11.1.</span> <span class="nav-text">上下文生命周期处理器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#启动bean"><span class="nav-number">14.11.2.</span> <span class="nav-text">启动bean</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#推送事件"><span class="nav-number">14.11.3.</span> <span class="nav-text">推送事件</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
 
       
 
@@ -3203,6 +1653,10 @@
 
 
   
+  <script src="/js/scrollspy.js?v=7.1.0"></script>
+<script src="/js/post-details.js?v=7.1.0"></script>
+
+
 
   
 
@@ -3218,6 +1672,8 @@
 
   
 
+
+  
 
 
   
