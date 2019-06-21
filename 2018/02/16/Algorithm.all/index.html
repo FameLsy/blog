@@ -114,8 +114,7 @@
 <meta property="og:image" content="https://raw.githubusercontent.com/FameLsy/Images/master/thread/一致性哈希.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/FameLsy/Images/master/thread/一致性哈希2.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/FameLsy/Images/master/thread/一致性哈希3.png">
-<meta property="og:image" content="https://raw.githubusercontent.com/FameLsy/Images/master/data/paxos.png">
-<meta property="og:updated_time" content="2019-06-20T14:04:01.085Z">
+<meta property="og:updated_time" content="2019-06-21T07:54:01.828Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="算法">
 <meta name="twitter:image" content="https://raw.githubusercontent.com/FameLsy/Images/master/Fullmetal%20Alchemist/wallhaven-380237.jpg">
@@ -441,7 +440,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-06-20 22:04:01" itemprop="dateModified" datetime="2019-06-20T22:04:01+08:00">2019-06-20</time>
+                <time title="修改时间：2019-06-21 15:54:01" itemprop="dateModified" datetime="2019-06-21T15:54:01+08:00">2019-06-21</time>
               
             
           </span>
@@ -893,91 +892,6 @@
 <p><img src="https://raw.githubusercontent.com/FameLsy/Images/master/thread/一致性哈希2.png" alt="一致性哈希2"></p>
 <h3 id="扩容与删除"><a href="#扩容与删除" class="headerlink" title="扩容与删除"></a>扩容与删除</h3><p>对于扩容与删除服务器，也只是让部分缓存失效</p>
 <p><img src="https://raw.githubusercontent.com/FameLsy/Images/master/thread/一致性哈希3.png" alt="一致性哈希3"></p>
-<h1 id="Paxos算法"><a href="#Paxos算法" class="headerlink" title="Paxos算法"></a>Paxos算法</h1><p>Paxos 算法是莱斯利·兰伯特(Leslie Lamport)1990 年提出的一种基于消息传递的、具有高容错性的<strong>一致性算法。</strong></p>
-<p>首先了解以下<code>拜占庭将军问题（Byzantine failures）</code>，以下是wiki的描述</p>
-<blockquote>
-<p>在分布式计算中，不同的计算机通过通讯交换信息达成共识而按照同一套协作策略行动。但有时候，系统中的成员计算机可能出错而发送错误的信息，用于传递信息的通讯网络也可能导致信息损坏，使得网络中不同的成员关于全体协作的策略得出不同结论，从而破坏系统一致性。拜占庭将军问题被认为是容错性问题中最难的问题类型之一。</p>
-</blockquote>
-<p>Paxos算法作者认为，在存在消息丢失的不可靠信道上试图通过消息传递的方式达到一致性是不可能的。所以，<strong>Paxos算法前提为不存在拜占庭将军问题</strong></p>
-<p>在一般情况下，分布式系统中各个节点间采用两种通讯模型：共享内存（Shared Memory）、消息传递（Messages Passing）。而 Paxos 是基于消息传递通讯模型的</p>
-<h2 id="算法功能概述"><a href="#算法功能概述" class="headerlink" title="算法功能概述"></a>算法功能概述</h2><p>Paxos算法存在三种角色，很多情况下，一个进程可能同时担当着多种角色</p>
-<ol>
-<li>Proposer：提案(value)的提议者</li>
-<li>Acceptor：提案的表决者，即决定是否接受该提案。（需要半数以上Acceptor接受提案才能选定）</li>
-<li>Learners：提案学习者，提案被选定后，它会同步并执行提案</li>
-</ol>
-<p>Acceptor存在多个，但在一个集群中，Proposer也可能存在多个。而Paxos算法可保证如下几点</p>
-<ol>
-<li>没有提案被提出则不会有提案被选定</li>
-<li>每个Proposer提出的提案，都会被指定一个具有全局唯一性的、递增的提案编号 N，即<strong>提案在整个集群中是唯一的</strong></li>
-<li>每个Acceptor在接受某提案后，会将该提案的编号N记录在本地。那么每个Acceptor保存的提案中肯定会存在一个maxN,即最大编号的提案。Acceptor每当接受新的提案，只会接受编号大于maxN的提案。</li>
-<li>多个提案只能有一个被选定</li>
-<li>一旦提案被选定，则其他服务器会主动同步(Learn)提案到本地</li>
-</ol>
-<h2 id="算法过程"><a href="#算法过程" class="headerlink" title="算法过程"></a>算法过程</h2><p>Paxos 算法的执行过程划分为两个阶段：</p>
-<ol>
-<li>准备阶段 prepare </li>
-<li>接受阶段 accept</li>
-</ol>
-<p>准备阶段</p>
-<ol>
-<li><p>Proposer准备提交一个编号为 N 的提议，于是其首先向所有表决者(Acceptor)发送 prepare(N)请求，用于试探集群是否支持该编号的提议。</p>
-</li>
-<li><p>Acceptor会根据其他主机发来的 prepare(N)，与本地的maxN值进行比较</p>
-<p>a. 如果N小于maxN，说明提案过时，则Acceptor不回应或回应Error。</p>
-<p>b. 若N大于等于maxN,说明提案可以接受，Acceptor通过<code>Proposal(myid,maxN,value)</code>方法将自己的maxN提案反馈给Proposer,同时不再接受编号小于N天。【myid代表Accepter的id，value表示提案的真正内容。如果Acceptor没有接受过任何提案，则发送<code>Proposal(myid,null,null)</code>】</p>
-</li>
-</ol>
-<p>接受阶段</p>
-<ol>
-<li>Proposer如果收到了超过半数的Accepter的反馈，通过 Proposal(N,V)发送accpet请求给所有的Accepter。V指的是收到的反馈中编号最大的提案的value。如果反馈为<code>Proposal(myid,null,null</code>,则V的值由Proposer自己决定。</li>
-<li>Acceptor接收到提议者发送的 Proposal(N,value)提案后，如果Acceptor没有对编号大于N的prepare请求做出过反馈，则接受提案</li>
-<li>Proposer如果收到的反馈少于半数，则重回准备阶段，递增提案号，重新发出prepare(N)。回到第一阶段</li>
-</ol>
-<p>一旦提案被接受，那么没有反馈的Accepter就会称为Learner，学习被选定的value，一共有3中方案</p>
-<ol>
-<li><p>方案一：Acceptor接受提案，直接发送给所有Learner</p>
-<p>a. 优点：Learner能快速获取被选定的value</p>
-<p>b. 缺点：通信次数为M*N</p>
-</li>
-<li><p>方案二：Acceptor接受提案，发送给主Learner,再由主Learner通知其他Learner</p>
-<p>a. 优点：通信次数减少(M+N-1)</p>
-<p>b.缺点：单点故障</p>
-</li>
-<li><p>方案三：Acceptor接受提案，发送给一个Learner集合，再由集合通知其他Learner</p>
-<p>a.优点：集合Learner个数越多，性能越好</p>
-<p>b.缺点：集合Learner个数越多，网络通信复杂度高</p>
-</li>
-</ol>
-<h2 id="如何保证Paxos算法活性"><a href="#如何保证Paxos算法活性" class="headerlink" title="如何保证Paxos算法活性"></a>如何保证Paxos算法活性</h2><p>有如下场景</p>
-<ol>
-<li>P1 发出编号M1的Prepare请求，收到过半响应</li>
-<li>同时，P2发出编号M2的Prepare请求，收到过半响应。Acceptor不再接受小于M2的提案</li>
-<li>P1开始进入第二阶段，发出的请求，因为M2&gt;M1,所以P1请求被拒绝。重回第一阶段并发出编号为M3的Prepare请求</li>
-<li>然后P2进入第二阶段，因为M3&gt;M2，P2请求被拒绝。重回第一阶段并发出编号为M4的Prepare请求</li>
-<li>…..</li>
-<li>然后进入死循环，P1、P2均无法完成第二阶段</li>
-</ol>
-<p>解决办法：<strong>选取</strong>一个主Proposer，只有主Proposer才能提出提案</p>
-<h2 id="算法图解示例"><a href="#算法图解示例" class="headerlink" title="算法图解示例"></a>算法图解示例</h2><p><img src="https://raw.githubusercontent.com/FameLsy/Images/master/data/paxos.png" alt></p>
-<p>以上图为例，存在三个Proposer和三个Acceptor</p>
-<ol>
-<li>P1 向A1、A2发送编号为20的提案</li>
-<li>P2向A2、A3发送编号为10的提案</li>
-<li>P3向A2、A3发送编号为30的提案</li>
-</ol>
-<p>三个Proposer以先后顺序发送。</p>
-<p>P1首先，因为A1、A2先前没有接受过提案，所以直接接受并将编号20的提案记录成maxN=20后反馈。P1收到半数反馈。</p>
-<p>此时P2开始发送提案，N为10，此时A2 maxN为20，，A2拒绝。A3接受，记录maxN=10并反馈。P2收到不超过反馈。</p>
-<p>随后P3开始发送提案，N为39，A2 maxN=20,A3 maxN=10,所以A2、A3全部接受记录maxN=20并反馈，P3收到反馈数过半。</p>
-<p>因为P2提案没选定，所以N变为40，发送给A2、A3，此时A2、A3全部接受记录maxN=40并反馈,P2收到半数以上反馈。</p>
-<p>至此，P1、P2、P3提案均被接受，A1 maxN=20, A2、A3 maxN = 40;</p>
-<p>在接受阶段</p>
-<p>P1 发送accept请求，N=20，A1 顺利通过并接受了该提案。A2 此时maxN=40,所以拒绝了该提案</p>
-<p>P2发出accpet请求，N=40， A2、A3均顺利通过并接受了该提案</p>
-<p>P3发出accpet请求，N=30，A2、A3均拒绝该请求</p>
-<p>那么，P2的提案有2个Acceptor选定，所以A2服务器被选为Learder。选举结束，其他服务器称为Learner会被通知进行数据的同步。</p>
-<h2 id="算法优化"><a href="#算法优化" class="headerlink" title="算法优化"></a>算法优化</h2><p>前面所述的Paxos算法在实际工程应用过程中，根据不同的实际需求存在诸多不便之处，所以也就出现了很多对于基本 Paxos 算法的优化算法，例如，Multi Paxos、Fast Paxos、EPaxos。而 Zookeeper 的 Leader 选举算法 FastLeaderElection 则是 Fast Paxos 算法的工程应用。</p>
 
       
     </div>
@@ -1341,7 +1255,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#递归"><span class="nav-number">1.</span> <span class="nav-text">递归</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#递归满足的三个条件"><span class="nav-number">1.1.</span> <span class="nav-text">递归满足的三个条件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#递归警惕事项"><span class="nav-number">1.2.</span> <span class="nav-text">递归警惕事项</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#堆栈溢出"><span class="nav-number">1.2.1.</span> <span class="nav-text">堆栈溢出</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#重复计算"><span class="nav-number">1.2.2.</span> <span class="nav-text">重复计算</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#递归相关问题及应用"><span class="nav-number">1.3.</span> <span class="nav-text">递归相关问题及应用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#走步问题"><span class="nav-number">1.3.1.</span> <span class="nav-text">走步问题</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二分查找"><span class="nav-number">2.</span> <span class="nav-text">二分查找</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#二分查找示例代码"><span class="nav-number">2.1.</span> <span class="nav-text">二分查找示例代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二分查找性能分析"><span class="nav-number">2.2.</span> <span class="nav-text">二分查找性能分析</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#冒泡排序-Bubble-Sort"><span class="nav-number">3.</span> <span class="nav-text">冒泡排序(Bubble Sort)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#冒泡排序示例代码"><span class="nav-number">3.1.</span> <span class="nav-text">冒泡排序示例代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#冒泡排序性能分析"><span class="nav-number">3.2.</span> <span class="nav-text">冒泡排序性能分析</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#插入排序（Insertion-Sort）"><span class="nav-number">4.</span> <span class="nav-text">插入排序（Insertion Sort）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#插入排序示例代码"><span class="nav-number">4.1.</span> <span class="nav-text">插入排序示例代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#插入排序性能分析"><span class="nav-number">4.2.</span> <span class="nav-text">插入排序性能分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么插入排序比冒泡排序更受欢迎"><span class="nav-number">4.3.</span> <span class="nav-text">为什么插入排序比冒泡排序更受欢迎</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#选择排序"><span class="nav-number">5.</span> <span class="nav-text">选择排序</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#选择排序示例代码"><span class="nav-number">5.1.</span> <span class="nav-text">选择排序示例代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#选择排序性能分析"><span class="nav-number">5.2.</span> <span class="nav-text">选择排序性能分析</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#归并排序"><span class="nav-number">6.</span> <span class="nav-text">归并排序</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#归并排序示例代码"><span class="nav-number">6.1.</span> <span class="nav-text">归并排序示例代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#归并排序的性能分析"><span class="nav-number">6.2.</span> <span class="nav-text">归并排序的性能分析</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#快速排序"><span class="nav-number">7.</span> <span class="nav-text">快速排序</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#快速排序示例代码"><span class="nav-number">7.1.</span> <span class="nav-text">快速排序示例代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#快速排序性能分析"><span class="nav-number">7.2.</span> <span class="nav-text">快速排序性能分析</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#桶排序（Bucket-sort）"><span class="nav-number">8.</span> <span class="nav-text">桶排序（Bucket sort）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#桶排序示例代码"><span class="nav-number">8.1.</span> <span class="nav-text">桶排序示例代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#桶排序性能分析"><span class="nav-number">8.2.</span> <span class="nav-text">桶排序性能分析</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#计数排序（Counting-sort）"><span class="nav-number">9.</span> <span class="nav-text">计数排序（Counting sort）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#计数排序示例代码"><span class="nav-number">9.1.</span> <span class="nav-text">计数排序示例代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#计数排序性能分析"><span class="nav-number">9.2.</span> <span class="nav-text">计数排序性能分析</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#基数排序（Radix-sort）"><span class="nav-number">10.</span> <span class="nav-text">基数排序（Radix sort）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#基数排序代码示例"><span class="nav-number">10.1.</span> <span class="nav-text">基数排序代码示例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基数排序性能分析"><span class="nav-number">10.2.</span> <span class="nav-text">基数排序性能分析</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#LRU-缓存淘汰算法"><span class="nav-number">11.</span> <span class="nav-text">LRU 缓存淘汰算法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#哈希算法"><span class="nav-number">12.</span> <span class="nav-text">哈希算法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是哈希算法"><span class="nav-number">12.1.</span> <span class="nav-text">什么是哈希算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安全加密"><span class="nav-number">12.2.</span> <span class="nav-text">安全加密</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#唯一标识"><span class="nav-number">12.3.</span> <span class="nav-text">唯一标识</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据校验"><span class="nav-number">12.4.</span> <span class="nav-text">数据校验</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#散列函数"><span class="nav-number">12.5.</span> <span class="nav-text">散列函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#负载均衡"><span class="nav-number">12.6.</span> <span class="nav-text">负载均衡</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据分片"><span class="nav-number">12.7.</span> <span class="nav-text">数据分片</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#例一：搜索关键字出现次数"><span class="nav-number">12.7.1.</span> <span class="nav-text">例一：搜索关键字出现次数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#例二：快速判断图片是否在图库中"><span class="nav-number">12.7.2.</span> <span class="nav-text">例二：快速判断图片是否在图库中</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分布式存储"><span class="nav-number">12.8.</span> <span class="nav-text">分布式存储</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一致性哈希算法"><span class="nav-number">12.9.</span> <span class="nav-text">一致性哈希算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#一致性哈希算法实现"><span class="nav-number">12.9.1.</span> <span class="nav-text">一致性哈希算法实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#虚拟节点"><span class="nav-number">12.9.2.</span> <span class="nav-text">虚拟节点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#扩容与删除"><span class="nav-number">12.9.3.</span> <span class="nav-text">扩容与删除</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Paxos算法"><span class="nav-number">13.</span> <span class="nav-text">Paxos算法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#算法功能概述"><span class="nav-number">13.1.</span> <span class="nav-text">算法功能概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#算法过程"><span class="nav-number">13.2.</span> <span class="nav-text">算法过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何保证Paxos算法活性"><span class="nav-number">13.3.</span> <span class="nav-text">如何保证Paxos算法活性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#算法图解示例"><span class="nav-number">13.4.</span> <span class="nav-text">算法图解示例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#算法优化"><span class="nav-number">13.5.</span> <span class="nav-text">算法优化</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#递归"><span class="nav-number">1.</span> <span class="nav-text">递归</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#递归满足的三个条件"><span class="nav-number">1.1.</span> <span class="nav-text">递归满足的三个条件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#递归警惕事项"><span class="nav-number">1.2.</span> <span class="nav-text">递归警惕事项</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#堆栈溢出"><span class="nav-number">1.2.1.</span> <span class="nav-text">堆栈溢出</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#重复计算"><span class="nav-number">1.2.2.</span> <span class="nav-text">重复计算</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#递归相关问题及应用"><span class="nav-number">1.3.</span> <span class="nav-text">递归相关问题及应用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#走步问题"><span class="nav-number">1.3.1.</span> <span class="nav-text">走步问题</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二分查找"><span class="nav-number">2.</span> <span class="nav-text">二分查找</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#二分查找示例代码"><span class="nav-number">2.1.</span> <span class="nav-text">二分查找示例代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二分查找性能分析"><span class="nav-number">2.2.</span> <span class="nav-text">二分查找性能分析</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#冒泡排序-Bubble-Sort"><span class="nav-number">3.</span> <span class="nav-text">冒泡排序(Bubble Sort)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#冒泡排序示例代码"><span class="nav-number">3.1.</span> <span class="nav-text">冒泡排序示例代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#冒泡排序性能分析"><span class="nav-number">3.2.</span> <span class="nav-text">冒泡排序性能分析</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#插入排序（Insertion-Sort）"><span class="nav-number">4.</span> <span class="nav-text">插入排序（Insertion Sort）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#插入排序示例代码"><span class="nav-number">4.1.</span> <span class="nav-text">插入排序示例代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#插入排序性能分析"><span class="nav-number">4.2.</span> <span class="nav-text">插入排序性能分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么插入排序比冒泡排序更受欢迎"><span class="nav-number">4.3.</span> <span class="nav-text">为什么插入排序比冒泡排序更受欢迎</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#选择排序"><span class="nav-number">5.</span> <span class="nav-text">选择排序</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#选择排序示例代码"><span class="nav-number">5.1.</span> <span class="nav-text">选择排序示例代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#选择排序性能分析"><span class="nav-number">5.2.</span> <span class="nav-text">选择排序性能分析</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#归并排序"><span class="nav-number">6.</span> <span class="nav-text">归并排序</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#归并排序示例代码"><span class="nav-number">6.1.</span> <span class="nav-text">归并排序示例代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#归并排序的性能分析"><span class="nav-number">6.2.</span> <span class="nav-text">归并排序的性能分析</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#快速排序"><span class="nav-number">7.</span> <span class="nav-text">快速排序</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#快速排序示例代码"><span class="nav-number">7.1.</span> <span class="nav-text">快速排序示例代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#快速排序性能分析"><span class="nav-number">7.2.</span> <span class="nav-text">快速排序性能分析</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#桶排序（Bucket-sort）"><span class="nav-number">8.</span> <span class="nav-text">桶排序（Bucket sort）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#桶排序示例代码"><span class="nav-number">8.1.</span> <span class="nav-text">桶排序示例代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#桶排序性能分析"><span class="nav-number">8.2.</span> <span class="nav-text">桶排序性能分析</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#计数排序（Counting-sort）"><span class="nav-number">9.</span> <span class="nav-text">计数排序（Counting sort）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#计数排序示例代码"><span class="nav-number">9.1.</span> <span class="nav-text">计数排序示例代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#计数排序性能分析"><span class="nav-number">9.2.</span> <span class="nav-text">计数排序性能分析</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#基数排序（Radix-sort）"><span class="nav-number">10.</span> <span class="nav-text">基数排序（Radix sort）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#基数排序代码示例"><span class="nav-number">10.1.</span> <span class="nav-text">基数排序代码示例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基数排序性能分析"><span class="nav-number">10.2.</span> <span class="nav-text">基数排序性能分析</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#LRU-缓存淘汰算法"><span class="nav-number">11.</span> <span class="nav-text">LRU 缓存淘汰算法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#哈希算法"><span class="nav-number">12.</span> <span class="nav-text">哈希算法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是哈希算法"><span class="nav-number">12.1.</span> <span class="nav-text">什么是哈希算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安全加密"><span class="nav-number">12.2.</span> <span class="nav-text">安全加密</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#唯一标识"><span class="nav-number">12.3.</span> <span class="nav-text">唯一标识</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据校验"><span class="nav-number">12.4.</span> <span class="nav-text">数据校验</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#散列函数"><span class="nav-number">12.5.</span> <span class="nav-text">散列函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#负载均衡"><span class="nav-number">12.6.</span> <span class="nav-text">负载均衡</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据分片"><span class="nav-number">12.7.</span> <span class="nav-text">数据分片</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#例一：搜索关键字出现次数"><span class="nav-number">12.7.1.</span> <span class="nav-text">例一：搜索关键字出现次数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#例二：快速判断图片是否在图库中"><span class="nav-number">12.7.2.</span> <span class="nav-text">例二：快速判断图片是否在图库中</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分布式存储"><span class="nav-number">12.8.</span> <span class="nav-text">分布式存储</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一致性哈希算法"><span class="nav-number">12.9.</span> <span class="nav-text">一致性哈希算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#一致性哈希算法实现"><span class="nav-number">12.9.1.</span> <span class="nav-text">一致性哈希算法实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#虚拟节点"><span class="nav-number">12.9.2.</span> <span class="nav-text">虚拟节点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#扩容与删除"><span class="nav-number">12.9.3.</span> <span class="nav-text">扩容与删除</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>

@@ -103,7 +103,9 @@
 <meta property="og:site_name" content="Liisyu Blog">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://raw.githubusercontent.com/FameLsy/Images/master/Fullmetal%20Alchemist/Apache-zookeeper-.jpg">
-<meta property="og:updated_time" content="2019-06-20T14:03:51.242Z">
+<meta property="og:image" content="https://raw.githubusercontent.com/FameLsy/Images/master/data/paxos.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/FameLsy/Images/master/data/%E6%B6%88%E6%81%AF%E5%B9%BF%E6%92%AD%E7%AE%97%E6%B3%95.png">
+<meta property="og:updated_time" content="2019-06-21T07:53:34.905Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ZooKeeper">
 <meta name="twitter:image" content="https://raw.githubusercontent.com/FameLsy/Images/master/Fullmetal%20Alchemist/Apache-zookeeper-.jpg">
@@ -412,12 +414,24 @@
                 
               
 
-              <time title="创建时间：2019-06-20 00:00:01 / 修改时间：22:03:51" itemprop="dateCreated datePublished" datetime="2019-06-20T00:00:01+08:00">2019-06-20</time>
+              <time title="创建时间：2019-06-20 00:00:01" itemprop="dateCreated datePublished" datetime="2019-06-20T00:00:01+08:00">2019-06-20</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-06-21 15:53:34" itemprop="dateModified" datetime="2019-06-21T15:53:34+08:00">2019-06-21</time>
               
             
           </span>
@@ -506,29 +520,184 @@
 <blockquote>
 <p>在传统文件系统中的ACL。通常分组权限和单一权限，且文件或子目录是默认继承父目录的ACL。</p>
 </blockquote>
-<h1 id="Paxos算法"><a href="#Paxos算法" class="headerlink" title="Paxos算法"></a>Paxos算法</h1><p>ZooKeeper使用的是Paxos一致性算法。具体请看《算法-Paxos算法》篇</p>
+<h1 id="Paxos算法"><a href="#Paxos算法" class="headerlink" title="Paxos算法"></a>Paxos算法</h1><p>Paxos 算法是莱斯利·兰伯特(Leslie Lamport)1990 年提出的一种基于消息传递的、具有高容错性的<strong>一致性算法。</strong></p>
+<p>首先了解以下<code>拜占庭将军问题（Byzantine failures）</code>，以下是wiki的描述</p>
+<blockquote>
+<p>在分布式计算中，不同的计算机通过通讯交换信息达成共识而按照同一套协作策略行动。但有时候，系统中的成员计算机可能出错而发送错误的信息，用于传递信息的通讯网络也可能导致信息损坏，使得网络中不同的成员关于全体协作的策略得出不同结论，从而破坏系统一致性。拜占庭将军问题被认为是容错性问题中最难的问题类型之一。</p>
+</blockquote>
+<p>Paxos算法作者认为，在存在消息丢失的不可靠信道上试图通过消息传递的方式达到一致性是不可能的。所以，<strong>Paxos算法前提为不存在拜占庭将军问题</strong></p>
+<p>在一般情况下，分布式系统中各个节点间采用两种通讯模型：共享内存（Shared Memory）、消息传递（Messages Passing）。而 Paxos 是基于消息传递通讯模型的</p>
+<h2 id="算法功能概述"><a href="#算法功能概述" class="headerlink" title="算法功能概述"></a>算法功能概述</h2><p>Paxos算法存在三种角色，很多情况下，一个进程可能同时担当着多种角色</p>
+<ol>
+<li>Proposer：提案(value)的提议者</li>
+<li>Acceptor：提案的表决者，即决定是否接受该提案。（需要半数以上Acceptor接受提案才能选定）</li>
+<li>Learners：提案学习者，提案被选定后，它会同步并执行提案</li>
+</ol>
+<p>Acceptor存在多个，但在一个集群中，Proposer也可能存在多个。而Paxos算法可保证如下几点</p>
+<ol>
+<li>没有提案被提出则不会有提案被选定</li>
+<li>每个Proposer提出的提案，都会被指定一个具有全局唯一性的、递增的提案编号 N，即<strong>提案在整个集群中是唯一的</strong></li>
+<li>每个Acceptor在接受某提案后，会将该提案的编号N记录在本地。那么每个Acceptor保存的提案中肯定会存在一个maxN,即最大编号的提案。Acceptor每当接受新的提案，只会接受编号大于maxN的提案。</li>
+<li>多个提案只能有一个被选定</li>
+<li>一旦提案被选定，则其他服务器会主动同步(Learn)提案到本地</li>
+</ol>
+<h2 id="算法过程"><a href="#算法过程" class="headerlink" title="算法过程"></a>算法过程</h2><p>Paxos 算法的执行过程划分为两个阶段：</p>
+<ol>
+<li>准备阶段 prepare </li>
+<li>接受阶段 accept</li>
+</ol>
+<p>准备阶段</p>
+<ol>
+<li><p>Proposer准备提交一个编号为 N 的提议，于是其首先向所有表决者(Acceptor)发送 prepare(N)请求，用于试探集群是否支持该编号的提议。</p>
+</li>
+<li><p>Acceptor会根据其他主机发来的 prepare(N)，与本地的maxN值进行比较</p>
+<p>a. 如果N小于maxN，说明提案过时，则Acceptor不回应或回应Error。</p>
+<p>b. 若N大于等于maxN,说明提案可以接受，Acceptor通过<code>Proposal(myid,maxN,value)</code>方法将自己的maxN提案反馈给Proposer,同时不再接受编号小于N天。【myid代表Accepter的id，value表示提案的真正内容。如果Acceptor没有接受过任何提案，则发送<code>Proposal(myid,null,null)</code>】</p>
+</li>
+</ol>
+<p>接受阶段</p>
+<ol>
+<li>Proposer如果收到了超过半数的Accepter的反馈，通过 Proposal(N,V)发送accpet请求给所有的Accepter。V指的是收到的反馈中编号最大的提案的value。如果反馈为<code>Proposal(myid,null,null</code>,则V的值由Proposer自己决定。</li>
+<li>Acceptor接收到提议者发送的 Proposal(N,value)提案后，如果Acceptor没有对编号大于N的prepare请求做出过反馈，则接受提案</li>
+<li>Proposer如果收到的反馈少于半数，则重回准备阶段，递增提案号，重新发出prepare(N)。回到第一阶段</li>
+</ol>
+<p>一旦提案被接受，那么没有反馈的Accepter就会称为Learner，学习被选定的value，一共有3中方案</p>
+<ol>
+<li><p>方案一：Acceptor接受提案，直接发送给所有Learner</p>
+<p>a. 优点：Learner能快速获取被选定的value</p>
+<p>b. 缺点：通信次数为M*N</p>
+</li>
+<li><p>方案二：Acceptor接受提案，发送给主Learner,再由主Learner通知其他Learner</p>
+<p>a. 优点：通信次数减少(M+N-1)</p>
+<p>b.缺点：单点故障</p>
+</li>
+<li><p>方案三：Acceptor接受提案，发送给一个Learner集合，再由集合通知其他Learner</p>
+<p>a.优点：集合Learner个数越多，性能越好</p>
+<p>b.缺点：集合Learner个数越多，网络通信复杂度高</p>
+</li>
+</ol>
+<h2 id="如何保证Paxos算法活性"><a href="#如何保证Paxos算法活性" class="headerlink" title="如何保证Paxos算法活性"></a>如何保证Paxos算法活性</h2><p>有如下场景</p>
+<ol>
+<li>P1 发出编号M1的Prepare请求，收到过半响应</li>
+<li>同时，P2发出编号M2的Prepare请求，收到过半响应。Acceptor不再接受小于M2的提案</li>
+<li>P1开始进入第二阶段，发出的请求，因为M2&gt;M1,所以P1请求被拒绝。重回第一阶段并发出编号为M3的Prepare请求</li>
+<li>然后P2进入第二阶段，因为M3&gt;M2，P2请求被拒绝。重回第一阶段并发出编号为M4的Prepare请求</li>
+<li>…..</li>
+<li>然后进入死循环，P1、P2均无法完成第二阶段</li>
+</ol>
+<p>解决办法：<strong>选取</strong>一个主Proposer，只有主Proposer才能提出提案</p>
+<h2 id="算法图解示例"><a href="#算法图解示例" class="headerlink" title="算法图解示例"></a>算法图解示例</h2><p><img src="https://raw.githubusercontent.com/FameLsy/Images/master/data/paxos.png" alt></p>
+<p>以上图为例，存在三个Proposer和三个Acceptor</p>
+<ol>
+<li>P1 向A1、A2发送编号为20的提案</li>
+<li>P2向A2、A3发送编号为10的提案</li>
+<li>P3向A2、A3发送编号为30的提案</li>
+</ol>
+<p>三个Proposer以先后顺序发送。</p>
+<p>P1首先，因为A1、A2先前没有接受过提案，所以直接接受并将编号20的提案记录成maxN=20后反馈。P1收到半数反馈。</p>
+<p>此时P2开始发送提案，N为10，此时A2 maxN为20，，A2拒绝。A3接受，记录maxN=10并反馈。P2收到不超过反馈。</p>
+<p>随后P3开始发送提案，N为39，A2 maxN=20,A3 maxN=10,所以A2、A3全部接受记录maxN=20并反馈，P3收到反馈数过半。</p>
+<p>因为P2提案没选定，所以N变为40，发送给A2、A3，此时A2、A3全部接受记录maxN=40并反馈,P2收到半数以上反馈。</p>
+<p>至此，P1、P2、P3提案均被接受，A1 maxN=20, A2、A3 maxN = 40;</p>
+<p>在接受阶段</p>
+<p>P1 发送accept请求，N=20，A1 顺利通过并接受了该提案。A2 此时maxN=40,所以拒绝了该提案</p>
+<p>P2发出accpet请求，N=40， A2、A3均顺利通过并接受了该提案</p>
+<p>P3发出accpet请求，N=30，A2、A3均拒绝该请求</p>
+<p>那么，P2的提案有2个Acceptor选定，所以A2服务器被选为Learder。选举结束，其他服务器称为Learner会被通知进行数据的同步。</p>
+<h2 id="算法优化"><a href="#算法优化" class="headerlink" title="算法优化"></a>算法优化</h2><p>前面所述的Paxos算法在实际工程应用过程中，根据不同的实际需求存在诸多不便之处，所以也就出现了很多对于基本 Paxos 算法的优化算法，例如，Multi Paxos、Fast Paxos、EPaxos。而 Zookeeper 的 Leader 选举算法 FastLeaderElection 则是 Fast Paxos 算法的工程应用。</p>
 <h1 id="ZAB协议"><a href="#ZAB协议" class="headerlink" title="ZAB协议"></a>ZAB协议</h1><p>ZAB全称为Zookeeper Atomic Broadcast，即ZooKeeper 原子消息广播协议，是专为 ZooKeeper 设计的一种支持崩溃恢复的原子广播协议，是一种 Pasox 的优化算法。</p>
 <p>在 Zookeeper 中，主要依赖 ZAB 协议来实现分布式数据一致性。</p>
-<p>Zookeeper 使用一个单一主进程来接收并处理客户端的所有事务请求，即写请求。当服务器数据的状态发生变更后，集群采用 ZAB 原子广播协议，以事务提案 Proposal 的形式广播到所有的副本进程上。ZAB 协议能够保证一个全局的变更序列，即可以为每一个事务分配一个全局的递增编号 xid。</p>
 <p>当 Zookeeper 客户端连接到 Zookeeper 集群的一个节点后，若客户端提交的是读请求，那么当前节点就直接根据自己保存的数据对其进行响应；如果是写请求且当前节点不是Leader，那么节点就会将该写请求转发给 Leader，Leader 会以提案的方式广播该写操作，只要有超过半数节点同意该写操作，则该写操作请求就会被提交。然后 Leader 会再次广播给所有订阅者，即 Learner，通知它们同步数据</p>
+<h2 id="ZAB中的三类角色"><a href="#ZAB中的三类角色" class="headerlink" title="ZAB中的三类角色"></a>ZAB中的三类角色</h2><p>ZooKeeper是以集群的形式出现的，这样做可以避免单点问题。其角色主要有以下三类</p>
+<ol>
+<li>Leader：集群写请求的唯一处理者，同时还负责进行投票的发起、决议和更新系统状态。Leader不会再收到写请求后马上修改，而是先根据写请求发送一个提案，只有选定后才会做出修改</li>
+<li>Follower：接受客户端请求，处理读请求，并向客户端返回结果；将写请求转给Leader；在选举过程中参与投票；</li>
+<li>Observer：可以理解为无选举投票权和写操作投票权的Follower,用于协助Follower处理更多读请求。【当ZooKeeper集群的读请求负载高时，就需要添加处理读请求的服务器数量。如果添加的时Follower,那么必定会降低写操作效率。因为过多的Follower添加了与Leader的通信压力，且会延长Leader的选举时长。而Observer不需要参与写操作投票和选举投票，所以在提高处理读操作的吞吐量同时，不会添加通信压力和投票效率】</li>
+</ol>
+<h2 id="ZAB的三种模式"><a href="#ZAB的三种模式" class="headerlink" title="ZAB的三种模式"></a>ZAB的三种模式</h2><p>AB 协议中对 ZooKeeperrServer的状态描述有三种模式</p>
+<ol>
+<li>恢复模式：ZooKeeperrServer服务重启或Leader崩溃后进入恢复模式。ZooKeeper集群将恢复到正常工作状态</li>
+<li>同步模式：所有ZooKeeperrServer服务启动完毕，或Leader崩溃后重新被选举，进入同步模式。Follower需要立即将Leader中数据同步到自己的主机中。【ZooKeeperrServer完成同步后，恢复模式结束。所以，同步模式包含在恢复模式中】</li>
+<li>广播模式：当Leader的提案被大多数ZooKeeperrServer同意，Leader就会修改自身数据，随后将修改数据广播给其他Follower</li>
+</ol>
+<h2 id="zixd"><a href="#zixd" class="headerlink" title="zixd"></a>zixd</h2><p><code>xid</code> 为 ZooKeeper的事务 id，每一个写操作都是一个事务，都会有一个 xid。xid 为一个依次递增的流水号。每一个写操作都需要由 Leader 发起一个提案，由所有 Follower 表决是否同意本次写操作。</p>
+<p><code>zxid</code> 为 64 位长度的 Long 类型，其中高 32 位表示纪元 epoch，低 32 位表示事务标识 xid。每个提案都具有一个 zxid；</p>
+<p>每个 Leader 都会具有一个不同的 epoch 值，表示一个时期、时代。每一次新的选举开启时都会生成一个新的 epoch，新的 Leader 产生，则会更新所有 ZooKerServer的 zxid 中的 epoch。</p>
+<h2 id="消息广播算法"><a href="#消息广播算法" class="headerlink" title="消息广播算法"></a>消息广播算法</h2><p>当集群中已经有过半的 Follower 与 Leader 服务器完成了状态同步，整个 集群就可以进入消息广播模式.</p>
+<p>集群中节点(非Leader)会将收到的请求转发给Leader服务器，Leader将其生成事务提案Proposal，将其发送给集群中其余所有的主机，然后再分别收集它们的选票，在选票过半后进行事务提交。具体流程为</p>
+<ol>
+<li>Leader收到消息请求，将消息赋予一个全集唯一64 位自增 id，即 zxid。</li>
+<li>为了保证 Leader 向 Follower 发送提案的有序，Leader 会为每个 Follower 创建一个 FIFO队列，并将提案副本写入到各个队列。然后再通过这些队列将提案发送给各个 Follower。</li>
+<li>当 Follower 接收到提案后，会先将提案的 zxid 与本地记录的事务日志中的最大的 zxid进行比较。若当前提案的 zxid 大于最大 zxid，则将当前提案记录到本地事务日志中，并向 Leader 返回一个 ACK</li>
+<li>当 Leader 接收到过半的 ACK 后，对于之前回复过 Leader 的 Follower，Leader 会向其发送 COMMIT 消息，批准这些 Follower 在本地执行该消息；对于之前未回复过 Leader的 Follower，Leader 会将这些 Follower 对应的队列中的提案发送给这些 Follower，发送的同时会携带 COMMIT 消息。当 Follower 收到 COMMIT 消息后，就会执行该消息</li>
+</ol>
+<p><img src="https://raw.githubusercontent.com/FameLsy/Images/master/data/%E6%B6%88%E6%81%AF%E5%B9%BF%E6%92%AD%E7%AE%97%E6%B3%95.png" alt></p>
+<h2 id="恢复模式的两个原则"><a href="#恢复模式的两个原则" class="headerlink" title="恢复模式的两个原则"></a>恢复模式的两个原则</h2><h3 id="原则一：已处理过的消息不能丢"><a href="#原则一：已处理过的消息不能丢" class="headerlink" title="原则一：已处理过的消息不能丢"></a>原则一：已处理过的消息不能丢</h3><p>存在一种情况，当 Leader 收到超过半数 Follower 的 ACKs 后，就向各个 Follower 广播 COMMIT 消息，批准各个 Server 执行该写操作事务。Server执行完操作后，会向客户端响应操作成功。存在一部分Follower，它们在收到COMMIT消息之前Leader就崩溃了，这样的话，就会存在部分Server执行了事务操作，部位Server没有执行。新的Leader被选举，集群通过恢复模式后，需要保证所有Server需要执行部分Server执行了的事务操作。其使用了以下策略</p>
+<ol>
+<li>选举拥有 proposal 最大值（即 zxid 最大） 的节点作为新的 Leader。【由于所有提案被COMMIT 之前必须有合法数量的 Follower ACK，因此只要有合法数量的节点正常工作，就必然有一个节点保存了所有被COMMIT 消息的 proposal 状态】</li>
+<li>新的Leader会先发送自身拥有且并不是所有Follower都拥有的 proposal ，在将这些proposal 的COMMIT命令发送非Follower，以保证所有的 Follower 都保存并执行了所有的 proposal</li>
+<li>基于以上两点，能保证已被处理的事务不会丢失</li>
+</ol>
+<h3 id="原则二：被丢弃的消息不能再现"><a href="#原则二：被丢弃的消息不能再现" class="headerlink" title="原则二：被丢弃的消息不能再现"></a>原则二：被丢弃的消息不能再现</h3><p>存在另一种情况，Leader接受事务请求并生成了proposal，但还没有发送就崩溃了。由于所有的Follower都没有收到词条proposal，所以经过恢复模式产生新的Leader后，这个事务被忽略。随后，之前挂了的旧Leader重启并注册了成了Follower，它保留了proposal，但与整个集群不一致，则需要删除这个proposal。</p>
+<p>ZAB通过zxid实现了这一功能。每一次选举，epoch值会加1，没产生一个事务，xid加1。当旧的Leader挂了后重启，因为此时它的zxid小于当前新的epoch，所以它不会被选为新的leader。此外，当Leade作为Follower重新接入集群后，新的Leader会让所有旧的epoch标号的、违背COMMIT的proposal清除。</p>
 <h1 id="Leader选举机制"><a href="#Leader选举机制" class="headerlink" title="Leader选举机制"></a>Leader选举机制</h1><h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><p>myid：Zookeeper集群中服务器的唯一标识，称为myid</p>
 <p>Logicalclock：逻辑时钟，是一个整数。该概念在选举时称为 logicalclock，而在 zxid 中则为 epoch 的值</p>
 <p>Zookeeper状态，一共有四种：</p>
 <ol>
-<li>LOOKING：选举状态，即查找Learder的状态</li>
+<li>LOOKING：选举状态，即查找Learder的状态，非服务状态</li>
 <li>FOLLOWING：跟随状态，同步Learder状态。处于该状态的服务器称为Follower</li>
 <li>OBSERVING：观察状态，同步Leader状态。处于该状态的服务器称为 Observer</li>
 <li>LEADING：领导状态。处于该状态的服务器称为 Leader</li>
 </ol>
-<h2 id="选举流程"><a href="#选举流程" class="headerlink" title="选举流程"></a>选举流程</h2><p>选举流程</p>
+<h2 id="集群启动中的Leader选举"><a href="#集群启动中的Leader选举" class="headerlink" title="集群启动中的Leader选举"></a>集群启动中的Leader选举</h2><p>若进行 Leader 选举，则至少需要两台主机。以三台服务器S1、S2、S3为例。</p>
+<p>在集群初始化阶段，S1启动，给自己投票，发布自己的投票结果。投票表示为(myid.zxid)，此时我们能假设S1投票为(1,0)。因为其他及其尚未启动，所以S1处于Looking状态。</p>
+<p>S2启动，那么它的投票假设为(2,0)。S1可以与S1通信。每台及其试图寻找Leader，选举过程如下</p>
 <ol>
-<li>所有的Server第一次投票时，会将自己作为Leader，即自己投自己，然后将自己选票的广播发送给其他服务器。此外，Server还会接收到其他Server发来的选票</li>
-<li><p>Server查看自己收到的选票是否为其他Server发送的所有选票。若数量不够，则有可能该Server的选票其他Server也没有到，需要重新发送选票</p>
+<li><p>S1、S2自选完后，将自己的投票发送给其他服务器</p>
 </li>
-<li><p>遍历所有选票，比较谁更适合做Leader，如果Server发现其他Server更适合当Leader，则更改自己的选票，然后将新的选票广播出去</p>
+<li><p>服务器接收来自其他服务器的投票后，检查投票的有效性</p>
 </li>
-<li>最后，由选票上超出半数的Server当Leader</li>
+<li><p>投票有效，则开始处理投票，处理方式如下</p>
+<p>a. 检查自身的投票和其他投票的zxid，选zxid大的优先作为leader</p>
+<p>b. zxid相同，比较myid,myid大的优先作为Leader</p>
+</li>
 </ol>
+<p>那么，对于S1、S2来说，它们的zxid都为0，而S1.myid &lt; S2.myid,所以S2更适合作为Leader，而S1则将自己的投票改为(2,0)。随后S1、S2再次重新发送投票。</p>
+<ol start="4">
+<li>每次投票后，每台ZooKeeperServer都会统计投票信息，判断是否有过半机器选定了相同投票。也就是说（2，0）投票已经被两台机器选定，所以新的Leader选出，即S2</li>
+<li>一旦确定了Leader，每个服务器就会更新自己的状态，如果是Follower，那么就变更为 FOLLOWING，如果是 Leader，就变更为 LEADING</li>
+</ol>
+<p>Leader已经选出，随后S3启动，由于集权各个主机的状态并不是LOOKING，而是正常服务中，所以S3只能是以Follower身份加入集群</p>
+<h2 id="断连后的Leader选举"><a href="#断连后的Leader选举" class="headerlink" title="断连后的Leader选举"></a>断连后的Leader选举</h2><p>Zookeeper运行期间，非Leader服务器崩溃或者新加入不会影响Leader，而Leader崩溃则会导致整个集群停止对外服务，进入新一轮的选举。<strong>该选举过程与启动时期Leader选举过程基本一致。</strong></p>
+<p>假设有S1、S2、S3三台服务器，S2为Leader。某段时间S2崩溃，新的选举开始，选举过程如下</p>
+<ol>
+<li><p>变更状态。Leader 挂后，所有非 Observer 服务器都状态由FOLLOWING 变更为 LOOKING，然后开始进入 Leader 选举过程</p>
+</li>
+<li><p>S1、S3自选完后，将自己的投票发送给其他服务器。因为服务器已经运行过了，所以它们的zxid可能是不同的。这里假设S1投票(1, 100),S3(3, 300)</p>
+</li>
+<li>S1、S3分别接受投票，先判断有效性，再进行处理。处理过程与启动时处理过程一致，所以S3更适合作为Leader，S1投票变更(3,300)</li>
+<li>统计投票</li>
+<li>改变服务器状态,S3变更为LEADING,S1变更为FOLLOWERING</li>
+</ol>
+<h2 id="恢复模式下的数据同步"><a href="#恢复模式下的数据同步" class="headerlink" title="恢复模式下的数据同步"></a>恢复模式下的数据同步</h2><p>Leader选举完成，就会进入恢复模式下的数据同步阶段。</p>
+<ol>
+<li>Leader 服务器会为每个 Follower 服务器准备一个队列，并将那些没有被各个 Follower 服务器同步的事务以Proposal 的形式逐条发给各个 Follower 服务器，同时紧跟一个COMMIT消息，表示事务已被提交</li>
+<li>Follower直接接受并执行事务，执行结束后，向Leader发送ACK信息</li>
+<li>Leader收到ACK后将Followe加入到可用列表中</li>
+</ol>
+<p>为了保证数据的一致性，集群在选举时还做了两类数据同步</p>
+<ol>
+<li>初始化同步：各个 Follower需要将新 Leader 的数据同步到自己的缓存中</li>
+<li>更新同步：Leader更新数据后向Follower发送广播，Follwer再主动同步 Leader 的更新数据</li>
+<li>在以上两步中，只要Zookeeper发现了超过半数的Follower同步超时，则会重新进行同步。并且同步状态时集群处于不可用状态（牺牲了可用性，也大大增加了选举的时长）</li>
+</ol>
+<h1 id="CAP原则"><a href="#CAP原则" class="headerlink" title="CAP原则"></a>CAP原则</h1><p>CAP 指的是在一个分布式系统中，Consistency （一致性）、 Availability（可用性）、Partition tolerance（分区容错性），<strong>三者不可兼得</strong></p>
+<ol>
+<li>一致性（C）：分布式系统的所有主机中在同一时刻具有完全相同的数据备份</li>
+<li>可用性（A）：在集群中部分节点发生故障后，不会影响对客户端读写请求的响应</li>
+<li>分区容错性（P）：对于分布式系统，必须有一定的容错性。【分布式系统中的一台主机称为一个分区，系统没有一致性或者可用性，都算是一种错误。】</li>
+</ol>
+<p>ZooKeeper遵循CP原则，保证一致性，牺牲了可用性。具体体现为当Leader崩溃后，开始新的选举。在选举的过程中，时长大约(30~120秒)，但依旧是不接受客户端的读写操作，即无法满足可用性。</p>
 
       
     </div>
@@ -888,7 +1057,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#ZooKeeper功能"><span class="nav-number">1.</span> <span class="nav-text">ZooKeeper功能</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#配置维护"><span class="nav-number">1.1.</span> <span class="nav-text">配置维护</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#域名服务"><span class="nav-number">1.2.</span> <span class="nav-text">域名服务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分布式同步"><span class="nav-number">1.3.</span> <span class="nav-text">分布式同步</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#集群管理"><span class="nav-number">1.4.</span> <span class="nav-text">集群管理</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ZooKeeper一致性要求"><span class="nav-number">2.</span> <span class="nav-text">ZooKeeper一致性要求</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ZooKeeper相关概念"><span class="nav-number">3.</span> <span class="nav-text">ZooKeeper相关概念</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Session"><span class="nav-number">3.1.</span> <span class="nav-text">Session</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Watcher-机制"><span class="nav-number">3.2.</span> <span class="nav-text">Watcher 机制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#znode"><span class="nav-number">3.3.</span> <span class="nav-text">znode</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ACL"><span class="nav-number">3.4.</span> <span class="nav-text">ACL</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Paxos算法"><span class="nav-number">4.</span> <span class="nav-text">Paxos算法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ZAB协议"><span class="nav-number">5.</span> <span class="nav-text">ZAB协议</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Leader选举机制"><span class="nav-number">6.</span> <span class="nav-text">Leader选举机制</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本概念"><span class="nav-number">6.1.</span> <span class="nav-text">基本概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#选举流程"><span class="nav-number">6.2.</span> <span class="nav-text">选举流程</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#ZooKeeper功能"><span class="nav-number">1.</span> <span class="nav-text">ZooKeeper功能</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#配置维护"><span class="nav-number">1.1.</span> <span class="nav-text">配置维护</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#域名服务"><span class="nav-number">1.2.</span> <span class="nav-text">域名服务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分布式同步"><span class="nav-number">1.3.</span> <span class="nav-text">分布式同步</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#集群管理"><span class="nav-number">1.4.</span> <span class="nav-text">集群管理</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ZooKeeper一致性要求"><span class="nav-number">2.</span> <span class="nav-text">ZooKeeper一致性要求</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ZooKeeper相关概念"><span class="nav-number">3.</span> <span class="nav-text">ZooKeeper相关概念</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Session"><span class="nav-number">3.1.</span> <span class="nav-text">Session</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Watcher-机制"><span class="nav-number">3.2.</span> <span class="nav-text">Watcher 机制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#znode"><span class="nav-number">3.3.</span> <span class="nav-text">znode</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ACL"><span class="nav-number">3.4.</span> <span class="nav-text">ACL</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Paxos算法"><span class="nav-number">4.</span> <span class="nav-text">Paxos算法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#算法功能概述"><span class="nav-number">4.1.</span> <span class="nav-text">算法功能概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#算法过程"><span class="nav-number">4.2.</span> <span class="nav-text">算法过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何保证Paxos算法活性"><span class="nav-number">4.3.</span> <span class="nav-text">如何保证Paxos算法活性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#算法图解示例"><span class="nav-number">4.4.</span> <span class="nav-text">算法图解示例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#算法优化"><span class="nav-number">4.5.</span> <span class="nav-text">算法优化</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ZAB协议"><span class="nav-number">5.</span> <span class="nav-text">ZAB协议</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ZAB中的三类角色"><span class="nav-number">5.1.</span> <span class="nav-text">ZAB中的三类角色</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ZAB的三种模式"><span class="nav-number">5.2.</span> <span class="nav-text">ZAB的三种模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#zixd"><span class="nav-number">5.3.</span> <span class="nav-text">zixd</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#消息广播算法"><span class="nav-number">5.4.</span> <span class="nav-text">消息广播算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#恢复模式的两个原则"><span class="nav-number">5.5.</span> <span class="nav-text">恢复模式的两个原则</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#原则一：已处理过的消息不能丢"><span class="nav-number">5.5.1.</span> <span class="nav-text">原则一：已处理过的消息不能丢</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#原则二：被丢弃的消息不能再现"><span class="nav-number">5.5.2.</span> <span class="nav-text">原则二：被丢弃的消息不能再现</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Leader选举机制"><span class="nav-number">6.</span> <span class="nav-text">Leader选举机制</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本概念"><span class="nav-number">6.1.</span> <span class="nav-text">基本概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#集群启动中的Leader选举"><span class="nav-number">6.2.</span> <span class="nav-text">集群启动中的Leader选举</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#断连后的Leader选举"><span class="nav-number">6.3.</span> <span class="nav-text">断连后的Leader选举</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#恢复模式下的数据同步"><span class="nav-number">6.4.</span> <span class="nav-text">恢复模式下的数据同步</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#CAP原则"><span class="nav-number">7.</span> <span class="nav-text">CAP原则</span></a></li></ol></div>
             
 
           </div>
